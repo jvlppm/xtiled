@@ -54,11 +54,20 @@
     <Compile Include="..\XTiled\Image.cs">
       <Link>Image.cs</Link>
     </Compile>
+    <Compile Include="..\XTiled\Layer.cs">
+      <Link>Layer.cs</Link>
+    </Compile>
     <Compile Include="..\XTiled\Map.cs">
       <Link>Map.cs</Link>
     </Compile>
     <Compile Include="..\XTiled\PropertyCollection.cs">
       <Link>PropertyCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\XTiled\Tile.cs">
+      <Link>Tile.cs</Link>
+    </Compile>
+    <Compile Include="..\XTiled\TileData.cs">
+      <Link>TileData.cs</Link>
     </Compile>
     <Compile Include="..\XTiled\Tileset.cs">
       <Link>Tileset.cs</Link>

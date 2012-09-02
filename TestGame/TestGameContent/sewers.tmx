@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="24" tileheight="24">
+ <properties>
+  <property name="map prop 1" value="aa"/>
+  <property name="map prop 2" value="1.0"/>
+  <property name="map prop 3" value="false"/>
+ </properties>
  <tileset firstgid="1" name="sewer_tileset" tilewidth="24" tileheight="24">
   <image source="sewer_tileset.png" trans="ff00ff" width="192" height="217"/>
  </tileset>
  <layer name="Bottom" width="50" height="50">
-  <data encoding="base64" compression="zlib">
-   eJzt19kKwjAQBdDim0sFqwguL3Vf/sP//ySnkIFhSGrSdEnxPhyQxqJ32kySPMuyJTkZC5KLa2dyNEo1Lsds3wkl/4f+7V/0/f+Y40Je5GpUn2+J5NiQCdmO/HlMyYzMI3JwLUJx7drIsSIFWUfk4FrY3GvGuHb8vr4jcmhNcnAtpIflmmar3VA5nqaWMUKeQ1d9dyht59iRPTmMPEdpua8Put/Frh88P5q84zFkv/NZP2TOlOaH7Hc+64fMmdL8cPVbV9+tcn5MzpTmR0gv12uDbQ4MNT8AIA73Uq3v3hqLe2ldTx4D21k1tf2ubw59Vk1tX+KbQ59VXfuSlMn9SJHV70tS5jqrYu8BAAAAAAAAAABd+wIHfQq1
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3X2QrCMBAF0OKbSwWrCC4vdV/+w///JKeQgWFIatJ0SfE+HJDGonfaTJI8y7IlORkLkotrZ3I0SjUux2zfCSX/h/7tX/T9/5jjQl7kalSfb4nk2JAJ2Y78eUzJjMwjcnAtQnHt2sixIgVZR+TgWtjca8a4dvy+viNyaE1ycC2kh+WaZqvdUDmeppYxQp5DV313KG3n2JE9OYw8R2m5rw+638WuHzw/mrzjMWS/81k/ZM6U5ofsdz7rh8yZ0vxw9VtX361yfkzOlOZHSC/Xa4NtDgw1PwAgDvdSre/eGot7aV1PHgPbWTW1/a5vDn1WTW1f4ptDn1Vd+5KUyf1IkdXvS1LmOqti7wEAAAAAAAAAAF37AlFWzCEQJwAA
   </data>
  </layer>
  <layer name="Top" width="50" height="50" opacity="0.49">
-  <data encoding="base64" compression="zlib">
-   eJzt1jsKgDAQQEELtVKvYuGvEDvvfya3MBeQQAzMwCPdsum2af5lL71AJv7xL7X+Y46WtzXayq7z2RGd0f2+V6a5bdRFfaZ5pQzRGE2lFwEAoArpDk7Veg+nOzjlHgYAAAAAIIcHvboDlQ==
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WOwqAMBBAQQu1Uq9i4a8QO+9/JrcwF5BADMzAI92y6bZp/mUvvUAm/vEvtf5jjpa3NdrKrvPZEZ3R/b5Xprlt1EV9pnmlDNEYTaUXAQCgCukOTtV6D6c7OOUeBgAAAAAghwe55M5JECcAAA==
   </data>
  </layer>
+ <objectgroup name="Object Layer 1" width="50" height="50">
+  <object type="Type2" x="624" y="360" width="216" height="168"/>
+  <object name="named object" type="Type1" x="840" y="264" width="144" height="144">
+   <properties>
+    <property name="prop 2" value="abc"/>
+    <property name="prpop 1" value="a"/>
+   </properties>
+  </object>
+  <object x="888" y="528" width="192" height="216"/>
+  <object x="648" y="576"/>
+ </objectgroup>
+ <objectgroup name="Object Layer 2" width="50" height="50">
+  <object name="props to me" type="Type2" gid="45" x="456" y="480">
+   <properties>
+    <property name="prop1" value="true"/>
+    <property name="prop3" value="False"/>
+   </properties>
+  </object>
+  <object type="Type2" gid="45" x="408" y="576"/>
+  <object gid="60" x="480" y="528"/>
+  <object name="something" gid="60" x="528" y="648"/>
+  <object x="120" y="408">
+   <polygon points="0,0 120,-240 312,0 0,192 96,24"/>
+  </object>
+  <object name="poly2" type="Type2" x="96" y="576">
+   <properties>
+    <property name="prop1" value="1"/>
+    <property name="prop2" value="a"/>
+   </properties>
+   <polygon points="0,0 336,0 312,-72 48,-120"/>
+  </object>
+  <object name="line" type="Type1" x="288" y="768">
+   <properties>
+    <property name="prop1" value="1"/>
+    <property name="prop2" value="2"/>
+   </properties>
+   <polyline points="0,0 264,-120 408,-48 528,-168"/>
+  </object>
+  <object x="384" y="840">
+   <polyline points="0,0 288,-48 192,48 -168,24 -288,-96 -120,-144"/>
+  </object>
+ </objectgroup>
 </map>

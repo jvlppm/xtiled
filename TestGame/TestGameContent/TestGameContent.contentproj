@@ -46,6 +46,7 @@
       <Name>desert</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +74,7 @@
       <Name>sewers</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +89,7 @@
       <Name>isometric_grass_and_water</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +104,26 @@
       <Name>perspective_walls</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="desert_base64_uncompressed.tmx">
+      <Name>desert_base64_uncompressed</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
+    </Compile>
+    <Compile Include="desert_base64_gzip.tmx">
+      <Name>desert_base64_gzip</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
+    </Compile>
+    <Compile Include="desert_base64_zlib.tmx">
+      <Name>desert_base64_zlib</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
     </Compile>
     <None Include="perspective_walls.tsx">
       <Name>perspective_walls</Name>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

@@ -10,12 +10,16 @@ namespace FuncWorks.XNA.XTiled {
         }
 
         public void ReadXml(System.Xml.XmlReader reader) {
-            if (reader.MoveToContent() == XmlNodeType.Element) {
-                while (reader.ReadToDescendant("Property")) {
-                    this.Add(reader["name"], reader["value"]);
+            if (!reader.IsEmptyElement) {
+                if (reader.ReadToDescendant("Property")) {
+                    do {
+                        this.Add(reader["name"], reader["value"]);
+                        reader.Read();
+                    }
+                    while (reader.Name.Equals("Property"));
                 }
+                reader.ReadEndElement();
             }
-            reader.Read();
         }
 
         public void WriteXml(System.Xml.XmlWriter writer) {

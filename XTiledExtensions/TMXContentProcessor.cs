@@ -3,10 +3,17 @@ using Microsoft.Xna.Framework.Content.Pipeline;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System.IO;
+using System.IO.Compression;
 
 namespace FuncWorks.XNA.XTiled {
     [ContentProcessor(DisplayName = "TMX Map - XTiled")]
     public class TMXContentProcessor : ContentProcessor<XDocument, Map> {
+
+        private const UInt32 FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+        private const UInt32 FLIPPED_VERTICALLY_FLAG = 0x40000000;
+        private const UInt32 FLIPPED_DIAGONALLY_FLAG = 0x20000000;
+
         public override Map Process(XDocument input, ContentProcessorContext context) {
             Map map = new Map();
 
@@ -41,7 +48,7 @@ namespace FuncWorks.XNA.XTiled {
             foreach (var elem in input.Document.Root.Elements("tileset")) {
                 Tileset t = new Tileset();
                 XElement tElem = elem;
-                t.FirstGID = Convert.ToInt32(tElem.Attribute("firstgid").Value);
+                t.FirstGID = Convert.ToUInt32(tElem.Attribute("firstgid").Value);
 
                 if (elem.Attribute("source") != null) {
                     XDocument tsx = XDocument.Load(elem.Attribute("source").Value);
@@ -82,9 +89,101 @@ namespace FuncWorks.XNA.XTiled {
                     foreach (var pElem in tElem.Element("properties").Elements("property"))
                         t.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
 
+                List<Tile> tiles = new List<Tile>();
+                foreach (var tileElem in tElem.Elements("tile")) {
+                    Tile tile = new Tile();
+                    tile.ID = Convert.ToUInt32(tileElem.Attribute("id").Value);
+                    tile.Properties = new PropertyCollection();
+                    if (tileElem.Element("properties") != null)
+                        foreach (var pElem in tileElem.Element("properties").Elements("property"))
+                            tile.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+                    tiles.Add(tile);
+                }
+                t.Tiles = tiles.ToArray();
+
                 tilesets.Add(t);
             }
             map.Tilesets = tilesets.ToArray();
+
+            List<Layer> layers = new List<Layer>();
+            foreach (var lElem in input.Document.Root.Elements("layer")) {
+                Layer l = new Layer();
+                l.Name = lElem.Attribute("name") == null ? null : lElem.Attribute("name").Value;
+                l.Opacity = lElem.Attribute("opacity") == null ? 1.0f : Convert.ToSingle(lElem.Attribute("opacity").Value);
+                l.Visible = lElem.Attribute("visible") == null ? true : lElem.Attribute("visible").Equals("1");
+
+                l.Properties = new PropertyCollection();
+                if (lElem.Element("properties") != null)
+                    foreach (var pElem in lElem.Element("properties").Elements("property"))
+                        l.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+
+                List<TileData> tiles = new List<TileData>();
+                if (lElem.Element("data") != null) {
+                    List<UInt32> gids = new List<UInt32>();
+                    if (lElem.Element("data").Attribute("encoding") != null || lElem.Element("data").Attribute("compression") != null) {
+
+                        // parse csv formatted data
+                        if (lElem.Element("data").Attribute("encoding") != null && lElem.Element("data").Attribute("encoding").Value.Equals("csv")) {
+                            foreach (var gid in lElem.Element("data").Value.Split(",\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                                gids.Add(Convert.ToUInt32(gid));
+                        }
+                        else if (lElem.Element("data").Attribute("encoding") != null && lElem.Element("data").Attribute("encoding").Value.Equals("base64")) {
+                            Byte[] data = Convert.FromBase64String(lElem.Element("data").Value);
+
+                            if (lElem.Element("data").Attribute("compression") == null) {
+                                // uncompressed data
+                                for (int i = 0; i < data.Length; i += sizeof(UInt32)) {
+                                    gids.Add(BitConverter.ToUInt32(data, i));
+                                }
+                            }
+                            else if (lElem.Element("data").Attribute("compression").Value.Equals("gzip")) {
+                                // gzip data
+                                GZipStream gz = new GZipStream(new MemoryStream(data), CompressionMode.Decompress);
+                                Byte[] buffer = new Byte[sizeof(UInt32)];
+                                while (gz.Read(buffer, 0, buffer.Length) == buffer.Length) {
+                                    gids.Add(BitConverter.ToUInt32(buffer, 0));
+                                }
+                            }
+                            else if (lElem.Element("data").Attribute("compression").Value.Equals("zlib")) {
+                                // zlib data - first two bytes zlib specific and not part of deflate
+                                MemoryStream ms = new MemoryStream(data);
+                                ms.ReadByte();
+                                ms.ReadByte();
+                                DeflateStream gz = new DeflateStream(ms, CompressionMode.Decompress);
+                                Byte[] buffer = new Byte[sizeof(UInt32)];
+                                while (gz.Read(buffer, 0, buffer.Length) == buffer.Length) {
+                                    gids.Add(BitConverter.ToUInt32(buffer, 0));
+                                }
+                            }
+                            else {
+                                throw new NotSupportedException(String.Format("Compression '{0}' not supported.  XTiled supports gzip or zlib", lElem.Element("data").Attribute("compression").Value));
+                            }
+                        }
+                        else {
+                            throw new NotSupportedException(String.Format("Encoding '{0}' not supported.  XTiled supports csv or base64", lElem.Element("data").Attribute("encoding").Value));
+                        }
+                    }
+                    else {
+
+                        // parse xml formatted data
+                        foreach (var tElem in lElem.Element("data").Elements("tile"))
+                            gids.Add(Convert.ToUInt32(tElem.Attribute("gid").Value));
+                    }
+
+                    foreach (var gid in gids) {
+                        TileData td = new TileData();
+                        td.ID = gid & ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
+                        td.FlippedVertically = Convert.ToBoolean(gid & FLIPPED_HORIZONTALLY_FLAG);
+                        td.FlippedHorizontally = Convert.ToBoolean(gid & FLIPPED_VERTICALLY_FLAG);
+                        td.FlippedDiagonally = Convert.ToBoolean(gid & FLIPPED_DIAGONALLY_FLAG);
+                        tiles.Add(td);
+                    }
+                }
+                l.Tiles = tiles.ToArray();
+
+                layers.Add(l);
+            }
+            map.Layers = layers.ToArray();
 
             return map;
         }

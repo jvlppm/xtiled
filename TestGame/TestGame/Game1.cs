@@ -27,6 +27,9 @@ namespace TestGame {
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Map desert = Content.Load<Map>("desert");
+            Map desert2 = Content.Load<Map>("desert_base64_uncompressed");
+            Map desert3 = Content.Load<Map>("desert_base64_gzip");
+            Map desert4 = Content.Load<Map>("desert_base64_zlib");
             Map isometric_grass_and_water = Content.Load<Map>("isometric_grass_and_water");
             Map perspective_walls = Content.Load<Map>("perspective_walls");
             Map sewers = Content.Load<Map>("sewers");
@@ -45,7 +48,6 @@ namespace TestGame {
 
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             base.Draw(gameTime);
         }
     }
