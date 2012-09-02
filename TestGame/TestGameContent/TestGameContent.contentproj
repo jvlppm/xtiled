@@ -50,6 +50,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="perspective_walls.png">
+      <Name>perspective_walls_tiles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="tmw_desert_spacing.png">
       <Name>tmw_desert_spacing</Name>
       <Importer>TextureImporter</Importer>
@@ -90,13 +95,6 @@
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="perspective_walls.png">
-      <Name>perspective_walls_tiles</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

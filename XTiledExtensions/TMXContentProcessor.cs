@@ -82,6 +82,17 @@ namespace FuncWorks.XNA.XTiled {
                         img.TransparentColor = new Color(sdc.R, sdc.G, sdc.B);
                     }
                     images.Add(img);
+
+                    if (img.Width == null || img.Height == null) {
+                        try {
+                            System.Drawing.Image sdi = System.Drawing.Image.FromFile(img.Source);
+                            img.Height = sdi.Height;
+                            img.Width = sdi.Width;
+                        }
+                        catch (Exception ex) {
+                            throw new Exception(String.Format("Image size not set for {0} and error loading file.", img.Source), ex);
+                        }
+                    }
                 }
                 t.Images = images.ToArray();
                 t.Properties = new PropertyCollection();
