@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 
 namespace FuncWorks.XNA.XTiled {
-    public class PropertyCollection : Dictionary<String, String>, IXmlSerializable {
+    public class PropertyCollection : Dictionary<String, Property>, IXmlSerializable {
         public System.Xml.Schema.XmlSchema GetSchema() {
             return null;
         }
@@ -12,7 +12,7 @@ namespace FuncWorks.XNA.XTiled {
             if (!reader.IsEmptyElement) {
                 if (reader.ReadToDescendant("Property")) {
                     do {
-                        this.Add(reader["name"], reader["value"]);
+                        this.Add(reader["name"], Property.Create(reader["value"]));
                         reader.Read();
                     }
                     while (reader.Name.Equals("Property"));
@@ -25,7 +25,7 @@ namespace FuncWorks.XNA.XTiled {
             foreach (var key in this.Keys) {
                 writer.WriteStartElement("Property");
                 writer.WriteAttributeString("name", key);
-                writer.WriteAttributeString("value", this[key]);
+                writer.WriteAttributeString("value", this[key].Value);
                 writer.WriteEndElement();
             }
         }

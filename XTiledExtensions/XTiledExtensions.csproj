@@ -66,6 +66,9 @@
     <Compile Include="..\XTiled\ObjectLayer.cs">
       <Link>ObjectLayer.cs</Link>
     </Compile>
+    <Compile Include="..\XTiled\Property.cs">
+      <Link>Property.cs</Link>
+    </Compile>
     <Compile Include="..\XTiled\PropertyCollection.cs">
       <Link>PropertyCollection.cs</Link>
     </Compile>

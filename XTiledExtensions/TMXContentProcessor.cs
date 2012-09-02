@@ -42,7 +42,7 @@ namespace FuncWorks.XNA.XTiled {
             map.Properties = new PropertyCollection();
             if (input.Document.Root.Element("properties") != null)
                 foreach (var pElem in input.Document.Root.Element("properties").Elements("property"))
-                    map.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+                    map.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
             List<Tileset> tilesets = new List<Tileset>();
             foreach (var elem in input.Document.Root.Elements("tileset")) {
@@ -87,7 +87,7 @@ namespace FuncWorks.XNA.XTiled {
                 t.Properties = new PropertyCollection();
                 if (tElem.Element("properties") != null)
                     foreach (var pElem in tElem.Element("properties").Elements("property"))
-                        t.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+                        t.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
                 List<Tile> tiles = new List<Tile>();
                 foreach (var tileElem in tElem.Elements("tile")) {
@@ -96,7 +96,7 @@ namespace FuncWorks.XNA.XTiled {
                     tile.Properties = new PropertyCollection();
                     if (tileElem.Element("properties") != null)
                         foreach (var pElem in tileElem.Element("properties").Elements("property"))
-                            tile.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+                            tile.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
                     tiles.Add(tile);
                 }
                 t.Tiles = tiles.ToArray();
@@ -115,7 +115,7 @@ namespace FuncWorks.XNA.XTiled {
                 l.Properties = new PropertyCollection();
                 if (lElem.Element("properties") != null)
                     foreach (var pElem in lElem.Element("properties").Elements("property"))
-                        l.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+                        l.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
                 List<TileData> tiles = new List<TileData>();
                 if (lElem.Element("data") != null) {
@@ -201,7 +201,7 @@ namespace FuncWorks.XNA.XTiled {
                 ol.Properties = new PropertyCollection();
                 if (olElem.Element("properties") != null)
                     foreach (var pElem in olElem.Element("properties").Elements("property"))
-                        ol.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+                        ol.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
                 List<MapObject> objects = new List<MapObject>();
                 foreach (var oElem in olElem.Elements("object")) {
@@ -218,7 +218,7 @@ namespace FuncWorks.XNA.XTiled {
                     o.Properties = new PropertyCollection();
                     if (oElem.Element("properties") != null)
                         foreach (var pElem in oElem.Element("properties").Elements("property"))
-                            o.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+                            o.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
                     o.Polygon = null;
                     if (oElem.Element("polygon") != null) {

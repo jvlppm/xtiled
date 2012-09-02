@@ -49,6 +49,7 @@
     <Compile Include="MapReader.cs" />
     <Compile Include="ObjectLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property.cs" />
     <Compile Include="PropertyCollection.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TileData.cs" />
