@@ -17,5 +17,7 @@ namespace FuncWorks.XNA.XTiled {
         public PropertyCollection Properties;
         public Layer[] Layers;
         public ObjectLayer[] ObjectLayers;
+        public Image[] Images;
+        public Tile[] Tiles;
     }
 }

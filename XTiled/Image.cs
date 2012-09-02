@@ -2,7 +2,7 @@
 
 namespace FuncWorks.XNA.XTiled {
     public class Image {
-        public String Source;
+        public String FileName;
         public Microsoft.Xna.Framework.Color? TransparentColor;
         public Int32? Width;
         public Int32? Height;

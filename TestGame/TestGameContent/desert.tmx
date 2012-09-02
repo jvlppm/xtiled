@@ -7,6 +7,11 @@
     <property name="something here" value="true"/>
    </properties>
   </tile>
+  <tile id="4">
+   <properties>
+    <property name="moar" value="1.0"/>
+   </properties>
+  </tile>
   <tile id="45">
    <properties>
     <property name="prop1" value="1.0"/>
@@ -14,15 +19,23 @@
     <property name="prop3null" value=""/>
    </properties>
   </tile>
+  <tile id="47">
+   <properties>
+    <property name="last" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="49" name="sewer_tileset" tilewidth="40" tileheight="40">
+  <image source="sewer_tileset.png" trans="ff00ff" width="192" height="217"/>
  </tileset>
  <layer name="Tile Layer 2" width="40" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3BAQkAAAACoPp/uh+hNgAAAAAAAF8Gm4yzYgAZAAA=
+   H4sIAAAAAAAAC+3OsQkAMAgAMLv6kf8/VvpBFxEhuSAnAGCPmg582HB8cjoAAAAA0OgCLQqrSwAZAAA=
   </data>
  </layer>
  <layer name="Ground" width="40" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2YbU7CQBCGR/ghSAIqCQhErRb5ECwcgaNwFI/iUTyab2M3JZNNu93uDgvpjydhk93swzsDHUiIKCH6Bgfw+4K1S/pgAO4tz8PpJ/UCx8SxW6Lxe3V8x7nz80ma1QiMwZPHe25qnm2BNvP24TkB0wrMQBfcgZ5Avd7AewVij36rAr85+AQfZ/Qryi82zFPCbxGg3555cb8t/ff/l7Af7zm+LsuL96ULP93nYMXyU6/L/HiurvJbsrXyqZqf7/pyT846q58pGwd+txkdyp9FRbQN9ymea/oNKJ8v1Hstome4T3fOxm9M+XzxAB5LGBru053z2XvSRKSfc0LyjAR9bGYzCS/1m8bku/P0+RM7ut8UE7/UaZ/tlfTbBejH+zo0P5v6ns4XUn67Cn48y9Dy09U6ZD/J/GxmM0m/ayEKwOFS4FmF9t9gU+OGhnr8ATf7wlkAGQAA
+   H4sIAAAAAAAAC+2YS07DMBCGB7rgUYnykCgPAYEALbSkZVGk7jgKR+EoHIWjMRa2Eo0se+zEU4Oy+NS6suWv/7jJpBUAVACfyDvyfY3jLjlARshh5Hp0+lJeyEfVsVtl8bvpeI9N55cSldUpMkbOEu6z1XLtNjIg3ik8z5GLAC6RPWQfGQrU6xa5C6BM6Dd1+N0jz8jDBv1c+ZXMPCX8HhP4rRqo8Vug05J4Ub85/J7/F+H86JmjY19e9Fy6/Fb687V+DfkdTEl+5r3Pj+bq8nvVbj4/xYSMjU9ofjH1XQfUl3pSnnT9uMwYfj52NLtQ34tcDJjzDFct/UZQ9xfmu7oYMufZ1sX4jaHuL46QYw8nzHm2dW2uLb6zJ00B9j4nJ89C0CemN5PwMs80nGtn8/5TdrQ/F46fclrquZJ+iwz96LnOzS+mvs3+QspvEeBHs8wtP1utc/aTzC+mN5P0+y8UGTj8FWhWuf032Ne4p6cdPxO1vEYAGQAA
   </data>
  </layer>
 </map>

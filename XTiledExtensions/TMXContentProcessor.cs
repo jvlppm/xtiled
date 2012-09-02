@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using System.Xml.Linq;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace FuncWorks.XNA.XTiled {
 
         public override Map Process(XDocument input, ContentProcessorContext context) {
             Map map = new Map();
+            List<Image> mapImages = new List<Image>();
+            List<Tile> mapTiles = new List<Tile>();
+            Dictionary<UInt32, Int32> gid2id = new Dictionary<UInt32, Int32>();
 
             map.Version = Convert.ToDecimal(input.Document.Root.Attribute("version").Value);
             if (map.Version != 1.0M)
@@ -70,10 +74,12 @@ namespace FuncWorks.XNA.XTiled {
                     t.TileOffsetY = 0;
                 }
 
-                List<Image> images = new List<Image>();
-                foreach (var imgElem in tElem.Elements("image")) {
+                t.Image = null;
+                Int32 imgIdx = -1;
+                if (tElem.Element("image") != null) {
+                    XElement imgElem = tElem.Element("image");
                     Image img = new Image();
-                    img.Source = imgElem.Attribute("source").Value;
+                    img.FileName = imgElem.Attribute("source").Value;
                     img.Width = imgElem.Attribute("width") == null ? null : (Int32?)Convert.ToInt32(imgElem.Attribute("width").Value);
                     img.Height = imgElem.Attribute("height") == null ? null : (Int32?)Convert.ToInt32(imgElem.Attribute("height").Value);
                     img.TransparentColor = null;
@@ -81,29 +87,54 @@ namespace FuncWorks.XNA.XTiled {
                         System.Drawing.Color sdc = System.Drawing.ColorTranslator.FromHtml("#" + imgElem.Attribute("trans").Value.TrimStart('#'));
                         img.TransparentColor = new Color(sdc.R, sdc.G, sdc.B);
                     }
-                    images.Add(img);
 
                     if (img.Width == null || img.Height == null) {
                         try {
-                            System.Drawing.Image sdi = System.Drawing.Image.FromFile(img.Source);
+                            System.Drawing.Image sdi = System.Drawing.Image.FromFile(img.FileName);
                             img.Height = sdi.Height;
                             img.Width = sdi.Width;
                         }
                         catch (Exception ex) {
-                            throw new Exception(String.Format("Image size not set for {0} and error loading file.", img.Source), ex);
+                            throw new Exception(String.Format("Image size not set for {0} and error loading file.", img.FileName), ex);
                         }
                     }
+
+                    if (mapImages.Count(x => x.FileName.Equals(img.FileName)) == 0) {
+                        mapImages.Add(img);
+                        imgIdx = mapImages.Count - 1;
+                    }
+                    else {
+                        imgIdx = mapImages.IndexOf(mapImages.First(x => x.FileName.Equals(img.FileName)));
+                    }
+
+                    t.Image = img;
                 }
-                t.Images = images.ToArray();
-                t.Properties = new PropertyCollection();
-                if (tElem.Element("properties") != null)
-                    foreach (var pElem in tElem.Element("properties").Elements("property"))
-                        t.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
+
+                UInt32 gid = t.FirstGID;
+                for (int y = t.TileOffsetY + t.Margin; y < t.Image.Height - t.Margin; y += t.TileHeight + t.Spacing) {
+                    if (y + t.TileHeight > t.Image.Height - t.Margin)
+                        continue;
+
+                    for (int x = t.TileOffsetX + t.Margin; x < t.Image.Width - t.Margin; x += t.TileWidth + t.Spacing) {
+                        if (x + t.TileWidth > t.Image.Width - t.Margin)
+                            continue;
+
+                        Tile tile = new Tile();
+                        tile.Source = new Rectangle(x, y, t.TileWidth, t.TileHeight);
+                        tile.ImageID = imgIdx;
+                        mapTiles.Add(tile);
+
+                        gid2id[gid] = mapTiles.Count - 1;
+                        gid++;
+                    }
+                }
 
                 List<Tile> tiles = new List<Tile>();
                 foreach (var tileElem in tElem.Elements("tile")) {
-                    Tile tile = new Tile();
-                    tile.ID = Convert.ToUInt32(tileElem.Attribute("id").Value);
+                    UInt32 id = Convert.ToUInt32(tileElem.Attribute("id").Value);
+                    Tile tile = mapTiles[gid2id[id + t.FirstGID]];
+                    //Tile tile = new Tile();
+                    tile.ID = id;
                     tile.Properties = new PropertyCollection();
                     if (tileElem.Element("properties") != null)
                         foreach (var pElem in tileElem.Element("properties").Elements("property"))
@@ -111,6 +142,11 @@ namespace FuncWorks.XNA.XTiled {
                     tiles.Add(tile);
                 }
                 t.Tiles = tiles.ToArray();
+
+                t.Properties = new PropertyCollection();
+                if (tElem.Element("properties") != null)
+                    foreach (var pElem in tElem.Element("properties").Elements("property"))
+                        t.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
                 tilesets.Add(t);
             }
@@ -259,6 +295,8 @@ namespace FuncWorks.XNA.XTiled {
             }
             map.ObjectLayers = oLayers.ToArray();
 
+            map.Images = mapImages.ToArray();
+            map.Tiles = mapTiles.ToArray();
             return map;
         }
     }

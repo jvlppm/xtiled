@@ -10,7 +10,7 @@ namespace FuncWorks.XNA.XTiled {
         public Int32 Margin;
         public Int32 TileOffsetX;
         public Int32 TileOffsetY;
-        public Image[] Images;
+        public Image Image;
         public PropertyCollection Properties;
         public Tile[] Tiles;
     }
