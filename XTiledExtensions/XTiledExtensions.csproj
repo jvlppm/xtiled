@@ -60,6 +60,12 @@
     <Compile Include="..\XTiled\Map.cs">
       <Link>Map.cs</Link>
     </Compile>
+    <Compile Include="..\XTiled\MapObject.cs">
+      <Link>MapObject.cs</Link>
+    </Compile>
+    <Compile Include="..\XTiled\ObjectLayer.cs">
+      <Link>ObjectLayer.cs</Link>
+    </Compile>
     <Compile Include="..\XTiled\PropertyCollection.cs">
       <Link>PropertyCollection.cs</Link>
     </Compile>

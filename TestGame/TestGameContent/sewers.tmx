@@ -29,7 +29,7 @@
   <object x="888" y="528" width="192" height="216"/>
   <object x="648" y="576"/>
  </objectgroup>
- <objectgroup name="Object Layer 2" width="50" height="50">
+ <objectgroup color="#ffffff" name="Object Layer 2" width="50" height="50">
   <object name="props to me" type="Type2" gid="45" x="456" y="480">
    <properties>
     <property name="prop1" value="true"/>
@@ -58,6 +58,21 @@
   </object>
   <object x="384" y="840">
    <polyline points="0,0 288,-48 192,48 -168,24 -288,-96 -120,-144"/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#55ff00" name="Object Layer 3" width="50" height="50">
+  <properties>
+   <property name="layer prop" value=""/>
+   <property name="layer prop 2" value="2"/>
+  </properties>
+  <object x="432" y="144" width="168" height="144"/>
+  <object x="504" y="384" width="192" height="216"/>
+  <object x="1008" y="96" width="144" height="168"/>
+  <object x="744" y="768">
+   <polygon points="0,0 144,-312 408,-192 384,48 240,-312 -24,-144 144,72"/>
+  </object>
+  <object x="144" y="648">
+   <polygon points="0,0 48,-264 336,-264 336,0 48,144 -96,-48 -72,-192 48,-336 264,-336 408,-240 408,24 216,168 72,168"/>
   </object>
  </objectgroup>
 </map>

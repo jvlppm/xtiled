@@ -78,7 +78,7 @@ namespace FuncWorks.XNA.XTiled {
                     img.Height = imgElem.Attribute("height") == null ? null : (Int32?)Convert.ToInt32(imgElem.Attribute("height").Value);
                     img.TransparentColor = null;
                     if (imgElem.Attribute("trans") != null) {
-                        System.Drawing.Color sdc = System.Drawing.ColorTranslator.FromHtml("#" + imgElem.Attribute("trans").Value);
+                        System.Drawing.Color sdc = System.Drawing.ColorTranslator.FromHtml("#" + imgElem.Attribute("trans").Value.TrimStart('#'));
                         img.TransparentColor = new Color(sdc.R, sdc.G, sdc.B);
                     }
                     images.Add(img);
@@ -184,6 +184,69 @@ namespace FuncWorks.XNA.XTiled {
                 layers.Add(l);
             }
             map.Layers = layers.ToArray();
+
+            List<ObjectLayer> oLayers = new List<ObjectLayer>();
+            foreach (var olElem in input.Document.Root.Elements("objectgroup")) {
+                ObjectLayer ol = new ObjectLayer();
+                ol.Name = olElem.Attribute("name") == null ? null : olElem.Attribute("name").Value;
+                ol.Opacity = olElem.Attribute("opacity") == null ? 1.0f : Convert.ToSingle(olElem.Attribute("opacity").Value);
+                ol.Visible = olElem.Attribute("visible") == null ? true : olElem.Attribute("visible").Equals("1");
+
+                ol.Color = null;
+                if (olElem.Attribute("color") != null) {
+                    System.Drawing.Color sdc = System.Drawing.ColorTranslator.FromHtml("#" + olElem.Attribute("color").Value.TrimStart('#'));
+                    ol.Color = new Color(sdc.R, sdc.G, sdc.B);
+                }
+
+                ol.Properties = new PropertyCollection();
+                if (olElem.Element("properties") != null)
+                    foreach (var pElem in olElem.Element("properties").Elements("property"))
+                        ol.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+
+                List<MapObject> objects = new List<MapObject>();
+                foreach (var oElem in olElem.Elements("object")) {
+                    MapObject o = new MapObject();
+                    o.Name = oElem.Attribute("name") == null ? null : oElem.Attribute("name").Value;
+                    o.Type = oElem.Attribute("type") == null ? null : oElem.Attribute("type").Value;
+                    o.X = oElem.Attribute("x") == null ? 0 : Convert.ToInt32(oElem.Attribute("x").Value);
+                    o.Y = oElem.Attribute("y") == null ? 0 : Convert.ToInt32(oElem.Attribute("y").Value);
+                    o.Width = oElem.Attribute("width") == null ? 0 : Convert.ToInt32(oElem.Attribute("width").Value);
+                    o.Height = oElem.Attribute("height") == null ? 0 : Convert.ToInt32(oElem.Attribute("height").Value);
+                    o.TileID = oElem.Attribute("gid") == null ? null : (Int32?)Convert.ToInt32(oElem.Attribute("gid").Value);
+                    o.Visible = oElem.Attribute("visible") == null ? true : oElem.Attribute("visible").Equals("1");
+
+                    o.Properties = new PropertyCollection();
+                    if (oElem.Element("properties") != null)
+                        foreach (var pElem in oElem.Element("properties").Elements("property"))
+                            o.Properties.Add(pElem.Attribute("name").Value, pElem.Attribute("value").Value);
+
+                    o.Polygon = null;
+                    if (oElem.Element("polygon") != null) {
+                        List<Point> points = new List<Point>();
+                        foreach (var point in oElem.Element("polygon").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
+                            String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            points.Add(new Point(Convert.ToInt32(coord[0]), Convert.ToInt32(coord[1])));
+                        }
+                        o.Polygon = points.ToArray();
+                    }
+
+                    o.Polyline = null;
+                    if (oElem.Element("polyline") != null) {
+                        List<Point> points = new List<Point>();
+                        foreach (var point in oElem.Element("polyline").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
+                            String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                            points.Add(new Point(Convert.ToInt32(coord[0]), Convert.ToInt32(coord[1])));
+                        }
+                        o.Polyline = points.ToArray();
+                    }
+
+                    objects.Add(o);
+                }
+                ol.MapObjects = objects.ToArray();
+
+                oLayers.Add(ol);
+            }
+            map.ObjectLayers = oLayers.ToArray();
 
             return map;
         }
