@@ -234,10 +234,10 @@ namespace FuncWorks.XNA.XTiled {
                                 td.Effects = SpriteEffects.None;
 
                             if (td.SourceID >= 0) {
-                                td.Target.Width = mapTiles[td.SourceID].Source.Width + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
-                                td.Target.Height = mapTiles[td.SourceID].Source.Height + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
-                                td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X);
-                                td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y);
+                                td.Target.Width = mapTiles[td.SourceID].Source.Width;
+                                td.Target.Height = mapTiles[td.SourceID].Source.Height;
+                                td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
+                                td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
                             }
                             tiles.Add(td);
                         }

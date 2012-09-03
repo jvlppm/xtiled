@@ -28,7 +28,7 @@ namespace TestGame {
 
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            currentMap = Content.Load<Map>("desert");
+            Map desert = Content.Load<Map>("desert");
             Map desert2 = Content.Load<Map>("desert_base64_uncompressed");
             Map desert3 = Content.Load<Map>("desert_base64_gzip");
             Map desert4 = Content.Load<Map>("desert_base64_zlib");
@@ -36,7 +36,8 @@ namespace TestGame {
             Map perspective_walls = Content.Load<Map>("perspective_walls");
             Map sewers = Content.Load<Map>("sewers");
 
-            mapTex = Content.Load<Texture2D>("tmw_desert_spacing");
+            currentMap = perspective_walls;
+            mapTex = Content.Load<Texture2D>("perspective_walls_tiles");
 
         }
 
@@ -47,7 +48,7 @@ namespace TestGame {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-      
+
             base.Update(gameTime);
         }
 
@@ -55,10 +56,13 @@ namespace TestGame {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            for (int i = 0; i < currentMap.Layers[1].Tiles.Length; i++) {
-                if (currentMap.Layers[1].Tiles[i] != null) {
-                    spriteBatch.Draw(mapTex, currentMap.Layers[1].Tiles[i].Target, currentMap.Tiles[currentMap.Layers[1].Tiles[i].SourceID].Source, Color.White,
-                        currentMap.Layers[1].Tiles[i].Rotation, currentMap.Tiles[currentMap.Layers[1].Tiles[i].SourceID].Origin, currentMap.Layers[1].Tiles[i].Effects, 0);
+
+            for (int l = 0; l < currentMap.Layers.Length; l++) {
+                for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
+                    if (currentMap.Layers[l].Tiles[i] != null) {
+                        spriteBatch.Draw(mapTex, currentMap.Layers[l].Tiles[i].Target, currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source, Color.White,
+                            currentMap.Layers[l].Tiles[i].Rotation, currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin, currentMap.Layers[l].Tiles[i].Effects, 0);
+                    }
                 }
             }
             spriteBatch.End();
