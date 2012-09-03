@@ -10,8 +10,11 @@ namespace FuncWorks.XNA.XTiled {
         public Int32 Margin;
         public Int32 TileOffsetX;
         public Int32 TileOffsetY;
-        public Image Image;
         public PropertyCollection Properties;
         public Tile[] Tiles;
+        public String ImageFileName;
+        public Microsoft.Xna.Framework.Color? ImageTransparentColor;
+        public Int32 ImageWidth;
+        public Int32 ImageHeight;
     }
 }

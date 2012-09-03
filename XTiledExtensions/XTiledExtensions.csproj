@@ -51,9 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\XTiled\Image.cs">
-      <Link>Image.cs</Link>
-    </Compile>
     <Compile Include="..\XTiled\Layer.cs">
       <Link>Layer.cs</Link>
     </Compile>
