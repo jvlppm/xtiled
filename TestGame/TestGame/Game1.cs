@@ -45,7 +45,7 @@ namespace TestGame {
             Map perspective_walls = Content.Load<Map>("perspective_walls");
             Map sewers = Content.Load<Map>("sewers");
 
-            currentMap = sewers;
+            currentMap = desert;
         }
 
         protected override void UnloadContent() {

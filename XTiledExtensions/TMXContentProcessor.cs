@@ -259,7 +259,7 @@ namespace FuncWorks.XNA.XTiled {
                             if (td.FlippedDiagonally) {
                                 td.Rotation = MathHelper.PiOver2;
 
-                                // we seam to be getting an extra horiz flip when also flipped diag
+                                // this works, not sure why (we are rotating diag instead of flipping, so I guess that's a clue)
                                 td.FlippedHorizontally = false;
                             }
                             else
@@ -274,12 +274,12 @@ namespace FuncWorks.XNA.XTiled {
                             else
                                 td.Effects = SpriteEffects.None;
 
-                            if (td.SourceID >= 0) {
-                                td.Target.Width = mapTiles[td.SourceID].Source.Width;
-                                td.Target.Height = mapTiles[td.SourceID].Source.Height;
-                                td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
-                                td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
-                            }
+                            td.Target.Width = mapTiles[td.SourceID].Source.Width;
+                            td.Target.Height = mapTiles[td.SourceID].Source.Height;
+                            td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
+                            td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
+
+                            td.Target.Y += map.TileHeight - td.Target.Height;
                             tiles.Add(td);
                         }
                         else
