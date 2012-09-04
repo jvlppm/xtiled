@@ -45,7 +45,7 @@ namespace TestGame {
             Map perspective_walls = Content.Load<Map>("perspective_walls");
             Map sewers = Content.Load<Map>("sewers");
 
-            currentMap = desert;
+            currentMap = sewers;
         }
 
         protected override void UnloadContent() {
@@ -73,7 +73,7 @@ namespace TestGame {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
 
             for (int l = 0; l < currentMap.Layers.Length; l++) {
                 for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
@@ -85,11 +85,12 @@ namespace TestGame {
                         if (screen.Contains(target) || screen.Intersects(target)) {
                             target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
                             target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
+
                             spriteBatch.Draw(
                                 currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
                                 target,
                                 currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source,
-                                Color.White,
+                                currentMap.Layers[l].OpacityColor,
                                 currentMap.Layers[l].Tiles[i].Rotation,
                                 currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
                                 currentMap.Layers[l].Tiles[i].Effects,

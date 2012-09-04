@@ -128,6 +128,7 @@ namespace FuncWorks.XNA.XTiled {
                         OpaqueDataDictionary data = new OpaqueDataDictionary();
                         data.Add("GenerateMipmaps", false);
                         data.Add("ResizeToPowerOfTwo", false);
+                        data.Add("PremultiplyAlpha", PremultiplyAlpha);
                         data.Add("TextureFormat", TextureFormat);
                         data.Add("ColorKeyEnabled", t.ImageTransparentColor.HasValue);
                         data.Add("ColorKeyColor", t.ImageTransparentColor ?? Microsoft.Xna.Framework.Color.Magenta);
@@ -184,6 +185,9 @@ namespace FuncWorks.XNA.XTiled {
                 l.Name = lElem.Attribute("name") == null ? null : lElem.Attribute("name").Value;
                 l.Opacity = lElem.Attribute("opacity") == null ? 1.0f : Convert.ToSingle(lElem.Attribute("opacity").Value);
                 l.Visible = lElem.Attribute("visible") == null ? true : lElem.Attribute("visible").Equals("1");
+
+                l.OpacityColor = Color.White;
+                l.OpacityColor.A = Convert.ToByte(255.0f * l.Opacity);
 
                 l.Properties = new PropertyCollection();
                 if (lElem.Element("properties") != null)
