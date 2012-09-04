@@ -63,13 +63,13 @@ namespace TestGame {
 
             Rectangle delta = mapView;
             if (keys.IsKeyDown(Keys.Down) || pad.IsButtonDown(Buttons.DPadDown))
-                delta.Y += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.Y += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
             if (keys.IsKeyDown(Keys.Up) || pad.IsButtonDown(Buttons.DPadUp))
-                delta.Y -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.Y -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
             if (keys.IsKeyDown(Keys.Right) || pad.IsButtonDown(Buttons.DPadRight))
-                delta.X += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.X += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
             if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
-                delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
 
             if (currentMap.Bounds.Contains(delta))
                 mapView = delta;
