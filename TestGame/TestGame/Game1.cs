@@ -18,6 +18,7 @@ namespace TestGame {
         Texture2D mapTex;
 
         Rectangle screen;
+        Rectangle mapView;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -27,6 +28,11 @@ namespace TestGame {
         protected override void Initialize() {
             base.Initialize();
             screen = graphics.GraphicsDevice.Viewport.Bounds;
+            screen.X = 50;
+            screen.Y = 50;
+            screen.Height -= 100;
+            screen.Width -= 100;
+            mapView = screen;
         }
 
         protected override void LoadContent() {
@@ -48,9 +54,20 @@ namespace TestGame {
         }
 
         protected override void Update(GameTime gameTime) {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
+            KeyboardState keys = Keyboard.GetState();
+            GamePadState pad = GamePad.GetState(PlayerIndex.One);
+
+            if (keys.IsKeyDown(Keys.Escape) || pad.IsButtonDown(Buttons.Back))
                 this.Exit();
+
+            if (keys.IsKeyDown(Keys.Down) || pad.IsButtonDown(Buttons.DPadDown))
+                mapView.Y -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+            if (keys.IsKeyDown(Keys.Up) || pad.IsButtonDown(Buttons.DPadUp))
+                mapView.Y += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+            if (keys.IsKeyDown(Keys.Right) || pad.IsButtonDown(Buttons.DPadRight))
+                mapView.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+            if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
+                mapView.X += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
 
             base.Update(gameTime);
         }
@@ -63,15 +80,23 @@ namespace TestGame {
             for (int l = 0; l < currentMap.Layers.Length; l++) {
                 for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
                     if (currentMap.Layers[l].Tiles[i] != null) {
-                        spriteBatch.Draw(
-                            currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture, 
-                            currentMap.Layers[l].Tiles[i].Target, 
-                            currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source, 
-                            Color.White,
-                            currentMap.Layers[l].Tiles[i].Rotation, 
-                            currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin, 
-                            currentMap.Layers[l].Tiles[i].Effects, 
-                            0);
+                        Rectangle target = currentMap.Layers[l].Tiles[i].Target;
+                        target.X += mapView.X - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
+                        target.Y += mapView.Y - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
+
+                        if (screen.Contains(target) || screen.Intersects(target)) {
+                            target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
+                            target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
+                            spriteBatch.Draw(
+                                currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
+                                target,
+                                currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source,
+                                Color.White,
+                                currentMap.Layers[l].Tiles[i].Rotation,
+                                currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
+                                currentMap.Layers[l].Tiles[i].Effects,
+                                0);
+                        }
                     }
                 }
             }
