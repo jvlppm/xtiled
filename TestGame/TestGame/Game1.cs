@@ -76,28 +76,29 @@ namespace TestGame {
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
 
             for (int l = 0; l < currentMap.Layers.Length; l++) {
-                for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
-                    if (currentMap.Layers[l].Tiles[i] != null) {
-                        Rectangle target = currentMap.Layers[l].Tiles[i].Target;
-                        target.X += mapView.X - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
-                        target.Y += mapView.Y - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
+                if (currentMap.Layers[l].Visible)
+                    for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
+                        if (currentMap.Layers[l].Tiles[i] != null) {
+                            Rectangle target = currentMap.Layers[l].Tiles[i].Target;
+                            target.X += mapView.X - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
+                            target.Y += mapView.Y - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
 
-                        if (screen.Contains(target) || screen.Intersects(target)) {
-                            target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
-                            target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
+                            if (screen.Contains(target) || screen.Intersects(target)) {
+                                target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
+                                target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
 
-                            spriteBatch.Draw(
-                                currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
-                                target,
-                                currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source,
-                                currentMap.Layers[l].OpacityColor,
-                                currentMap.Layers[l].Tiles[i].Rotation,
-                                currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
-                                currentMap.Layers[l].Tiles[i].Effects,
-                                0);
+                                spriteBatch.Draw(
+                                    currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
+                                    target,
+                                    currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source,
+                                    currentMap.Layers[l].OpacityColor,
+                                    currentMap.Layers[l].Tiles[i].Rotation,
+                                    currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
+                                    currentMap.Layers[l].Tiles[i].Effects,
+                                    0);
+                            }
                         }
                     }
-                }
             }
             spriteBatch.End();
 

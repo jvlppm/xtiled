@@ -355,6 +355,17 @@ namespace FuncWorks.XNA.XTiled {
                 oLayers.Add(ol);
             }
             map.ObjectLayers = oLayers.ToArray();
+
+            Int32 layerId = 0, objectId = 0;
+            List<LayerInfo> info = new List<LayerInfo>();
+            foreach (var elem in input.Document.Root.Elements()) {
+                if (elem.Name.LocalName.Equals("layer"))
+                    info.Add(new LayerInfo() { ID = layerId++, LayerType = LayerType.TileLayer });
+                else if (elem.Name.LocalName.Equals("objectgroup"))
+                    info.Add(new LayerInfo() { ID = objectId++, LayerType = LayerType.ObjectLayer });
+            }
+            map.LayerOrder = info.ToArray();
+
             return map;
         }
     }

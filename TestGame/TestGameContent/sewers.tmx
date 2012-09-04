@@ -13,11 +13,6 @@
    H4sIAAAAAAAAC+3X3W7CMAwF4Ii7AUUCJqRt3PA/2N0eYu//SDNaLFmWU9KGtu50Kn0SamjhpI2TVCGEBdlHc1KJcweyjXaqXbZZ32lK/g/924/o6/9zju/wd+gcR3Ijp+j++ewkxyuZkE1GDs/P44VMyUzci4/cHNwXTXHfPSPHkqzI2rhXbg7uC8ulpo37jt/Xr4IcWpsc3BfSp3FOs/puqBzX2JclmjyHruruUJ6d4428k4+R59gZ1/VB1ztr/mgzPtq84yVkvUvNHzKHzOlpfMh6lzN/yJyexkeq3qbq7j3nT8zpaXw0qeV6brDGwFDjAwDKcC3V+q6tpbiW1tXkMbD2qt7Wu7k59F7V27okN4feq6bWJZ7J9cgq1K9LPEvtVbH2AAAAAAAAAACArv0CkW57RhAnAAA=
   </data>
  </layer>
- <layer name="Top" width="50" height="50" opacity="0.49">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WOwqAMBBAQQu1Uq9i4a8QO+9/JrcwF5BADMzAI92y6bZp/mUvvUAm/vEvtf5jjpa3NdrKrvPZEZ3R/b5Xprlt1EV9pnmlDNEYTaUXAQCgCukOTtV6D6c7OOUeBgAAAAAghwe55M5JECcAAA==
-  </data>
- </layer>
  <objectgroup name="Object Layer 1" width="50" height="50">
   <object type="Type2" x="624" y="360" width="216" height="168"/>
   <object name="named object" type="Type1" x="840" y="264" width="144" height="144">
@@ -29,6 +24,11 @@
   <object x="888" y="528" width="192" height="216"/>
   <object x="648" y="576"/>
  </objectgroup>
+ <layer name="Top" width="50" height="50" opacity="0.49">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WOwqAMBBAQQu1Uq9i4a8QO+9/JrcwF5BADMzAI92y6bZp/mUvvUAm/vEvtf5jjpa3NdrKrvPZEZ3R/b5Xprlt1EV9pnmlDNEYTaUXAQCgCukOTtV6D6c7OOUeBgAAAAAghwe55M5JECcAAA==
+  </data>
+ </layer>
  <objectgroup color="#ffffff" name="Object Layer 2" width="50" height="50">
   <object name="props to me" type="Type2" gid="45" x="456" y="480">
    <properties>

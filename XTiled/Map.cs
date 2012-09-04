@@ -5,7 +5,17 @@ namespace FuncWorks.XNA.XTiled {
         Orthogonal,
         Isometric
     }
+    
+    public enum LayerType {
+        TileLayer,
+        ObjectLayer
+    }
 
+    public struct LayerInfo {
+        public Int32 ID;
+        public LayerType LayerType;
+    }
+    
     public class Map {
         public Decimal Version;
         public MapOrientation Orientation;
@@ -19,5 +29,6 @@ namespace FuncWorks.XNA.XTiled {
         public ObjectLayer[] ObjectLayers;
         public Tile[] Tiles;
         public Boolean LoadTextures;
+        public LayerInfo[] LayerOrder;
     }
 }
