@@ -32,7 +32,7 @@ namespace TestGame {
             screen.Y = 50;
             screen.Height -= 100;
             screen.Width -= 100;
-            
+
             mapView = screen;
             mapView.X = 0;
             mapView.Y = 0;
@@ -71,7 +71,7 @@ namespace TestGame {
             if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
                 delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
 
-            if (currentMap.Bounds.Contains(delta)) 
+            if (currentMap.Bounds.Contains(delta))
                 mapView = delta;
 
             base.Update(gameTime);
@@ -90,7 +90,7 @@ namespace TestGame {
                             target.X = target.X - mapView.X + screen.X - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
                             target.Y = target.Y - mapView.Y + screen.Y - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
 
-                            if (screen.Contains(target) || screen.Intersects(target)) {
+                            if (screen.Contains(target)) {
                                 target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
                                 target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
 
@@ -98,6 +98,33 @@ namespace TestGame {
                                     currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
                                     target,
                                     currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source,
+                                    currentMap.Layers[l].OpacityColor,
+                                    currentMap.Layers[l].Tiles[i].Rotation,
+                                    currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
+                                    currentMap.Layers[l].Tiles[i].Effects,
+                                    0);
+                            }
+                            else if (screen.Intersects(target)) {
+                                Rectangle delta = Rectangle.Intersect(screen, target);
+                                Rectangle source = currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source;
+
+                                source.X -= target.X - delta.X;
+                                source.Y -= target.Y - delta.Y;
+                                source.Height = delta.Height;
+                                source.Width = delta.Width;
+
+                                target.X -= target.X - delta.X;
+                                target.Y -= target.Y - delta.Y;
+                                target.Height = delta.Height;
+                                target.Width = delta.Width;
+
+                                target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
+                                target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
+
+                                spriteBatch.Draw(
+                                    currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
+                                    target,
+                                    source,
                                     currentMap.Layers[l].OpacityColor,
                                     currentMap.Layers[l].Tiles[i].Rotation,
                                     currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
