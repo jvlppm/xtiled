@@ -52,29 +52,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="perspective_walls.png">
-      <Name>perspective_walls_tiles</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="tmw_desert_spacing.png">
-      <Name>tmw_desert_spacing</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\XTiledExtensions\XTiledExtensions.csproj">
       <Project>{AC3FAE00-C94C-4FE3-969F-232241195224}</Project>
       <Name>XTiledExtensions</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="sewer_tileset.png">
-      <Name>sewer_tileset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="sewers.tmx">
@@ -82,13 +63,6 @@
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="isometric_grass_and_water.png">
-      <Name>isometric_grass_and_water_tiles</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

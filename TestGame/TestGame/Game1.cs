@@ -46,8 +46,6 @@ namespace TestGame {
             Map sewers = Content.Load<Map>("sewers");
 
             currentMap = desert;
-            mapTex = Content.Load<Texture2D>("tmw_desert_spacing");
-
         }
 
         protected override void UnloadContent() {
