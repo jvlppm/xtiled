@@ -16,5 +16,6 @@ namespace FuncWorks.XNA.XTiled {
         public Microsoft.Xna.Framework.Color? ImageTransparentColor;
         public Int32 ImageWidth;
         public Int32 ImageHeight;
+        public Microsoft.Xna.Framework.Graphics.Texture2D Texture;
     }
 }

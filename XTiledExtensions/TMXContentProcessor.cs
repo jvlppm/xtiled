@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using System.IO.Compression;
 using Microsoft.Xna.Framework.Graphics;
+using System.ComponentModel;
+using Microsoft.Xna.Framework.Content.Pipeline.Processors;
+using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 
 namespace FuncWorks.XNA.XTiled {
     [ContentProcessor(DisplayName = "TMX Map - XTiled")]
@@ -16,8 +19,30 @@ namespace FuncWorks.XNA.XTiled {
         private const UInt32 FLIPPED_VERTICALLY_FLAG = 0x40000000;
         private const UInt32 FLIPPED_DIAGONALLY_FLAG = 0x20000000;
 
+        [DisplayName("Load Textures")]
+        [DefaultValue(true)]
+        [Description("If true, XTiled will build textures with the Map.")]
+        public Boolean LoadTextures { get; set; }
+
+        [DisplayName("Texture - Format")]
+        [DefaultValue(TextureProcessorOutputFormat.Color)]
+        [Description("Texture processor output format if loading textures")]
+        public TextureProcessorOutputFormat TextureFormat { get; set; }
+
+        [DisplayName("Texture - Premultiply Alpha")]
+        [DefaultValue(true)]
+        [Description("If true, texture is converted to premultiplied alpha format")]
+        public Boolean PremultiplyAlpha { get; set; }
+
+        public TMXContentProcessor() {
+            LoadTextures = true;
+            TextureFormat = TextureProcessorOutputFormat.Color;
+            PremultiplyAlpha = true;
+        }
+
         public override Map Process(XDocument input, ContentProcessorContext context) {
             Map map = new Map();
+            map.LoadTextures = LoadTextures;
             //List<Image> mapImages = new List<Image>();
             List<Tile> mapTiles = new List<Tile>();
             Dictionary<UInt32, Int32> gid2id = new Dictionary<UInt32, Int32>();
@@ -96,6 +121,18 @@ namespace FuncWorks.XNA.XTiled {
                         catch (Exception ex) {
                             throw new Exception(String.Format("Image size not set for {0} and error loading file.", t.ImageFileName), ex);
                         }
+                    }
+
+                    if (LoadTextures) {
+                        String assetName = String.Format("{0}/{1:00}", Path.GetFileNameWithoutExtension(context.OutputFilename), tilesets.Count);
+                        OpaqueDataDictionary data = new OpaqueDataDictionary();
+                        data.Add("GenerateMipmaps", false);
+                        data.Add("ResizeToPowerOfTwo", false);
+                        data.Add("TextureFormat", TextureFormat);
+                        data.Add("ColorKeyEnabled", t.ImageTransparentColor.HasValue);
+                        data.Add("ColorKeyColor", t.ImageTransparentColor ?? Microsoft.Xna.Framework.Color.Magenta);
+                        context.BuildAsset<TextureContent, TextureContent>(new ExternalReference<TextureContent>(t.ImageFileName),
+                            "TextureProcessor", data, "TextureImporter", assetName);
                     }
                 }
 

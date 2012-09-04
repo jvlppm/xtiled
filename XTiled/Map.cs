@@ -18,5 +18,6 @@ namespace FuncWorks.XNA.XTiled {
         public Layer[] Layers;
         public ObjectLayer[] ObjectLayers;
         public Tile[] Tiles;
+        public Boolean LoadTextures;
     }
 }

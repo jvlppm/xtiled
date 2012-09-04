@@ -17,6 +17,8 @@ namespace TestGame {
         Map currentMap;
         Texture2D mapTex;
 
+        Rectangle screen;
+
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -24,6 +26,7 @@ namespace TestGame {
 
         protected override void Initialize() {
             base.Initialize();
+            screen = graphics.GraphicsDevice.Viewport.Bounds;
         }
 
         protected override void LoadContent() {
@@ -36,8 +39,8 @@ namespace TestGame {
             Map perspective_walls = Content.Load<Map>("perspective_walls");
             Map sewers = Content.Load<Map>("sewers");
 
-            currentMap = perspective_walls;
-            mapTex = Content.Load<Texture2D>("perspective_walls_tiles");
+            currentMap = desert;
+            mapTex = Content.Load<Texture2D>("tmw_desert_spacing");
 
         }
 
@@ -60,8 +63,15 @@ namespace TestGame {
             for (int l = 0; l < currentMap.Layers.Length; l++) {
                 for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
                     if (currentMap.Layers[l].Tiles[i] != null) {
-                        spriteBatch.Draw(mapTex, currentMap.Layers[l].Tiles[i].Target, currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source, Color.White,
-                            currentMap.Layers[l].Tiles[i].Rotation, currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin, currentMap.Layers[l].Tiles[i].Effects, 0);
+                        spriteBatch.Draw(
+                            currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture, 
+                            currentMap.Layers[l].Tiles[i].Target, 
+                            currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source, 
+                            Color.White,
+                            currentMap.Layers[l].Tiles[i].Rotation, 
+                            currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin, 
+                            currentMap.Layers[l].Tiles[i].Effects, 
+                            0);
                     }
                 }
             }

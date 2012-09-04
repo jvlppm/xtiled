@@ -47,6 +47,8 @@
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
+      <ProcessorParameters_LoadTextures>True</ProcessorParameters_LoadTextures>
+      <ProcessorParameters_PremultiplyAlpha>True</ProcessorParameters_PremultiplyAlpha>
     </Compile>
   </ItemGroup>
   <ItemGroup>

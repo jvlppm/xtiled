@@ -4,3 +4,4 @@ obj/
 *.cachefile
 *.user
 *.suo
+Thumbs.db
