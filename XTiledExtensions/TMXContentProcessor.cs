@@ -43,7 +43,6 @@ namespace FuncWorks.XNA.XTiled {
         public override Map Process(XDocument input, ContentProcessorContext context) {
             Map map = new Map();
             map.LoadTextures = LoadTextures;
-            //List<Image> mapImages = new List<Image>();
             List<Tile> mapTiles = new List<Tile>();
             Dictionary<UInt32, Int32> gid2id = new Dictionary<UInt32, Int32>();
             gid2id.Add(0, -1);
@@ -69,6 +68,8 @@ namespace FuncWorks.XNA.XTiled {
             map.Height = Convert.ToInt32(input.Document.Root.Attribute("height").Value);
             map.TileWidth = Convert.ToInt32(input.Document.Root.Attribute("tilewidth").Value);
             map.TileHeight = Convert.ToInt32(input.Document.Root.Attribute("tileheight").Value);
+
+            map.Bounds = new Rectangle(0, 0, map.Width * map.TileWidth, map.Height * map.TileHeight);
 
             map.Properties = new PropertyCollection();
             if (input.Document.Root.Element("properties") != null)

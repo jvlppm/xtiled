@@ -33,7 +33,7 @@
    H4sIAAAAAAAAC+3OMQ5AABBEUVo3QEWHE9C5/6WsTkGiIEvyXvKbqaYseFIdNVGbfeRCF/XRetiWpC9nhmiMpuwjwGfN2Qdu+MPHXZV9AAAAAOBFGyK7bD0AGQAA
   </data>
  </layer>
- <layer name="Ground" width="40" height="40" visible="0">
+ <layer name="Ground" width="40" height="40">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2YW04CMRSGqzyokIiXRLxEHR0vKDjgAyb4pDtxKS7Fpbg0/8Y2Mzlpep9ONfPwBUraycd/DsyBijFWMfYJ3sD3BdYx2QVjsOd5Hk5f3At8VJHdKoXfZYTrnoBTcAZeO85PxRV4B2XgdXhWR2ACjiN4yawewCOYifVGwDX52U0wIN4x+4jW3RbeHztgCEYtOdG6XztQtug31fjdiPrfduiny68k6y797lrwWzXg6xdHpyXxon5z9tv/T4nzoz1H16a8aF/q/Fbi9bV4dPkcTEl+8rnJj+aq83sWbiY/zj1ZSx/X/Hzqu3aoL/WkyPuKLTMLPxNbgm1W34t0DCz3Sc4D/casni/ke9UxstynOufjN2H1fLEPDgwcWu5TnQv5bjH1XmoKpp5zcvIsEvr4zGYpvORvGpvvzub9J3R2d8XGjzstxd6UfosM/Whf5+bnU9/mfJHKb+HgR7PMLT9VrXP2S5mfz2yW0u+/UGTg8FegWbX1v1Ff456ebvgB3glIXwAZAAA=
   </data>

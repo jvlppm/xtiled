@@ -32,7 +32,10 @@ namespace TestGame {
             screen.Y = 50;
             screen.Height -= 100;
             screen.Width -= 100;
+            
             mapView = screen;
+            mapView.X = 0;
+            mapView.Y = 0;
         }
 
         protected override void LoadContent() {
@@ -58,14 +61,18 @@ namespace TestGame {
             if (keys.IsKeyDown(Keys.Escape) || pad.IsButtonDown(Buttons.Back))
                 this.Exit();
 
+            Rectangle delta = mapView;
             if (keys.IsKeyDown(Keys.Down) || pad.IsButtonDown(Buttons.DPadDown))
-                mapView.Y -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.Y += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
             if (keys.IsKeyDown(Keys.Up) || pad.IsButtonDown(Buttons.DPadUp))
-                mapView.Y += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.Y -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
             if (keys.IsKeyDown(Keys.Right) || pad.IsButtonDown(Buttons.DPadRight))
-                mapView.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.X += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
             if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
-                mapView.X += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+                delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 2);
+
+            if (currentMap.Bounds.Contains(delta)) 
+                mapView = delta;
 
             base.Update(gameTime);
         }
@@ -80,8 +87,8 @@ namespace TestGame {
                     for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
                         if (currentMap.Layers[l].Tiles[i] != null) {
                             Rectangle target = currentMap.Layers[l].Tiles[i].Target;
-                            target.X += mapView.X - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
-                            target.Y += mapView.Y - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
+                            target.X = target.X - mapView.X + screen.X - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
+                            target.Y = target.Y - mapView.Y + screen.Y - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
 
                             if (screen.Contains(target) || screen.Intersects(target)) {
                                 target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);

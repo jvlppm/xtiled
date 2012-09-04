@@ -23,6 +23,7 @@ namespace FuncWorks.XNA.XTiled {
         public Int32 Height;
         public Int32 TileWidth;
         public Int32 TileHeight;
+        public Microsoft.Xna.Framework.Rectangle Bounds;
         public Tileset[] Tilesets;
         public PropertyCollection Properties;
         public Layer[] Layers;
