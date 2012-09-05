@@ -2,7 +2,6 @@
 
 namespace FuncWorks.XNA.XTiled {
     public class Tileset {
-        public UInt32 FirstGID;
         public String Name;
         public Int32 TileWidth;
         public Int32 TileHeight;

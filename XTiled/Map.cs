@@ -17,7 +17,6 @@ namespace FuncWorks.XNA.XTiled {
     }
     
     public class Map {
-        public Decimal Version;
         public MapOrientation Orientation;
         public Int32 Width;
         public Int32 Height;

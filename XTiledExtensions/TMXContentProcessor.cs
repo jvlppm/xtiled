@@ -47,8 +47,8 @@ namespace FuncWorks.XNA.XTiled {
             Dictionary<UInt32, Int32> gid2id = new Dictionary<UInt32, Int32>();
             gid2id.Add(0, -1);
 
-            map.Version = Convert.ToDecimal(input.Document.Root.Attribute("version").Value);
-            if (map.Version != 1.0M)
+            Decimal Version = Convert.ToDecimal(input.Document.Root.Attribute("version").Value);
+            if (Version != 1.0M)
                 throw new NotSupportedException("XTiled only supports TMX maps version 1.0");
 
             switch (input.Document.Root.Attribute("orientation").Value) {
@@ -80,7 +80,7 @@ namespace FuncWorks.XNA.XTiled {
             foreach (var elem in input.Document.Root.Elements("tileset")) {
                 Tileset t = new Tileset();
                 XElement tElem = elem;
-                t.FirstGID = Convert.ToUInt32(tElem.Attribute("firstgid").Value);
+                UInt32 FirstGID = Convert.ToUInt32(tElem.Attribute("firstgid").Value);
 
                 if (elem.Attribute("source") != null) {
                     XDocument tsx = XDocument.Load(elem.Attribute("source").Value);
@@ -138,7 +138,7 @@ namespace FuncWorks.XNA.XTiled {
                     }
                 }
 
-                UInt32 gid = t.FirstGID;
+                UInt32 gid = FirstGID;
                 for (int y = t.Margin; y < t.ImageHeight - t.Margin; y += t.TileHeight + t.Spacing) {
                     if (y + t.TileHeight > t.ImageHeight - t.Margin)
                         continue;
@@ -161,8 +161,7 @@ namespace FuncWorks.XNA.XTiled {
                 List<Tile> tiles = new List<Tile>();
                 foreach (var tileElem in tElem.Elements("tile")) {
                     UInt32 id = Convert.ToUInt32(tileElem.Attribute("id").Value);
-                    Tile tile = mapTiles[gid2id[id + t.FirstGID]];
-                    tile.ID = id;
+                    Tile tile = mapTiles[gid2id[id + FirstGID]];
                     tile.Properties = new PropertyCollection();
                     if (tileElem.Element("properties") != null)
                         foreach (var pElem in tileElem.Element("properties").Elements("property"))
@@ -250,27 +249,27 @@ namespace FuncWorks.XNA.XTiled {
 
                     for (int i = 0; i < gids.Count; i++) {
                         TileData td = new TileData();
-                        td.ID = gids[i] & ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
-                        td.SourceID = gid2id[td.ID];
+                        UInt32 ID = gids[i] & ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
+                        td.SourceID = gid2id[ID];
                         if (td.SourceID >= 0) {
-                            td.FlippedHorizontally = Convert.ToBoolean(gids[i] & FLIPPED_HORIZONTALLY_FLAG);
-                            td.FlippedVertically = Convert.ToBoolean(gids[i] & FLIPPED_VERTICALLY_FLAG);
-                            td.FlippedDiagonally = Convert.ToBoolean(gids[i] & FLIPPED_DIAGONALLY_FLAG);
+                            Boolean FlippedHorizontally = Convert.ToBoolean(gids[i] & FLIPPED_HORIZONTALLY_FLAG);
+                            Boolean FlippedVertically = Convert.ToBoolean(gids[i] & FLIPPED_VERTICALLY_FLAG);
+                            Boolean FlippedDiagonally = Convert.ToBoolean(gids[i] & FLIPPED_DIAGONALLY_FLAG);
 
-                            if (td.FlippedDiagonally) {
+                            if (FlippedDiagonally) {
                                 td.Rotation = MathHelper.PiOver2;
 
                                 // this works, not sure why (we are rotating diag instead of flipping, so I guess that's a clue)
-                                td.FlippedHorizontally = false;
+                                FlippedHorizontally = false;
                             }
                             else
                                 td.Rotation = 0;
 
-                            if (td.FlippedVertically && td.FlippedHorizontally)
+                            if (FlippedVertically && FlippedHorizontally)
                                 td.Effects = SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically;
-                            else if (td.FlippedVertically)
+                            else if (FlippedVertically)
                                 td.Effects = SpriteEffects.FlipVertically;
-                            else if (td.FlippedHorizontally)
+                            else if (FlippedHorizontally)
                                 td.Effects = SpriteEffects.FlipHorizontally;
                             else
                                 td.Effects = SpriteEffects.None;
@@ -300,6 +299,9 @@ namespace FuncWorks.XNA.XTiled {
                 ol.Name = olElem.Attribute("name") == null ? null : olElem.Attribute("name").Value;
                 ol.Opacity = olElem.Attribute("opacity") == null ? 1.0f : Convert.ToSingle(olElem.Attribute("opacity").Value);
                 ol.Visible = olElem.Attribute("visible") == null ? true : olElem.Attribute("visible").Equals("1");
+
+                ol.OpacityColor = Color.White;
+                ol.OpacityColor.A = Convert.ToByte(255.0f * ol.Opacity);
 
                 ol.Color = null;
                 if (olElem.Attribute("color") != null) {
