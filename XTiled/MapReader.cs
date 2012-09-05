@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
 using System.Xml.Serialization;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace FuncWorks.XNA.XTiled {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace FuncWorks.XNA.XTiled {
     public class MapObject {
@@ -11,7 +12,7 @@ namespace FuncWorks.XNA.XTiled {
         public Int32? TileID;
         public Boolean Visible;
         public PropertyCollection Properties;
-        public Microsoft.Xna.Framework.Point[] Polygon;
-        public Microsoft.Xna.Framework.Point[] Polyline;
+        public Point[] Polygon;
+        public Point[] Polyline;
     }
 }

@@ -14,15 +14,12 @@ namespace TestGame {
     public class Game1 : Microsoft.Xna.Framework.Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
+        Rectangle mapView;
         Int32 mapIdx;
         List<Map> maps;
-        Map currentMap { get { return maps[mapIdx]; } }
 
-        Rectangle screen;
-        Rectangle mapView;
-
-        double cycleTimer = 0;
+        double actionTimer = 0;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -31,13 +28,8 @@ namespace TestGame {
 
         protected override void Initialize() {
             base.Initialize();
-            screen = graphics.GraphicsDevice.Viewport.Bounds;
-            screen.X = 50;
-            screen.Y = 50;
-            screen.Height -= 100;
-            screen.Width -= 100;
 
-            mapView = screen;
+            mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
         }
@@ -77,21 +69,21 @@ namespace TestGame {
             if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
                 delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
 
-            cycleTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
-            if ((keys.IsKeyDown(Keys.PageUp) || pad.IsButtonDown(Buttons.RightShoulder)) && cycleTimer >= 250) {
+            actionTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if ((keys.IsKeyDown(Keys.PageUp) || pad.IsButtonDown(Buttons.RightShoulder)) && actionTimer >= 250) {
                 mapIdx = mapIdx + 1 >= maps.Count ? 0 : mapIdx + 1;
                 mapView.X = 0;
                 mapView.Y = 0;
-                cycleTimer = 0;
+                actionTimer = 0;
             }
-            if ((keys.IsKeyDown(Keys.PageDown) || pad.IsButtonDown(Buttons.LeftShoulder)) && cycleTimer >= 250) {
+            if ((keys.IsKeyDown(Keys.PageDown) || pad.IsButtonDown(Buttons.LeftShoulder)) && actionTimer >= 250) {
                 mapIdx = mapIdx - 1 < 0 ? maps.Count - 1 : mapIdx - 1;
                 mapView.X = 0;
                 mapView.Y = 0;
-                cycleTimer = 0;
+                actionTimer = 0;
             }
 
-            if (currentMap.Bounds.Contains(delta))
+            if (maps[mapIdx].Bounds.Contains(delta))
                 mapView = delta;
 
             base.Update(gameTime);
@@ -99,61 +91,9 @@ namespace TestGame {
 
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
-
-            for (int l = 0; l < currentMap.Layers.Length; l++) {
-                if (currentMap.Layers[l].Visible)
-                    for (int i = 0; i < currentMap.Layers[l].Tiles.Length; i++) {
-                        if (currentMap.Layers[l].Tiles[i] != null) {
-                            Rectangle target = currentMap.Layers[l].Tiles[i].Target;
-                            target.X = target.X - mapView.X + screen.X - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
-                            target.Y = target.Y - mapView.Y + screen.Y - Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
-
-                            if (screen.Contains(target)) {
-                                target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
-                                target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
-
-                                spriteBatch.Draw(
-                                    currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
-                                    target,
-                                    currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source,
-                                    currentMap.Layers[l].OpacityColor,
-                                    currentMap.Layers[l].Tiles[i].Rotation,
-                                    currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
-                                    currentMap.Layers[l].Tiles[i].Effects,
-                                    0);
-                            }
-                            else if (screen.Intersects(target)) {
-                                Rectangle delta = Rectangle.Intersect(screen, target);
-                                Rectangle source = currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Source;
-
-                                source.X -= target.X - delta.X;
-                                source.Y -= target.Y - delta.Y;
-                                source.Height = delta.Height;
-                                source.Width = delta.Width;
-
-                                target.X -= target.X - delta.X;
-                                target.Y -= target.Y - delta.Y;
-                                target.Height = delta.Height;
-                                target.Width = delta.Width;
-
-                                target.X += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.X);
-                                target.Y += Convert.ToInt32(currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin.Y);
-
-                                spriteBatch.Draw(
-                                    currentMap.Tilesets[currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
-                                    target,
-                                    source,
-                                    currentMap.Layers[l].OpacityColor,
-                                    currentMap.Layers[l].Tiles[i].Rotation,
-                                    currentMap.Tiles[currentMap.Layers[l].Tiles[i].SourceID].Origin,
-                                    currentMap.Layers[l].Tiles[i].Effects,
-                                    0);
-                            }
-                        }
-                    }
-            }
+            maps[mapIdx].Draw(spriteBatch, mapView, GraphicsDevice.Viewport.Bounds);
             spriteBatch.End();
 
             base.Draw(gameTime);

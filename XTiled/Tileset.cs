@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FuncWorks.XNA.XTiled {
     public class Tileset {
@@ -12,9 +14,9 @@ namespace FuncWorks.XNA.XTiled {
         public PropertyCollection Properties;
         public Tile[] Tiles;
         public String ImageFileName;
-        public Microsoft.Xna.Framework.Color? ImageTransparentColor;
+        public Color? ImageTransparentColor;
         public Int32 ImageWidth;
         public Int32 ImageHeight;
-        public Microsoft.Xna.Framework.Graphics.Texture2D Texture;
+        public Texture2D Texture;
     }
 }

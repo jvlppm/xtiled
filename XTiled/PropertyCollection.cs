@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Xml.Serialization;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace FuncWorks.XNA.XTiled {
     public class PropertyCollection : Dictionary<String, Property>, IXmlSerializable {
