@@ -5,8 +5,8 @@
   <image source="isometric_grass_and_water.png" width="256" height="384"/>
  </tileset>
  <layer name="Tile Layer 1" width="25" height="25">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC32V227DMAxDpTpb13Uvazu0//+lc4AIJU6oPAiJHVsXklJeEfGa9jTPeq/1edpps5y2yHps62X7NuRd/T3hW2PccL+eznfFr2+df83/KjUwxiL+WFOdJx6Mof7Vn+ar2GlNKTGIj77f5J7mqTi5enSffte8fwwPej/Bfcoea8vY4/Q97QIe6h79jfB1Ka6uDvKs/Gbsua69Tsfr+t4Y/WvOGV7DysPA2VN4TgvTj2mfkrfGIr/ENA/i6Z2vrS7y7mKTC8dP7bGHdW/1/TvtL/aaIGaKqeLEfmOOj3j3jmqUvdnlSLzIbyJGxwtr0v5hLkvssdAYeoda0fyVy24+FMcrDxfEcFyzTznTmJPqy/WQm5fEjfgRp6PZ5+akmzcdpt0Zxu1mgPaG455zx/E2cFZ7mziQM6eNTiuO2yPtd3OaXLmeG/Db5UGO2R9O45yp1DJr7/BxGJAXziHOBuWJ/wP+O/nPUD1QL+X3H78y42PECQAA
+  <data encoding="base64" compression="zlib">
+   eJx9ldtuwzAMQ6U6W9d1L2s7tP//pXOACCVOqDwIiR1bF5JSXhHxmvY0z3qv9XnaabOctsh6bOtl+zbkXf094Vtj3HC/ns53xa9vnX/N/yo1MMYi/lhTnScejKH+1Z/mq9hpTSkxiI++3+Se5qk4uXp0n37XvH8MD3o/wX3KHmvL2OP0Pe0CHuoe/Y3wdSmurg7yrPxm7LmuvU7H6/reGP1rzhlew8rDwNlTeE4L049pn5K3xiK/xDQP4umdr60u8u5ikwvHT+2xh3Vv9f077S/2miBmiqnixH5jjo94945qlL3Z5Ui8yG8iRscLa9L+YS5L7LHQGHqHWtH8lctuPhTHKw8XxHBcs08505iT6sv1kJuXxI34Eaej2efmpJs3HabdGcbtZoD2huOec8fxNnBWe5s4kDOnjU4rjtsj7Xdzmly5nhvw2+VBjtkfTuOcqdQya+/wcRiQF84hzgblif8D/jv5z1A9UC/l9x9tPQ2j
   </data>
  </layer>
 </map>

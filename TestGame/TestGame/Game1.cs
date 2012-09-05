@@ -14,11 +14,15 @@ namespace TestGame {
     public class Game1 : Microsoft.Xna.Framework.Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Map currentMap;
-        Texture2D mapTex;
+        
+        Int32 mapIdx;
+        List<Map> maps;
+        Map currentMap { get { return maps[mapIdx]; } }
 
         Rectangle screen;
         Rectangle mapView;
+
+        double cycleTimer = 0;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -40,15 +44,17 @@ namespace TestGame {
 
         protected override void LoadContent() {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Map desert = Content.Load<Map>("desert");
-            Map desert2 = Content.Load<Map>("desert_base64_uncompressed");
-            Map desert3 = Content.Load<Map>("desert_base64_gzip");
-            Map desert4 = Content.Load<Map>("desert_base64_zlib");
-            Map isometric_grass_and_water = Content.Load<Map>("isometric_grass_and_water");
-            Map perspective_walls = Content.Load<Map>("perspective_walls");
-            Map sewers = Content.Load<Map>("sewers");
+            maps = new List<Map>();
 
-            currentMap = desert;
+            maps.Add(Content.Load<Map>("desert"));
+            maps.Add(Content.Load<Map>("desert_base64_uncompressed"));
+            maps.Add(Content.Load<Map>("desert_base64_gzip"));
+            maps.Add(Content.Load<Map>("desert_base64_zlib"));
+            maps.Add(Content.Load<Map>("isometric_grass_and_water"));
+            maps.Add(Content.Load<Map>("perspective_walls"));
+            maps.Add(Content.Load<Map>("sewers"));
+
+            mapIdx = 0;
         }
 
         protected override void UnloadContent() {
@@ -70,6 +76,20 @@ namespace TestGame {
                 delta.X += Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
             if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
                 delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
+
+            cycleTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+            if ((keys.IsKeyDown(Keys.PageUp) || pad.IsButtonDown(Buttons.RightShoulder)) && cycleTimer >= 250) {
+                mapIdx = mapIdx + 1 >= maps.Count ? 0 : mapIdx + 1;
+                mapView.X = 0;
+                mapView.Y = 0;
+                cycleTimer = 0;
+            }
+            if ((keys.IsKeyDown(Keys.PageDown) || pad.IsButtonDown(Buttons.LeftShoulder)) && cycleTimer >= 250) {
+                mapIdx = mapIdx - 1 < 0 ? maps.Count - 1 : mapIdx - 1;
+                mapView.X = 0;
+                mapView.Y = 0;
+                cycleTimer = 0;
+            }
 
             if (currentMap.Bounds.Contains(delta))
                 mapView = delta;
