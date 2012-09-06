@@ -39,18 +39,22 @@ namespace FuncWorks.XNA.XTiled {
 
         public void Draw(SpriteBatch spriteBatch, Rectangle source, Rectangle target, Boolean drawHiddenLayers) {
 
-            if(this.Orientation == MapOrientation.Orthogonal) {
+            if (this.Orientation == MapOrientation.Orthogonal) {
+
+                Int32 txMin = source.X / this.TileWidth;
+                Int32 txMax = (source.X + source.Width) / this.TileWidth;
+                Int32 tyMin = source.Y / this.TileHeight;
+                Int32 tyMax = (source.Y + source.Height) / this.TileHeight;
+
                 for (int l = 0; l < this.Layers.Length; l++) {
                     if (this.Layers[l].Visible || drawHiddenLayers) {
-                        for (int i = 0; i < this.Layers[l].Tiles.Length; i++) {
-                            if (this.Layers[l].Tiles[i] != null) {
-                                Rectangle tileTarget = this.Layers[l].Tiles[i].Target;
-                                tileTarget.X = tileTarget.X - source.X + target.X - Convert.ToInt32(this.Tiles[this.Layers[l].Tiles[i].SourceID].Origin.X);
-                                tileTarget.Y = tileTarget.Y - source.Y + target.Y - Convert.ToInt32(this.Tiles[this.Layers[l].Tiles[i].SourceID].Origin.Y);
-
-                                if (target.Contains(tileTarget) || target.Intersects(tileTarget)) {
-                                    tileTarget.X += Convert.ToInt32(this.Tiles[this.Layers[l].Tiles[i].SourceID].Origin.X);
-                                    tileTarget.Y += Convert.ToInt32(this.Tiles[this.Layers[l].Tiles[i].SourceID].Origin.Y);
+                        for (int y = tyMin; y <= tyMax; y++) {
+                            for (int x = txMin; x <= txMax; x++) {
+                                Int32 i = x + (this.Width) * y;
+                                if (i < this.Layers[l].Tiles.Length && this.Layers[l].Tiles[i] != null) {
+                                    Rectangle tileTarget = this.Layers[l].Tiles[i].Target;
+                                    tileTarget.X = tileTarget.X - source.X + target.X;
+                                    tileTarget.Y = tileTarget.Y - source.Y + target.Y;
 
                                     spriteBatch.Draw(
                                         this.Tilesets[this.Tiles[this.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
