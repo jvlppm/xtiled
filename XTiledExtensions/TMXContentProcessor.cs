@@ -194,7 +194,7 @@ namespace FuncWorks.XNA.XTiled {
                     foreach (var pElem in lElem.Element("properties").Elements("property"))
                         l.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
-                List<TileData> tiles = new List<TileData>();
+                TileData[] tiles = new TileData[map.Orientation == MapOrientation.Orthogonal ? (map.Height * map.Width) : (int)Math.Pow((map.Height + map.Width - 1), 2)];
                 if (lElem.Element("data") != null) {
                     List<UInt32> gids = new List<UInt32>();
                     if (lElem.Element("data").Attribute("encoding") != null || lElem.Element("data").Attribute("compression") != null) {
@@ -259,7 +259,7 @@ namespace FuncWorks.XNA.XTiled {
                             if (FlippedDiagonally) {
                                 td.Rotation = MathHelper.PiOver2;
 
-                                // this works, not sure why (we are rotating diag instead of flipping, so I guess that's a clue)
+                                // this works, not 100% why (we are rotating instead of diag flipping, so I guess that's a clue)
                                 FlippedHorizontally = false;
                             }
                             else
@@ -276,17 +276,23 @@ namespace FuncWorks.XNA.XTiled {
 
                             td.Target.Width = mapTiles[td.SourceID].Source.Width;
                             td.Target.Height = mapTiles[td.SourceID].Source.Height;
-                            td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
-                            td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
 
-                            td.Target.Y += map.TileHeight - td.Target.Height;
-                            tiles.Add(td);
+                            if (map.Orientation == MapOrientation.Orthogonal) {
+                                td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
+                                td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
+                                td.Target.Y += map.TileHeight - td.Target.Height;
+                                tiles[i] = td;
+                            }
+                            else if (map.Orientation == MapOrientation.Isometric) {
+                                td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
+                                td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
+                                td.Target.Y += map.TileHeight - td.Target.Height;
+                                tiles[i] = td;
+                            }
                         }
-                        else
-                            tiles.Add(null);
                     }
                 }
-                l.Tiles = tiles.ToArray();
+                l.Tiles = tiles;
 
                 layers.Add(l);
             }

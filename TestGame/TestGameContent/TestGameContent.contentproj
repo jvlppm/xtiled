@@ -95,6 +95,16 @@
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
     </Compile>
+    <Compile Include="isometric_5_10.tmx">
+      <Name>isometric_5_10</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
+    </Compile>
+    <Compile Include="isometric_10_5.tmx">
+      <Name>isometric_10_5</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
+    </Compile>
     <None Include="perspective_walls.tsx">
       <Name>perspective_walls</Name>
       <SubType>Designer</SubType>

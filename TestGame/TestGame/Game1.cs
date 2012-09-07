@@ -43,6 +43,8 @@ namespace TestGame {
             maps.Add(Content.Load<Map>("desert_base64_gzip"));
             maps.Add(Content.Load<Map>("desert_base64_zlib"));
             maps.Add(Content.Load<Map>("isometric_grass_and_water"));
+            maps.Add(Content.Load<Map>("isometric_10_5"));
+            maps.Add(Content.Load<Map>("isometric_5_10"));
             maps.Add(Content.Load<Map>("perspective_walls"));
             maps.Add(Content.Load<Map>("sewers"));
 
@@ -69,6 +71,9 @@ namespace TestGame {
             if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
                 delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
 
+            if (maps[mapIdx].Bounds.Contains(delta))
+                mapView = delta;
+
             actionTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
             if ((keys.IsKeyDown(Keys.PageUp) || pad.IsButtonDown(Buttons.RightShoulder)) && actionTimer >= 250) {
                 mapIdx = mapIdx + 1 >= maps.Count ? 0 : mapIdx + 1;
@@ -82,9 +87,6 @@ namespace TestGame {
                 mapView.Y = 0;
                 actionTimer = 0;
             }
-
-            if (maps[mapIdx].Bounds.Contains(delta))
-                mapView = delta;
 
             base.Update(gameTime);
         }
