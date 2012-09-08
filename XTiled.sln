@@ -55,8 +55,8 @@ Global
 		{AC3FAE00-C94C-4FE3-969F-232241195224}.Debug|x86.Build.0 = Debug|x86
 		{AC3FAE00-C94C-4FE3-969F-232241195224}.Debug|Xbox 360.ActiveCfg = Debug|x86
 		{AC3FAE00-C94C-4FE3-969F-232241195224}.Debug|Xbox 360.Build.0 = Debug|x86
-		{AC3FAE00-C94C-4FE3-969F-232241195224}.Release|Mixed Platforms.ActiveCfg = Debug|x86
-		{AC3FAE00-C94C-4FE3-969F-232241195224}.Release|Mixed Platforms.Build.0 = Debug|x86
+		{AC3FAE00-C94C-4FE3-969F-232241195224}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{AC3FAE00-C94C-4FE3-969F-232241195224}.Release|Mixed Platforms.Build.0 = Release|x86
 		{AC3FAE00-C94C-4FE3-969F-232241195224}.Release|x86.ActiveCfg = Debug|x86
 		{AC3FAE00-C94C-4FE3-969F-232241195224}.Release|x86.Build.0 = Debug|x86
 		{AC3FAE00-C94C-4FE3-969F-232241195224}.Release|Xbox 360.ActiveCfg = Debug|x86
