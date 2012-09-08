@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 
 namespace FuncWorks.XNA.XTiled {
     public enum MapOrientation {
@@ -72,7 +73,14 @@ namespace FuncWorks.XNA.XTiled {
                     }
                 }
             }
-            //}
+        }
+
+        internal static void WriteToStream(Stream stream) {
+        }
+
+        internal static Map ReadFromStream(Stream stream) {
+            Map map = new Map();
+            return map;
         }
     }
 }

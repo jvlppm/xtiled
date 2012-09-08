@@ -47,6 +47,8 @@ namespace FuncWorks.XNA.XTiled {
             Dictionary<UInt32, Int32> gid2id = new Dictionary<UInt32, Int32>();
             gid2id.Add(0, -1);
 
+            String mapDirectory = input.Document.Root.Element("File").Attribute("path").Value;
+
             Decimal Version = Convert.ToDecimal(input.Document.Root.Attribute("version").Value);
             if (Version != 1.0M)
                 throw new NotSupportedException("XTiled only supports TMX maps version 1.0");
@@ -104,7 +106,7 @@ namespace FuncWorks.XNA.XTiled {
 
                 if (tElem.Element("image") != null) {
                     XElement imgElem = tElem.Element("image");
-                    t.ImageFileName = imgElem.Attribute("source").Value;
+                    t.ImageFileName = Path.Combine(mapDirectory, imgElem.Attribute("source").Value);
                     t.ImageWidth = imgElem.Attribute("width") == null ? -1 : Convert.ToInt32(imgElem.Attribute("width").Value);
                     t.ImageHeight = imgElem.Attribute("height") == null ? -1 : Convert.ToInt32(imgElem.Attribute("height").Value);
                     t.ImageTransparentColor = null;
