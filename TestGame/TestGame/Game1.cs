@@ -93,8 +93,13 @@ namespace TestGame {
 
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
+
+            // sewers map needs blendstate to look correct with alphas
+            if (mapIdx == 8)
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
+            else
+                spriteBatch.Begin();
+
             maps[mapIdx].Draw(spriteBatch, mapView, GraphicsDevice.Viewport.Bounds);
             spriteBatch.End();
 

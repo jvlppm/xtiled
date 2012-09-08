@@ -294,10 +294,9 @@ namespace FuncWorks.XNA.XTiled {
                                 td.Target.X = x * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
                                 td.Target.Y = y * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
                                 td.Target.Y += map.TileHeight - td.Target.Height;
-                                td.Target.X /= 2;
-                                td.Target.Y /= 2;
+                                td.Target.X = td.Target.X / 2 + map.TileWidth / 4;
+                                td.Target.Y = td.Target.Y / 2 + map.TileHeight / 4;
                                 tiles[x][y] = td;
-                                throw new Exception(String.Format("i {0} x {1} y {2} w {3} h {4} l {5},{6}", i, x, y, map.Width, map.Height, tiles.Length, tiles[0].Length), ex);
                             }
                         }
                     }
