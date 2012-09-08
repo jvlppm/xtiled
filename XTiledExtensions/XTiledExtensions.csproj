@@ -54,6 +54,9 @@
     <Compile Include="..\XTiled\Layer.cs">
       <Link>Layer.cs</Link>
     </Compile>
+    <Compile Include="..\XTiled\LayerList.cs">
+      <Link>LayerList.cs</Link>
+    </Compile>
     <Compile Include="..\XTiled\Map.cs">
       <Link>Map.cs</Link>
     </Compile>

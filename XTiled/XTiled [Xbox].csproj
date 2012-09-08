@@ -43,6 +43,7 @@
   <ItemGroup />
   <ItemGroup>
     <Compile Include="Layer.cs" />
+    <Compile Include="LayerList.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="MapReader.cs" />

@@ -27,7 +27,7 @@ namespace FuncWorks.XNA.XTiled {
         public Rectangle Bounds;
         public Tileset[] Tilesets;
         public PropertyCollection Properties;
-        public Layer[] Layers;
+        public LayerList Layers;
         public ObjectLayer[] ObjectLayers;
         public Tile[] Tiles;
         public Boolean LoadTextures;
@@ -49,7 +49,7 @@ namespace FuncWorks.XNA.XTiled {
                 txMax = txMax * 2 + 1;
             }
 
-            for (int l = 0; l < this.Layers.Length; l++) {
+            for (int l = 0; l < this.Layers.Count; l++) {
                 if (this.Layers[l].Visible || drawHiddenLayers) {
                     for (int y = tyMin; y <= tyMax; y++) {
                         for (int x = txMin; x <= txMax; x++) {

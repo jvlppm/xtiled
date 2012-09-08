@@ -179,7 +179,7 @@ namespace FuncWorks.XNA.XTiled {
             }
             map.Tilesets = tilesets.ToArray();
 
-            List<Layer> layers = new List<Layer>();
+            LayerList layers = new LayerList();
             foreach (var lElem in input.Document.Root.Elements("layer")) {
                 Layer l = new Layer();
                 l.Name = lElem.Attribute("name") == null ? null : lElem.Attribute("name").Value;
@@ -305,7 +305,7 @@ namespace FuncWorks.XNA.XTiled {
 
                 layers.Add(l);
             }
-            map.Layers = layers.ToArray();
+            map.Layers = layers;
             map.Tiles = mapTiles.ToArray();
 
             List<ObjectLayer> oLayers = new List<ObjectLayer>();
