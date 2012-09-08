@@ -194,10 +194,9 @@ namespace FuncWorks.XNA.XTiled {
                     foreach (var pElem in lElem.Element("properties").Elements("property"))
                         l.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
-                //TileData[] tiles = new TileData[map.Orientation == MapOrientation.Orthogonal ? (map.Height * map.Width) : (int)Math.Pow((map.Height + map.Width - 1), 2)];
-                TileData[][] tiles = new TileData[map.Width][];
+                TileData[][] tiles = new TileData[map.Orientation == MapOrientation.Orthogonal ? map.Width : map.Height + map.Width - 1][];
                 for (int i = 0; i < tiles.Length; i++)
-                    tiles[i] = new TileData[map.Height];
+                    tiles[i] = new TileData[map.Orientation == MapOrientation.Orthogonal ? map.Height : map.Height + map.Width - 1];
 
                 if (lElem.Element("data") != null) {
                     List<UInt32> gids = new List<UInt32>();
@@ -284,17 +283,22 @@ namespace FuncWorks.XNA.XTiled {
                             if (map.Orientation == MapOrientation.Orthogonal) {
                                 Int32 x = i % map.Width;
                                 Int32 y = i / map.Width;
-                                td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
-                                td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
+                                td.Target.X = x * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
+                                td.Target.Y = y * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
                                 td.Target.Y += map.TileHeight - td.Target.Height;
                                 tiles[x][y] = td;
                             }
-                            //else if (map.Orientation == MapOrientation.Isometric) {
-                            //    td.Target.X = (i % map.Width) * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
-                            //    td.Target.Y = (i / map.Height) * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
-                            //    td.Target.Y += map.TileHeight - td.Target.Height;
-                            //    tiles[i] = td;
-                            //}
+                            else if (map.Orientation == MapOrientation.Isometric) {
+                                Int32 x = map.Height + i % map.Width - (1 * i / map.Width + 1);
+                                Int32 y = i - i / map.Width * map.Width + i / map.Width;
+                                td.Target.X = x * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
+                                td.Target.Y = y * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
+                                td.Target.Y += map.TileHeight - td.Target.Height;
+                                td.Target.X /= 2;
+                                td.Target.Y /= 2;
+                                tiles[x][y] = td;
+                                throw new Exception(String.Format("i {0} x {1} y {2} w {3} h {4} l {5},{6}", i, x, y, map.Width, map.Height, tiles.Length, tiles[0].Length), ex);
+                            }
                         }
                     }
                 }

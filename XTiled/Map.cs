@@ -39,12 +39,15 @@ namespace FuncWorks.XNA.XTiled {
 
         public void Draw(SpriteBatch spriteBatch, Rectangle source, Rectangle target, Boolean drawHiddenLayers) {
 
-            //if (this.Orientation == MapOrientation.Orthogonal) {
-
             Int32 txMin = source.X / this.TileWidth;
             Int32 txMax = (source.X + source.Width) / this.TileWidth;
             Int32 tyMin = source.Y / this.TileHeight;
             Int32 tyMax = (source.Y + source.Height) / this.TileHeight;
+
+            if (this.Orientation == MapOrientation.Isometric) {
+                tyMax = tyMax * 2 + 1;
+                txMax = txMax * 2 + 1;
+            }
 
             for (int l = 0; l < this.Layers.Length; l++) {
                 if (this.Layers[l].Visible || drawHiddenLayers) {
