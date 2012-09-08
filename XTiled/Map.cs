@@ -50,20 +50,19 @@ namespace FuncWorks.XNA.XTiled {
                 if (this.Layers[l].Visible || drawHiddenLayers) {
                     for (int y = tyMin; y <= tyMax; y++) {
                         for (int x = txMin; x <= txMax; x++) {
-                            Int32 i = x + (this.Width) * y;
-                            if (i < this.Layers[l].Tiles.Length && this.Layers[l].Tiles[i] != null) {
-                                Rectangle tileTarget = this.Layers[l].Tiles[i].Target;
+                            if (x < this.Layers[l].Tiles.Length && y < this.Layers[l].Tiles[x].Length && this.Layers[l].Tiles[x][y] != null) {
+                                Rectangle tileTarget = this.Layers[l].Tiles[x][y].Target;
                                 tileTarget.X = tileTarget.X - source.X + target.X;
                                 tileTarget.Y = tileTarget.Y - source.Y + target.Y;
 
                                 spriteBatch.Draw(
-                                    this.Tilesets[this.Tiles[this.Layers[l].Tiles[i].SourceID].TilesetID].Texture,
+                                    this.Tilesets[this.Tiles[this.Layers[l].Tiles[x][y].SourceID].TilesetID].Texture,
                                     tileTarget,
-                                    this.Tiles[this.Layers[l].Tiles[i].SourceID].Source,
+                                    this.Tiles[this.Layers[l].Tiles[x][y].SourceID].Source,
                                     this.Layers[l].OpacityColor,
-                                    this.Layers[l].Tiles[i].Rotation,
-                                    this.Tiles[this.Layers[l].Tiles[i].SourceID].Origin,
-                                    this.Layers[l].Tiles[i].Effects,
+                                    this.Layers[l].Tiles[x][y].Rotation,
+                                    this.Tiles[this.Layers[l].Tiles[x][y].SourceID].Origin,
+                                    this.Layers[l].Tiles[x][y].Effects,
                                     0);
                             }
                         }
