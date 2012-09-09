@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
+using System.Collections.Generic;
 
 namespace FuncWorks.XNA.XTiled {
     public enum MapOrientation {
@@ -27,9 +27,9 @@ namespace FuncWorks.XNA.XTiled {
         public Int32 TileHeight;
         public Rectangle Bounds;
         public Tileset[] Tilesets;
-        public PropertyCollection Properties;
-        public LayerList Layers;
-        public ObjectLayer[] ObjectLayers;
+        public Dictionary<String, Property> Properties;
+        public TileLayerList TileLayers;
+        public ObjectLayerList ObjectLayers;
         public Tile[] Tiles;
         public Boolean LoadTextures;
         public LayerInfo[] LayerOrder;
@@ -50,37 +50,29 @@ namespace FuncWorks.XNA.XTiled {
                 txMax = txMax * 2 + 1;
             }
 
-            for (int l = 0; l < this.Layers.Count; l++) {
-                if (this.Layers[l].Visible || drawHiddenLayers) {
+            for (int l = 0; l < this.TileLayers.Count; l++) {
+                if (this.TileLayers[l].Visible || drawHiddenLayers) {
                     for (int y = tyMin; y <= tyMax; y++) {
                         for (int x = txMin; x <= txMax; x++) {
-                            if (x < this.Layers[l].Tiles.Length && y < this.Layers[l].Tiles[x].Length && this.Layers[l].Tiles[x][y] != null) {
-                                Rectangle tileTarget = this.Layers[l].Tiles[x][y].Target;
+                            if (x < this.TileLayers[l].Tiles.Length && y < this.TileLayers[l].Tiles[x].Length && this.TileLayers[l].Tiles[x][y] != null) {
+                                Rectangle tileTarget = this.TileLayers[l].Tiles[x][y].Target;
                                 tileTarget.X = tileTarget.X - source.X + target.X;
                                 tileTarget.Y = tileTarget.Y - source.Y + target.Y;
 
                                 spriteBatch.Draw(
-                                    this.Tilesets[this.Tiles[this.Layers[l].Tiles[x][y].SourceID].TilesetID].Texture,
+                                    this.Tilesets[this.Tiles[this.TileLayers[l].Tiles[x][y].SourceID].TilesetID].Texture,
                                     tileTarget,
-                                    this.Tiles[this.Layers[l].Tiles[x][y].SourceID].Source,
-                                    this.Layers[l].OpacityColor,
-                                    this.Layers[l].Tiles[x][y].Rotation,
-                                    this.Tiles[this.Layers[l].Tiles[x][y].SourceID].Origin,
-                                    this.Layers[l].Tiles[x][y].Effects,
+                                    this.Tiles[this.TileLayers[l].Tiles[x][y].SourceID].Source,
+                                    this.TileLayers[l].OpacityColor,
+                                    this.TileLayers[l].Tiles[x][y].Rotation,
+                                    this.Tiles[this.TileLayers[l].Tiles[x][y].SourceID].Origin,
+                                    this.TileLayers[l].Tiles[x][y].Effects,
                                     0);
                             }
                         }
                     }
                 }
             }
-        }
-
-        internal static void WriteToStream(Stream stream) {
-        }
-
-        internal static Map ReadFromStream(Stream stream) {
-            Map map = new Map();
-            return map;
         }
     }
 }

@@ -68,9 +68,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\XTiled\Layer.cs">
-      <Link>Layer.cs</Link>
-    </Compile>
     <Compile Include="..\XTiled\LayerList.cs">
       <Link>LayerList.cs</Link>
     </Compile>
@@ -86,14 +83,14 @@
     <Compile Include="..\XTiled\Property.cs">
       <Link>Property.cs</Link>
     </Compile>
-    <Compile Include="..\XTiled\PropertyCollection.cs">
-      <Link>PropertyCollection.cs</Link>
-    </Compile>
     <Compile Include="..\XTiled\Tile.cs">
       <Link>Tile.cs</Link>
     </Compile>
     <Compile Include="..\XTiled\TileData.cs">
       <Link>TileData.cs</Link>
+    </Compile>
+    <Compile Include="..\XTiled\TileLayer.cs">
+      <Link>TileLayer.cs</Link>
     </Compile>
     <Compile Include="..\XTiled\Tileset.cs">
       <Link>Tileset.cs</Link>

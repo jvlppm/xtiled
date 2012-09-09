@@ -73,7 +73,7 @@ namespace FuncWorks.XNA.XTiled {
 
             map.Bounds = new Rectangle(0, 0, map.Width * map.TileWidth, map.Height * map.TileHeight);
 
-            map.Properties = new PropertyCollection();
+            map.Properties = new Dictionary<String, Property>();
             if (input.Document.Root.Element("properties") != null)
                 foreach (var pElem in input.Document.Root.Element("properties").Elements("property"))
                     map.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
@@ -164,7 +164,7 @@ namespace FuncWorks.XNA.XTiled {
                 foreach (var tileElem in tElem.Elements("tile")) {
                     UInt32 id = Convert.ToUInt32(tileElem.Attribute("id").Value);
                     Tile tile = mapTiles[gid2id[id + FirstGID]];
-                    tile.Properties = new PropertyCollection();
+                    tile.Properties = new Dictionary<String, Property>();
                     if (tileElem.Element("properties") != null)
                         foreach (var pElem in tileElem.Element("properties").Elements("property"))
                             tile.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
@@ -172,7 +172,7 @@ namespace FuncWorks.XNA.XTiled {
                 }
                 t.Tiles = tiles.ToArray();
 
-                t.Properties = new PropertyCollection();
+                t.Properties = new Dictionary<String, Property>();
                 if (tElem.Element("properties") != null)
                     foreach (var pElem in tElem.Element("properties").Elements("property"))
                         t.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
@@ -181,9 +181,9 @@ namespace FuncWorks.XNA.XTiled {
             }
             map.Tilesets = tilesets.ToArray();
 
-            LayerList layers = new LayerList();
+            TileLayerList layers = new TileLayerList();
             foreach (var lElem in input.Document.Root.Elements("layer")) {
-                Layer l = new Layer();
+                TileLayer l = new TileLayer();
                 l.Name = lElem.Attribute("name") == null ? null : lElem.Attribute("name").Value;
                 l.Opacity = lElem.Attribute("opacity") == null ? 1.0f : Convert.ToSingle(lElem.Attribute("opacity").Value);
                 l.Visible = lElem.Attribute("visible") == null ? true : lElem.Attribute("visible").Equals("1");
@@ -191,7 +191,7 @@ namespace FuncWorks.XNA.XTiled {
                 l.OpacityColor = Color.White;
                 l.OpacityColor.A = Convert.ToByte(255.0f * l.Opacity);
 
-                l.Properties = new PropertyCollection();
+                l.Properties = new Dictionary<String, Property>();
                 if (lElem.Element("properties") != null)
                     foreach (var pElem in lElem.Element("properties").Elements("property"))
                         l.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
@@ -307,10 +307,10 @@ namespace FuncWorks.XNA.XTiled {
 
                 layers.Add(l);
             }
-            map.Layers = layers;
+            map.TileLayers = layers;
             map.Tiles = mapTiles.ToArray();
 
-            List<ObjectLayer> oLayers = new List<ObjectLayer>();
+            ObjectLayerList oLayers = new ObjectLayerList();
             foreach (var olElem in input.Document.Root.Elements("objectgroup")) {
                 ObjectLayer ol = new ObjectLayer();
                 ol.Name = olElem.Attribute("name") == null ? null : olElem.Attribute("name").Value;
@@ -326,7 +326,7 @@ namespace FuncWorks.XNA.XTiled {
                     ol.Color = new Color(sdc.R, sdc.G, sdc.B);
                 }
 
-                ol.Properties = new PropertyCollection();
+                ol.Properties = new Dictionary<String, Property>();
                 if (olElem.Element("properties") != null)
                     foreach (var pElem in olElem.Element("properties").Elements("property"))
                         ol.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
@@ -336,14 +336,14 @@ namespace FuncWorks.XNA.XTiled {
                     MapObject o = new MapObject();
                     o.Name = oElem.Attribute("name") == null ? null : oElem.Attribute("name").Value;
                     o.Type = oElem.Attribute("type") == null ? null : oElem.Attribute("type").Value;
-                    o.X = oElem.Attribute("x") == null ? 0 : Convert.ToInt32(oElem.Attribute("x").Value);
-                    o.Y = oElem.Attribute("y") == null ? 0 : Convert.ToInt32(oElem.Attribute("y").Value);
-                    o.Width = oElem.Attribute("width") == null ? 0 : Convert.ToInt32(oElem.Attribute("width").Value);
-                    o.Height = oElem.Attribute("height") == null ? 0 : Convert.ToInt32(oElem.Attribute("height").Value);
+                    o.Bounds.X = oElem.Attribute("x") == null ? 0 : Convert.ToInt32(oElem.Attribute("x").Value);
+                    o.Bounds.Y = oElem.Attribute("y") == null ? 0 : Convert.ToInt32(oElem.Attribute("y").Value);
+                    o.Bounds.Width = oElem.Attribute("width") == null ? 0 : Convert.ToInt32(oElem.Attribute("width").Value);
+                    o.Bounds.Height = oElem.Attribute("height") == null ? 0 : Convert.ToInt32(oElem.Attribute("height").Value);
                     o.TileID = oElem.Attribute("gid") == null ? null : (Int32?)Convert.ToInt32(oElem.Attribute("gid").Value);
                     o.Visible = oElem.Attribute("visible") == null ? true : oElem.Attribute("visible").Equals("1");
 
-                    o.Properties = new PropertyCollection();
+                    o.Properties = new Dictionary<String, Property>();
                     if (oElem.Element("properties") != null)
                         foreach (var pElem in oElem.Element("properties").Elements("property"))
                             o.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
@@ -374,7 +374,7 @@ namespace FuncWorks.XNA.XTiled {
 
                 oLayers.Add(ol);
             }
-            map.ObjectLayers = oLayers.ToArray();
+            map.ObjectLayers = oLayers;
 
             Int32 layerId = 0, objectId = 0;
             List<LayerInfo> info = new List<LayerInfo>();

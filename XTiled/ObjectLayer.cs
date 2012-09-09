@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace FuncWorks.XNA.XTiled {
     public class ObjectLayer {
         public String Name;
-        public Color? Color;
         public Single Opacity;
         public Color OpacityColor;
         public Boolean Visible;
-        public PropertyCollection Properties;
+        public Dictionary<String, Property> Properties; public Color? Color;
         public MapObject[] MapObjects;
     }
 }

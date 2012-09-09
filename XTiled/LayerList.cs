@@ -5,9 +5,16 @@ using System.Text;
 using System.Collections;
 
 namespace FuncWorks.XNA.XTiled {
-    public class LayerList : List<Layer> {
+    public class TileLayerList : List<TileLayer> {
+        public TileLayer this[String name] {
+            get {
+                return this.FirstOrDefault(x => x.Name.Equals(name));
+            }
+        }
+    }
 
-        public Layer this[String name] {
+    public class ObjectLayerList : List<ObjectLayer> {
+        public ObjectLayer this[String name] {
             get {
                 return this.FirstOrDefault(x => x.Name.Equals(name));
             }
