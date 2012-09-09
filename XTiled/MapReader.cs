@@ -5,7 +5,10 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace FuncWorks.XNA.XTiled {
+
+    /// <summary/>
     public sealed class MapReader : ContentTypeReader<Map> {
+        /// <summary/>
         protected override Map Read(ContentReader input, Map existingInstance) {
             Map m = new Map();
             Int32 props = 0;

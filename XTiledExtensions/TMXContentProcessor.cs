@@ -322,7 +322,7 @@ namespace FuncWorks.XNA.XTiled {
                 ol.Color = null;
                 if (olElem.Attribute("color") != null) {
                     System.Drawing.Color sdc = System.Drawing.ColorTranslator.FromHtml("#" + olElem.Attribute("color").Value.TrimStart('#'));
-                    ol.Color = new Color(sdc.R, sdc.G, sdc.B);
+                    ol.Color = new Color(sdc.R, sdc.G, sdc.B, ol.OpacityColor.A);
                 }
 
                 ol.Properties = new Dictionary<String, Property>();
