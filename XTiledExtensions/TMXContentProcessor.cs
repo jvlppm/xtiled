@@ -153,6 +153,7 @@ namespace FuncWorks.XNA.XTiled {
                         tile.Source = new Rectangle(x, y, t.TileWidth, t.TileHeight);
                         tile.Origin = new Vector2(((float)t.TileWidth) / 2.0f, ((float)t.TileHeight) / 2.0f);
                         tile.TilesetID = tilesets.Count;
+                        tile.Properties = new Dictionary<String, Property>(); 
                         mapTiles.Add(tile);
 
                         gid2id[gid] = mapTiles.Count - 1;
@@ -163,8 +164,7 @@ namespace FuncWorks.XNA.XTiled {
                 List<Tile> tiles = new List<Tile>();
                 foreach (var tileElem in tElem.Elements("tile")) {
                     UInt32 id = Convert.ToUInt32(tileElem.Attribute("id").Value);
-                    Tile tile = mapTiles[gid2id[id + FirstGID]];
-                    tile.Properties = new Dictionary<String, Property>();
+                    Tile tile = mapTiles[gid2id[id + FirstGID]];                 
                     if (tileElem.Element("properties") != null)
                         foreach (var pElem in tileElem.Element("properties").Elements("property"))
                             tile.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));

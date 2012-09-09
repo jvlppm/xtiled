@@ -39,6 +39,7 @@
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;XBOX;XBOX360</DefineConstants>
     <XnaCompressContent>true</XnaCompressContent>
+    <DocumentationFile>bin\Xbox 360\Release\FuncWorks.XNA.XTiled.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>

@@ -21,11 +21,11 @@ namespace FuncWorks.XNA.XTiled {
 
             output.Write(value.Tilesets.Length);
             foreach (var ts in value.Tilesets) {
-                output.Write(ts.ImageFileName);
+                output.Write(ts.ImageFileName == null ? String.Empty : ts.ImageFileName);
                 output.Write(ts.ImageHeight);
-                output.Write(ts.ImageWidth);                
+                output.Write(ts.ImageWidth);
                 output.Write(ts.Margin);
-                output.Write(ts.Name);
+                output.Write(ts.Name == null ? String.Empty : ts.Name);
                 output.Write(ts.Spacing);
                 output.Write(ts.TileHeight);
                 output.Write(ts.TileOffsetX);
@@ -48,57 +48,134 @@ namespace FuncWorks.XNA.XTiled {
 
                     output.Write(t.Properties.Count);
                     foreach (var kv in t.Properties) {
-                        output.Write(kv.Key);
-                        output.Write(kv.Value.Value);
+                        output.Write(kv.Key == null ? String.Empty : kv.Key);
+                        output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
                     }
                 }
 
                 output.Write(ts.Properties.Count);
                 foreach (var kv in ts.Properties) {
-                    output.Write(kv.Key);
-                    output.Write(kv.Value.Value);
+                    output.Write(kv.Key == null ? String.Empty : kv.Key);
+                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
                 }
             }
 
             output.Write(value.Properties.Count);
             foreach (var kv in value.Properties) {
-                output.Write(kv.Key);
-                output.Write(kv.Value.Value);
+                output.Write(kv.Key == null ? String.Empty : kv.Key);
+                output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
             }
 
             output.Write(value.TileLayers.Count);
             foreach (var l in value.TileLayers) {
-                output.Write(l.Name);
+                output.Write(l.Name == null ? String.Empty : l.Name);
                 output.Write(l.Opacity);
                 output.Write(l.OpacityColor.A);
                 output.Write(l.Visible);
-                
+
                 output.Write(l.Properties.Count);
                 foreach (var kv in l.Properties) {
-                    output.Write(kv.Key);
-                    output.Write(kv.Value.Value);
+                    output.Write(kv.Key == null ? String.Empty : kv.Key);
+                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
                 }
 
                 output.Write(l.Tiles.Length);
                 foreach (var row in l.Tiles) {
                     output.Write(row.Length);
                     foreach (var t in row) {
-                        output.Write(t.Rotation);
-                        output.Write(t.SourceID);
-                        output.Write(t.Target.X);
-                        output.Write(t.Target.Y);
-                        output.Write(t.Target.Height);
-                        output.Write(t.Target.Width);
-                        output.Write(t.Effects.HasFlag(SpriteEffects.FlipHorizontally));
-                        output.Write(t.Effects.HasFlag(SpriteEffects.FlipVertically));
+                        output.Write(t != null);
+                        if (t != null) {
+                            output.Write(t.Rotation);
+                            output.Write(t.SourceID);
+                            output.Write(t.Target.X);
+                            output.Write(t.Target.Y);
+                            output.Write(t.Target.Height);
+                            output.Write(t.Target.Width);
+                            output.Write(t.Effects.HasFlag(SpriteEffects.FlipHorizontally));
+                            output.Write(t.Effects.HasFlag(SpriteEffects.FlipVertically));
+                        }
                     }
                 }
             }
 
-            //public ObjectLayerList ObjectLayers;
-            //public LayerInfo[] LayerOrder;
-            //public Tile[] Tiles;
-        
+            output.Write(value.Tiles.Length);
+            foreach (var t in value.Tiles) {
+                output.Write(t.Origin.X);
+                output.Write(t.Origin.Y);
+                output.Write(t.Source.X);
+                output.Write(t.Source.Y);
+                output.Write(t.Source.Height);
+                output.Write(t.Source.Width);
+                output.Write(t.TilesetID);
+
+                output.Write(t.Properties.Count);
+                foreach (var kv in t.Properties) {
+                    output.Write(kv.Key == null ? String.Empty : kv.Key);
+                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                }
+            }
+
+            output.Write(value.ObjectLayers.Count);
+            foreach (var ol in value.ObjectLayers) {
+                output.Write(ol.Name == null ? String.Empty : ol.Name);
+                output.Write(ol.Opacity);
+                output.Write(ol.OpacityColor.A);
+                output.Write(ol.Visible);
+
+                output.Write(ol.Color.HasValue);
+                if (ol.Color.HasValue) {
+                    output.Write(ol.Color.Value.R);
+                    output.Write(ol.Color.Value.G);
+                    output.Write(ol.Color.Value.B);
+                    output.Write(ol.Color.Value.A);
+                }
+
+                output.Write(ol.MapObjects.Length);
+                foreach (var m in ol.MapObjects) {
+                    output.Write(m.Bounds.X);
+                    output.Write(m.Bounds.Y);
+                    output.Write(m.Bounds.Height);
+                    output.Write(m.Bounds.Width);
+                    output.Write(m.Name == null ? String.Empty : m.Name);
+                    output.Write(m.Type == null ? String.Empty : m.Type);
+                    output.Write(m.Visible);
+
+                    output.Write(m.TileID.HasValue);
+                    if (m.TileID.HasValue)
+                        output.Write(m.TileID.Value);
+
+                    output.Write(m.Polyline != null);
+                    if (m.Polyline != null) {
+                        output.Write(m.Polyline.Length);
+                        foreach (var p in m.Polyline) {
+                            output.Write(p.X);
+                            output.Write(p.Y);
+                        }
+                    }
+
+                    output.Write(m.Polygon != null);
+                    if (m.Polygon != null) {
+                        output.Write(m.Polygon.Length);
+                        foreach (var p in m.Polygon) {
+                            output.Write(p.X);
+                            output.Write(p.Y);
+                        }
+                    }
+                }
+
+                output.Write(ol.Properties.Count);
+                foreach (var kv in ol.Properties) {
+                    output.Write(kv.Key == null ? String.Empty : kv.Key);
+                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                }
+            }
+
+            output.Write(value.LayerOrder.Length);
+            foreach (var lo in value.LayerOrder) {
+                output.Write(lo.ID);
+                output.Write(lo.LayerType == LayerType.TileLayer ? true : false);
+            }
+
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform) {
