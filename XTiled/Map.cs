@@ -30,7 +30,7 @@ namespace FuncWorks.XNA.XTiled {
         public Dictionary<String, Property> Properties;
         public TileLayerList TileLayers;
         public ObjectLayerList ObjectLayers;
-        public Tile[] Tiles;
+        public Tile[] SourceTiles;
         public Boolean LoadTextures;
         public LayerInfo[] LayerOrder;
 
@@ -60,12 +60,12 @@ namespace FuncWorks.XNA.XTiled {
                                 tileTarget.Y = tileTarget.Y - source.Y + target.Y;
 
                                 spriteBatch.Draw(
-                                    this.Tilesets[this.Tiles[this.TileLayers[l].Tiles[x][y].SourceID].TilesetID].Texture,
+                                    this.Tilesets[this.SourceTiles[this.TileLayers[l].Tiles[x][y].SourceID].TilesetID].Texture,
                                     tileTarget,
-                                    this.Tiles[this.TileLayers[l].Tiles[x][y].SourceID].Source,
+                                    this.SourceTiles[this.TileLayers[l].Tiles[x][y].SourceID].Source,
                                     this.TileLayers[l].OpacityColor,
                                     this.TileLayers[l].Tiles[x][y].Rotation,
-                                    this.Tiles[this.TileLayers[l].Tiles[x][y].SourceID].Origin,
+                                    this.SourceTiles[this.TileLayers[l].Tiles[x][y].SourceID].Origin,
                                     this.TileLayers[l].Tiles[x][y].Effects,
                                     0);
                             }

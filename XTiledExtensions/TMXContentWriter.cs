@@ -98,8 +98,8 @@ namespace FuncWorks.XNA.XTiled {
                 }
             }
 
-            output.Write(value.Tiles.Length);
-            foreach (var t in value.Tiles) {
+            output.Write(value.SourceTiles.Length);
+            foreach (var t in value.SourceTiles) {
                 output.Write(t.Origin.X);
                 output.Write(t.Origin.Y);
                 output.Write(t.Source.X);

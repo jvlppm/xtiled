@@ -70,7 +70,6 @@ namespace FuncWorks.XNA.XTiled {
             map.Height = Convert.ToInt32(input.Document.Root.Attribute("height").Value);
             map.TileWidth = Convert.ToInt32(input.Document.Root.Attribute("tilewidth").Value);
             map.TileHeight = Convert.ToInt32(input.Document.Root.Attribute("tileheight").Value);
-
             map.Bounds = new Rectangle(0, 0, map.Width * map.TileWidth, map.Height * map.TileHeight);
 
             map.Properties = new Dictionary<String, Property>();
@@ -308,7 +307,7 @@ namespace FuncWorks.XNA.XTiled {
                 layers.Add(l);
             }
             map.TileLayers = layers;
-            map.Tiles = mapTiles.ToArray();
+            map.SourceTiles = mapTiles.ToArray();
 
             ObjectLayerList oLayers = new ObjectLayerList();
             foreach (var olElem in input.Document.Root.Elements("objectgroup")) {

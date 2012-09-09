@@ -121,21 +121,21 @@ namespace FuncWorks.XNA.XTiled {
                 }
             }
 
-            m.Tiles = new Tile[input.ReadInt32()];
-            for (int i = 0; i < m.Tiles.Length; i++) {
-                m.Tiles[i] = new Tile();
-                m.Tiles[i].Origin.X = input.ReadSingle();
-                m.Tiles[i].Origin.Y = input.ReadSingle();
-                m.Tiles[i].Source.X = input.ReadInt32();
-                m.Tiles[i].Source.Y = input.ReadInt32();
-                m.Tiles[i].Source.Height = input.ReadInt32();
-                m.Tiles[i].Source.Width = input.ReadInt32();
-                m.Tiles[i].TilesetID = input.ReadInt32();
+            m.SourceTiles = new Tile[input.ReadInt32()];
+            for (int i = 0; i < m.SourceTiles.Length; i++) {
+                m.SourceTiles[i] = new Tile();
+                m.SourceTiles[i].Origin.X = input.ReadSingle();
+                m.SourceTiles[i].Origin.Y = input.ReadSingle();
+                m.SourceTiles[i].Source.X = input.ReadInt32();
+                m.SourceTiles[i].Source.Y = input.ReadInt32();
+                m.SourceTiles[i].Source.Height = input.ReadInt32();
+                m.SourceTiles[i].Source.Width = input.ReadInt32();
+                m.SourceTiles[i].TilesetID = input.ReadInt32();
 
                 props = input.ReadInt32();
-                m.Tiles[i].Properties = new Dictionary<String, Property>(props);
+                m.SourceTiles[i].Properties = new Dictionary<String, Property>(props);
                 for (int p = 0; p < props; p++) {
-                    m.Tiles[i].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
+                    m.SourceTiles[i].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
                 }
             }
 

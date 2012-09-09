@@ -8,6 +8,7 @@ namespace FuncWorks.XNA.XTiled {
         public Single Opacity;
         public Color OpacityColor;
         public Boolean Visible;
-        public Dictionary<String, Property> Properties; public TileData[][] Tiles;
+        public Dictionary<String, Property> Properties; 
+        public TileData[][] Tiles;
     }
 }
