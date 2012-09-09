@@ -15,6 +15,7 @@ namespace TestGame {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Rectangle screen;
         Rectangle mapView;
         Int32 mapIdx;
         List<Map> maps;
@@ -28,7 +29,7 @@ namespace TestGame {
 
         protected override void Initialize() {
             base.Initialize();
-
+            screen = graphics.GraphicsDevice.Viewport.Bounds;
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
@@ -100,10 +101,11 @@ namespace TestGame {
             else
                 spriteBatch.Begin();
 
-            maps[mapIdx].Draw(spriteBatch, mapView, GraphicsDevice.Viewport.Bounds);
+            maps[mapIdx].Draw(spriteBatch, ref mapView, ref screen);
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
     }
 }
