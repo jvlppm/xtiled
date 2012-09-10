@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8775A24A-7
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGen", "DocGen\DocGen.csproj", "{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -97,6 +99,16 @@ Global
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Xbox 360.Build.0 = Release|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Debug|x86.ActiveCfg = Debug|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Debug|x86.Build.0 = Debug|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Debug|Xbox 360.ActiveCfg = Debug|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Release|Mixed Platforms.Build.0 = Release|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Release|x86.ActiveCfg = Release|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Release|x86.Build.0 = Release|x86
+		{5C2672B8-C7EC-4964-A346-78E95E6FF5B3}.Release|Xbox 360.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

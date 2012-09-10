@@ -1,0 +1,469 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FuncWorks.XNA.XTiled</name>
+    </assembly>
+    <members>
+        <member name="T:FuncWorks.XNA.XTiled.Tile">
+            <summary>
+            Represents a source tile image's metadata
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tile.TilesetID">
+            <summary>
+            Index of the Tileset in the Map.Tilesets collection this tile belongs to
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tile.Properties">
+            <summary>
+            Custom properties
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tile.Source">
+            <summary>
+            Area in the texture of the tileset that represents this tile
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tile.Origin">
+            <summary>
+            Origin of this tile for rendering; set to the center of the tile
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.TileLayerList">
+            <summary>
+            List of TileLayers, indexable by id or name
+            </summary>
+        </member>
+        <member name="P:FuncWorks.XNA.XTiled.TileLayerList.Item(System.String)">
+            <summary>
+            Gets the layer with the given name; read-only propery.
+            </summary>
+            <param name="name">Name of the layer</param>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.ObjectLayerList">
+            <summary>
+            List of ObjectLayer, indexable by id or name
+            </summary>
+        </member>
+        <member name="P:FuncWorks.XNA.XTiled.ObjectLayerList.Item(System.String)">
+            <summary>
+            Gets the layer with the given name; read-only propery.
+            </summary>
+            <param name="name">Name of the layer</param>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.ObjectLayer">
+            <summary>
+            Represents an object layer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.ObjectLayer.Name">
+            <summary>
+            Optional name of the layer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.ObjectLayer.Opacity">
+            <summary>
+            Opacity of the layer, 1 is opaque and 0 is complete transparent
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.ObjectLayer.OpacityColor">
+            <summary>
+            A color value of white, with the alpha component set to the layer Opacity
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.ObjectLayer.Visible">
+            <summary>
+            True if the layer is visible
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.ObjectLayer.Properties">
+            <summary>
+            Custom properties
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.ObjectLayer.Color">
+            <summary>
+            Optional color for the layer, alpha is set to the value of Opacity
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.ObjectLayer.MapObjects">
+            <summary>
+            Collection of objects on this layer
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.MapObject">
+            <summary>
+            Represents an object in an ObjectLayer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.Name">
+            <summary>
+            Optional name of the object
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.Type">
+            <summary>
+            Optional type of the object
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.Bounds">
+            <summary>
+            Map location of the object in pixles
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.TileID">
+            <summary>
+            Optional image tile index in the Map.SourceTiles collection
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.Visible">
+            <summary>
+            True if the object is visible.  Possible in the TMX map format, but no UI exists for the user to change.
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.Properties">
+            <summary>
+            Custom properties for this object
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.Polygon">
+            <summary>
+            A list of points that form a closed shape (last point should be linked to the first)
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapObject.Polyline">
+            <summary>
+            A list of points that form a line
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.MapOrientation">
+            <summary />
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapOrientation.Orthogonal">
+            <summary />
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.MapOrientation.Isometric">
+            <summary />
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.LayerType">
+            <summary />
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.LayerType.TileLayer">
+            <summary />
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.LayerType.ObjectLayer">
+            <summary />
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.LayerInfo">
+            <summary>
+            References either a TileLayer or ObjectLayer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.LayerInfo.ID">
+            <summary>
+            The Layer Index/ID
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.LayerInfo.LayerType">
+            <summary>
+            They type of layer
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.Map">
+            <summary>
+            An XTiled TMX Map
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.Orientation">
+            <summary>
+            Orientation of the map.
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.Width">
+            <summary>
+            Width, in tiles, of the map
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.Height">
+            <summary>
+            Height, in tiles, of the map
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.TileWidth">
+            <summary>
+            Pixel width of a single tile
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.TileHeight">
+            <summary>
+            Pixel height of a single tile
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.Bounds">
+            <summary>
+            Size of the map in pixels
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.Tilesets">
+            <summary>
+            Tilesets associated with this map
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.Properties">
+            <summary>
+            Custom properties
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.TileLayers">
+            <summary>
+            Ordered collection of tile layers; first is the bottom layer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.ObjectLayers">
+            <summary>
+            Ordered collection of object layers; first is the bottom layer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.SourceTiles">
+            <summary>
+            List of all source tiles from tilesets
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.LoadTextures">
+            <summary>
+            True if XTiled loaded tileset textures during map load
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Map.LayerOrder">
+            <summary>
+            Order of tile and object layers combined, first is the bottom layer
+            </summary>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Draws all visible tile layers
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="source">Region of the map in pixels to draw</param>
+            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Draws all visible tile layers
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="source">Region of the map in pixels to draw</param>
+            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle,System.Boolean)">
+            <summary>
+            Draws all visible tile layers
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="source">Region of the map in pixels to draw</param>
+            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="drawHiddenLayers">If true, draws layers regardless of TileLayer.Visible flag</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@,System.Boolean)">
+            <summary>
+            Draws all visible tile layers
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="source">Region of the map in pixels to draw</param>
+            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="drawHiddenLayers">If true, draws layers regardless of TileLayer.Visible flag</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle,System.Single)">
+            <summary>
+            Draws given tile layer
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="layerID">Index of the layer to draw in the Map.TileLayers collection</param>
+            <param name="source">Region of the map in pixels to draw</param>
+            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@,System.Single)">
+            <summary>
+            Draws given tile layer
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="layerID">Index of the layer to draw in the Map.TileLayers collection</param>
+            <param name="source">Region of the map in pixels to draw</param>
+            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.Tileset">
+            <summary>
+            Represents a tileset (aka tile sheet) in a Map
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.Name">
+            <summary>
+            Optional name of the tileset
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.TileWidth">
+            <summary>
+            Width of a single tile in pixels
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.TileHeight">
+            <summary>
+            Height of a single tile in pixels
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.Spacing">
+            <summary>
+            Spacing between tiles in pixels
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.Margin">
+            <summary>
+            Outside margin of the tilesheet in pixels
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.TileOffsetX">
+            <summary>
+            Horizontal offset of tiles
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.TileOffsetY">
+            <summary>
+            Vertical offset of tiles
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.Properties">
+            <summary>
+            Custom properties
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.Tiles">
+            <summary>
+            List of tiles in this tilesheet
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.ImageFileName">
+            <summary>
+            Full path of the image referenced in the TMX file
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.ImageTransparentColor">
+            <summary>
+            Transparent color as set in the Tiled editor; null if not set
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.ImageWidth">
+            <summary>
+            Width of image in pixels
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.ImageHeight">
+            <summary>
+            Height of image in pixels
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Tileset.Texture">
+            <summary>
+            Image as an XNA Texture2D instance; null if Map.LoadTextures is false
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.MapReader">
+            <summary/>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.MapReader.Read(Microsoft.Xna.Framework.Content.ContentReader,FuncWorks.XNA.XTiled.Map)">
+            <summary/>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.TileLayer">
+            <summary>
+            Represents an tile layer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileLayer.Name">
+            <summary>
+            Optional name of the layer
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileLayer.Opacity">
+            <summary>
+            Opacity of the layer, 1 is opaque and 0 is complete transparent
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileLayer.OpacityColor">
+            <summary>
+            A color value of white, with the alpha component set to the layer Opacity
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileLayer.Visible">
+            <summary>
+            True if the layer is visible
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileLayer.Properties">
+            <summary>
+            Custom properties
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileLayer.Tiles">
+            <summary>
+            Collection of tiles on this layer
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.Property">
+            <summary>
+            Represents a custom property value
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Property.Value">
+            <summary>
+            Raw String value of the propery
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Property.AsSingle">
+            <summary>
+            Value converted to a float, null if conversion failed
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Property.AsInt32">
+            <summary>
+            Value converted to an int, null if conversion failed
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Property.AsBoolean">
+            <summary>
+            Value converted to a boolean, null if conversion failed
+            </summary>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Property.Create(System.String)">
+            <summary>
+            Creates a property from a raw string value
+            </summary>
+            <param name="value">Value of the property</param>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.TileData">
+            <summary>
+            Represents a placed tiled on the map
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileData.SourceID">
+            <summary>
+            Index of the source tile in the Map.SourceTiles collection
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileData.Effects">
+            <summary>
+            Horizontal and/or vertical flipping state of the placed tile
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileData.Target">
+            <summary>
+            Location in pixels of the tile on the map
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.TileData.Rotation">
+            <summary>
+            Rotation of the placed tile, in radians
+            </summary>
+        </member>
+    </members>
+</doc>
