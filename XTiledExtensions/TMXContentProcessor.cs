@@ -125,8 +125,19 @@ namespace FuncWorks.XNA.XTiled {
                         }
                     }
 
-                    if (LoadTextures) {
+                    if (LoadTextures)
+                    {
                         String assetName = String.Format("{0}/{1:00}", Path.GetFileNameWithoutExtension(context.OutputFilename), tilesets.Count);
+                        string basePath = String.Empty;
+                        if (mapDirectory.StartsWith(Directory.GetCurrentDirectory()) && mapDirectory != Directory.GetCurrentDirectory())
+                        {
+                            basePath = mapDirectory.Substring(Directory.GetCurrentDirectory().Length + 1);
+                        }
+                        if (!String.IsNullOrEmpty(basePath))
+                        {
+                            assetName = basePath + "/" + assetName;
+                        }
+                        
                         OpaqueDataDictionary data = new OpaqueDataDictionary();
                         data.Add("GenerateMipmaps", false);
                         data.Add("ResizeToPowerOfTwo", false);

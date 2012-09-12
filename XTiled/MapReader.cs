@@ -200,6 +200,13 @@ namespace FuncWorks.XNA.XTiled {
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polygon = null;
+
+                    props = input.ReadInt32();
+                    m.ObjectLayers[i].MapObjects[mo].Properties = new Dictionary<String, Property>();
+                    for (int p = 0; p < props; p++)
+                    {
+                        m.ObjectLayers[i].MapObjects[mo].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
+                    }
                 }
 
                 props = input.ReadInt32();

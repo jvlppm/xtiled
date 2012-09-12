@@ -161,6 +161,13 @@ namespace FuncWorks.XNA.XTiled {
                             output.Write(p.Y);
                         }
                     }
+
+                    output.Write(m.Properties.Count);
+                    foreach (var kv in m.Properties)
+                    {
+                        output.Write(kv.Key == null ? String.Empty : kv.Key);
+                        output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                    }
                 }
 
                 output.Write(ol.Properties.Count);
