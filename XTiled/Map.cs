@@ -204,5 +204,19 @@ namespace FuncWorks.XNA.XTiled {
                 }
             }
         }
+
+        public static void ToScreenCoordinates(ref Rectangle mapCoordinates, ref Rectangle cameraLocation, ref Rectangle screenCoordinates)
+        {
+            screenCoordinates.Width = mapCoordinates.Width;
+            screenCoordinates.Height = mapCoordinates.Height;
+            screenCoordinates.X = mapCoordinates.X - cameraLocation.X;
+            screenCoordinates.Y = mapCoordinates.Y - cameraLocation.Y;
+        }
+
+        public static void ToScreenCoordinates(ref Vector2 mapCoordinates, ref Rectangle cameraLocation, ref Vector2 screenCoordinates)
+        {
+            screenCoordinates.X = mapCoordinates.X - cameraLocation.X;
+            screenCoordinates.Y = mapCoordinates.Y - cameraLocation.Y;            
+        }
     }
 }
