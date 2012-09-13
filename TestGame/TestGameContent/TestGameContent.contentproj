@@ -58,50 +58,56 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="sewers.tmx">
+    <None Include="sewers.tmx">
       <Name>sewers</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="isometric_grass_and_water.tmx">
+    <None Include="isometric_grass_and_water.tmx">
       <Name>isometric_grass_and_water</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="perspective_walls.tmx">
+    <None Include="perspective_walls.tmx">
       <Name>perspective_walls</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </Compile>
-    <Compile Include="desert_base64_uncompressed.tmx">
+    </None>
+    <None Include="desert_base64_uncompressed.tmx">
       <Name>desert_base64_uncompressed</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </Compile>
-    <Compile Include="desert_base64_gzip.tmx">
+    </None>
+    <None Include="desert_base64_gzip.tmx">
       <Name>desert_base64_gzip</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </Compile>
-    <Compile Include="desert_base64_zlib.tmx">
+    </None>
+    <None Include="desert_base64_zlib.tmx">
       <Name>desert_base64_zlib</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </Compile>
-    <Compile Include="isometric_5_10.tmx">
+    </None>
+    <None Include="isometric_5_10.tmx">
       <Name>isometric_5_10</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </Compile>
-    <Compile Include="isometric_10_5.tmx">
+    </None>
+    <None Include="isometric_10_5.tmx">
       <Name>isometric_10_5</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
+    </None>
+    <Compile Include="subfolder\desert_fld_test.tmx">
+      <SubType>Designer</SubType>
+      <Name>desert_fld_test</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
     </Compile>
@@ -110,6 +116,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
