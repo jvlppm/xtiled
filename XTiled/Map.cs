@@ -205,6 +205,11 @@ namespace FuncWorks.XNA.XTiled {
             }
         }
 
+        public Rectangle Translate(Rectangle location, Rectangle relativeTo) {
+            location.Offset(location.X - relativeTo.X, location.Y - relativeTo.Y);
+            return location; 
+        }
+
         public static void ToScreenCoordinates(ref Rectangle mapCoordinates, ref Rectangle cameraLocation, ref Rectangle screenCoordinates)
         {
             screenCoordinates.Width = mapCoordinates.Width;
