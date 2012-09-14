@@ -101,7 +101,7 @@ namespace TestGame {
             else
                 spriteBatch.Begin();
 
-            maps[mapIdx].Draw(spriteBatch, mapView, screen);
+            maps[mapIdx].Draw(spriteBatch, mapView);
             spriteBatch.End();
 
             base.Draw(gameTime);

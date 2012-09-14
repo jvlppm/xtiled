@@ -58,53 +58,53 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sewers.tmx">
+    <Compile Include="sewers.tmx">
       <Name>sewers</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </None>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="isometric_grass_and_water.tmx">
+    <Compile Include="isometric_grass_and_water.tmx">
       <Name>isometric_grass_and_water</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </None>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="perspective_walls.tmx">
+    <Compile Include="perspective_walls.tmx">
       <Name>perspective_walls</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="desert_base64_uncompressed.tmx">
+    </Compile>
+    <Compile Include="desert_base64_uncompressed.tmx">
       <Name>desert_base64_uncompressed</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </None>
-    <None Include="desert_base64_gzip.tmx">
+    </Compile>
+    <Compile Include="desert_base64_gzip.tmx">
       <Name>desert_base64_gzip</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </None>
-    <None Include="desert_base64_zlib.tmx">
+    </Compile>
+    <Compile Include="desert_base64_zlib.tmx">
       <Name>desert_base64_zlib</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </None>
-    <None Include="isometric_5_10.tmx">
+    </Compile>
+    <Compile Include="isometric_5_10.tmx">
       <Name>isometric_5_10</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </None>
-    <None Include="isometric_10_5.tmx">
+    </Compile>
+    <Compile Include="isometric_10_5.tmx">
       <Name>isometric_10_5</Name>
       <Importer>TMXContentImporter</Importer>
       <Processor>TMXContentProcessor</Processor>
-    </None>
+    </Compile>
     <Compile Include="subfolder\desert_fld_test.tmx">
       <SubType>Designer</SubType>
       <Name>desert_fld_test</Name>

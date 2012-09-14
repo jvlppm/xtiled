@@ -96,46 +96,42 @@ namespace FuncWorks.XNA.XTiled {
         /// Draws all visible tile layers
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-        /// <param name="source">Region of the map in pixels to draw</param>
-        /// <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
-        public void Draw(SpriteBatch spriteBatch, Rectangle source, Rectangle target) {
-            this.Draw(spriteBatch, ref source, ref target, false);
+        /// <param name="region">Region of the map in pixels to draw</param>
+        public void Draw(SpriteBatch spriteBatch, Rectangle region) {
+            this.Draw(spriteBatch, ref region, false);
         }
 
         /// <summary>
         /// Draws all visible tile layers
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-        /// <param name="source">Region of the map in pixels to draw</param>
-        /// <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
-        public void Draw(SpriteBatch spriteBatch, ref Rectangle source, ref Rectangle target) {
-            this.Draw(spriteBatch, ref source, ref target, false);
+        /// <param name="region">Region of the map in pixels to draw</param>
+        public void Draw(SpriteBatch spriteBatch, ref Rectangle region) {
+            this.Draw(spriteBatch, ref region, false);
         }
 
         /// <summary>
         /// Draws all visible tile layers
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-        /// <param name="source">Region of the map in pixels to draw</param>
-        /// <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
         /// <param name="drawHiddenLayers">If true, draws layers regardless of TileLayer.Visible flag</param>
-        public void Draw(SpriteBatch spriteBatch, Rectangle source, Rectangle target, Boolean drawHiddenLayers) {
-            this.Draw(spriteBatch, ref source, ref target, drawHiddenLayers);
+        public void Draw(SpriteBatch spriteBatch, Rectangle region, Boolean drawHiddenLayers) {
+            this.Draw(spriteBatch, ref region, drawHiddenLayers);
         }
 
         /// <summary>
         /// Draws all visible tile layers
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-        /// <param name="source">Region of the map in pixels to draw</param>
-        /// <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
         /// <param name="drawHiddenLayers">If true, draws layers regardless of TileLayer.Visible flag</param>
-        public void Draw(SpriteBatch spriteBatch, ref Rectangle source, ref Rectangle target, Boolean drawHiddenLayers) {
+        public void Draw(SpriteBatch spriteBatch, ref Rectangle region, Boolean drawHiddenLayers) {
 
-            Int32 txMin = source.X / this.TileWidth;
-            Int32 txMax = (source.X + source.Width) / this.TileWidth;
-            Int32 tyMin = source.Y / this.TileHeight;
-            Int32 tyMax = (source.Y + source.Height) / this.TileHeight;
+            Int32 txMin = region.X / this.TileWidth;
+            Int32 txMax = (region.X + region.Width) / this.TileWidth;
+            Int32 tyMin = region.Y / this.TileHeight;
+            Int32 tyMax = (region.Y + region.Height) / this.TileHeight;
 
             if (this.Orientation == MapOrientation.Isometric) {
                 tyMax = tyMax * 2 + 1;
@@ -144,7 +140,7 @@ namespace FuncWorks.XNA.XTiled {
 
             for (int l = 0; l < this.TileLayers.Count; l++) {
                 if (this.TileLayers[l].Visible || drawHiddenLayers) {
-                    DrawLayer(spriteBatch, l, ref source, ref target, txMin, txMax, tyMin, tyMax, 0);
+                    DrawLayer(spriteBatch, l, ref region, txMin, txMax, tyMin, tyMax, 0);
                 }
             }
         }
@@ -154,11 +150,10 @@ namespace FuncWorks.XNA.XTiled {
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
         /// <param name="layerID">Index of the layer to draw in the Map.TileLayers collection</param>
-        /// <param name="source">Region of the map in pixels to draw</param>
-        /// <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
         /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
-        public void DrawLayer(SpriteBatch spriteBatch, Int32 layerID, Rectangle source, Rectangle target, Single layerDepth) {
-            DrawLayer(spriteBatch, layerID, ref source, ref target, layerDepth);
+        public void DrawLayer(SpriteBatch spriteBatch, Int32 layerID, Rectangle region, Single layerDepth) {
+            DrawLayer(spriteBatch, layerID, ref region, layerDepth);
         }
 
         /// <summary>
@@ -166,30 +161,29 @@ namespace FuncWorks.XNA.XTiled {
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
         /// <param name="layerID">Index of the layer to draw in the Map.TileLayers collection</param>
-        /// <param name="source">Region of the map in pixels to draw</param>
-        /// <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
         /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
-        public void DrawLayer(SpriteBatch spriteBatch, Int32 layerID, ref Rectangle source, ref Rectangle target, Single layerDepth) {
-            Int32 txMin = source.X / this.TileWidth;
-            Int32 txMax = (source.X + source.Width) / this.TileWidth;
-            Int32 tyMin = source.Y / this.TileHeight;
-            Int32 tyMax = (source.Y + source.Height) / this.TileHeight;
+        public void DrawLayer(SpriteBatch spriteBatch, Int32 layerID, ref Rectangle region, Single layerDepth) {
+            Int32 txMin = region.X / this.TileWidth;
+            Int32 txMax = (region.X + region.Width) / this.TileWidth;
+            Int32 tyMin = region.Y / this.TileHeight;
+            Int32 tyMax = (region.Y + region.Height) / this.TileHeight;
 
             if (this.Orientation == MapOrientation.Isometric) {
                 tyMax = tyMax * 2 + 1;
                 txMax = txMax * 2 + 1;
             }
 
-            DrawLayer(spriteBatch, layerID, ref source, ref target, txMin, txMax, tyMin, tyMax, layerDepth);
+            DrawLayer(spriteBatch, layerID, ref region, txMin, txMax, tyMin, tyMax, layerDepth);
         }
 
-        private void DrawLayer(SpriteBatch spriteBatch, Int32 layerID, ref Rectangle source, ref Rectangle target, Int32 txMin, Int32 txMax, Int32 tyMin, Int32 tyMax, Single layerDepth) {
+        private void DrawLayer(SpriteBatch spriteBatch, Int32 layerID, ref Rectangle region, Int32 txMin, Int32 txMax, Int32 tyMin, Int32 tyMax, Single layerDepth) {
             for (int y = tyMin; y <= tyMax; y++) {
                 for (int x = txMin; x <= txMax; x++) {
                     if (x < this.TileLayers[layerID].Tiles.Length && y < this.TileLayers[layerID].Tiles[x].Length && this.TileLayers[layerID].Tiles[x][y] != null) {
                         Rectangle tileTarget = this.TileLayers[layerID].Tiles[x][y].Target;
-                        tileTarget.X = tileTarget.X - source.X + target.X;
-                        tileTarget.Y = tileTarget.Y - source.Y + target.Y;
+                        tileTarget.X = tileTarget.X - region.X;
+                        tileTarget.Y = tileTarget.Y - region.Y;
 
                         spriteBatch.Draw(
                             this.Tilesets[this.SourceTiles[this.TileLayers[layerID].Tiles[x][y].SourceID].TilesetID].Texture,
@@ -205,27 +199,68 @@ namespace FuncWorks.XNA.XTiled {
             }
         }
 
-        public Rectangle Translate(Rectangle location, Rectangle relativeTo) {
+        /// <summary>
+        /// Translates a location to screen space
+        /// </summary>
+        /// <param name="location">The location in map pixel coordinates</param>
+        /// <param name="relativeTo">Region of the map that is on screen</param>
+        /// <returns>A location converted to screen space</returns>
+        public static Rectangle Translate(Rectangle location, Rectangle relativeTo) {
             location.Offset(location.X - relativeTo.X, location.Y - relativeTo.Y);
             return location; 
         }
-        
-        public void Translate(ref Rectangle location, ref Rectangle relativeTo) {
+
+        /// <summary>
+        /// Translates a location to screen space
+        /// </summary>
+        /// <param name="location">The location in map pixel coordinates</param>
+        /// <param name="relativeTo">Region of the map that is on screen</param>
+        public static void Translate(ref Rectangle location, ref Rectangle relativeTo) {
             location.Offset(location.X - relativeTo.X, location.Y - relativeTo.Y);
         }
-        
-        public static void ToScreenCoordinates(ref Rectangle mapCoordinates, ref Rectangle cameraLocation, ref Rectangle screenCoordinates)
-        {
-            screenCoordinates.Width = mapCoordinates.Width;
-            screenCoordinates.Height = mapCoordinates.Height;
-            screenCoordinates.X = mapCoordinates.X - cameraLocation.X;
-            screenCoordinates.Y = mapCoordinates.Y - cameraLocation.Y;
+
+        /// <summary>
+        /// Translates a location to screen space
+        /// </summary>
+        /// <param name="location">The location in map pixel coordinates</param>
+        /// <param name="relativeTo">Region of the map that is on screen</param>
+        /// <returns>A location converted to screen space</returns>
+        public static Point Translate(Point location, Rectangle relativeTo) {
+            location.X = location.X - relativeTo.X;
+            location.Y = location.Y - relativeTo.Y;
+            return location;
         }
 
-        public static void ToScreenCoordinates(ref Vector2 mapCoordinates, ref Rectangle cameraLocation, ref Vector2 screenCoordinates)
-        {
-            screenCoordinates.X = mapCoordinates.X - cameraLocation.X;
-            screenCoordinates.Y = mapCoordinates.Y - cameraLocation.Y;            
+        /// <summary>
+        /// Translates a location to screen space
+        /// </summary>
+        /// <param name="location">The location in map pixel coordinates</param>
+        /// <param name="relativeTo">Region of the map that is on screen</param>
+        public static void Translate(ref Point location, ref Rectangle relativeTo) {
+            location.X = location.X - relativeTo.X;
+            location.Y = location.Y - relativeTo.Y;
+        }
+
+        /// <summary>
+        /// Translates a location to screen space
+        /// </summary>
+        /// <param name="location">The location in map pixel coordinates</param>
+        /// <param name="relativeTo">Region of the map that is on screen</param>
+        /// <returns>A location converted to screen space</returns>
+        public static Vector2 Translate(Vector2 location, Rectangle relativeTo) {
+            location.X = location.X - relativeTo.X;
+            location.Y = location.Y - relativeTo.Y;
+            return location;
+        }
+
+        /// <summary>
+        /// Translates a location to screen space
+        /// </summary>
+        /// <param name="location">The location in map pixel coordinates</param>
+        /// <param name="relativeTo">Region of the map that is on screen</param>
+        public static void Translate(ref Vector2 location, ref Rectangle relativeTo) {
+            location.X = location.X - relativeTo.X;
+            location.Y = location.Y - relativeTo.Y;
         }
     }
 }
