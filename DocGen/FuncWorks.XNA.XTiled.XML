@@ -239,59 +239,98 @@
             Order of tile and object layers combined, first is the bottom layer
             </summary>
         </member>
-        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle)">
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle)">
             <summary>
             Draws all visible tile layers
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-            <param name="source">Region of the map in pixels to draw</param>
-            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="region">Region of the map in pixels to draw</param>
         </member>
-        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@)">
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle@)">
             <summary>
             Draws all visible tile layers
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-            <param name="source">Region of the map in pixels to draw</param>
-            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="region">Region of the map in pixels to draw</param>
         </member>
-        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle,System.Boolean)">
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,System.Boolean)">
             <summary>
             Draws all visible tile layers
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-            <param name="source">Region of the map in pixels to draw</param>
-            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="region">Region of the map in pixels to draw</param>
             <param name="drawHiddenLayers">If true, draws layers regardless of TileLayer.Visible flag</param>
         </member>
-        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@,System.Boolean)">
+        <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle@,System.Boolean)">
             <summary>
             Draws all visible tile layers
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-            <param name="source">Region of the map in pixels to draw</param>
-            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="region">Region of the map in pixels to draw</param>
             <param name="drawHiddenLayers">If true, draws layers regardless of TileLayer.Visible flag</param>
         </member>
-        <member name="M:FuncWorks.XNA.XTiled.Map.DrawLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle,System.Single)">
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle,System.Single)">
             <summary>
             Draws given tile layer
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
             <param name="layerID">Index of the layer to draw in the Map.TileLayers collection</param>
-            <param name="source">Region of the map in pixels to draw</param>
-            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="region">Region of the map in pixels to draw</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         </member>
-        <member name="M:FuncWorks.XNA.XTiled.Map.DrawLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@,System.Single)">
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle@,System.Single)">
             <summary>
             Draws given tile layer
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
             <param name="layerID">Index of the layer to draw in the Map.TileLayers collection</param>
-            <param name="source">Region of the map in pixels to draw</param>
-            <param name="target">Screen space to draw the map to; Height and Width should match source, will not scale the map</param>
+            <param name="region">Region of the map in pixels to draw</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Translates a location to screen space
+            </summary>
+            <param name="location">The location in map pixel coordinates</param>
+            <param name="relativeTo">Region of the map that is on screen</param>
+            <returns>A location converted to screen space</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Translates a location to screen space
+            </summary>
+            <param name="location">The location in map pixel coordinates</param>
+            <param name="relativeTo">Region of the map that is on screen</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Point,Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Translates a location to screen space
+            </summary>
+            <param name="location">The location in map pixel coordinates</param>
+            <param name="relativeTo">Region of the map that is on screen</param>
+            <returns>A location converted to screen space</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Point@,Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Translates a location to screen space
+            </summary>
+            <param name="location">The location in map pixel coordinates</param>
+            <param name="relativeTo">Region of the map that is on screen</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Translates a location to screen space
+            </summary>
+            <param name="location">The location in map pixel coordinates</param>
+            <param name="relativeTo">Region of the map that is on screen</param>
+            <returns>A location converted to screen space</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Vector2@,Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Translates a location to screen space
+            </summary>
+            <param name="location">The location in map pixel coordinates</param>
+            <param name="relativeTo">Region of the map that is on screen</param>
         </member>
         <member name="T:FuncWorks.XNA.XTiled.Tileset">
             <summary>
