@@ -32,11 +32,11 @@ namespace FuncWorks.XNA.XTiled {
         /// </summary>
         public Dictionary<String, Property> Properties;
         /// <summary>
-        /// A list of points that form a closed shape (last point should be linked to the first)
+        /// A sequence of lines that form a closed shape; can be null if there is no Polygon with this object
         /// </summary>
         public Polygon Polygon;
         /// <summary>
-        /// A list of points that form a line
+        /// A sequence of lines; can be null if there is no Polyline with this object
         /// </summary>
         public Polyline Polyline;
     }

@@ -128,12 +128,12 @@
         </member>
         <member name="F:FuncWorks.XNA.XTiled.MapObject.Polygon">
             <summary>
-            A list of points that form a closed shape (last point should be linked to the first)
+            A sequence of lines that form a closed shape; can be null if there is no Polygon with this object
             </summary>
         </member>
         <member name="F:FuncWorks.XNA.XTiled.MapObject.Polyline">
             <summary>
-            A list of points that form a line
+            A sequence of lines; can be null if there is no Polyline with this object
             </summary>
         </member>
         <member name="T:FuncWorks.XNA.XTiled.MapOrientation">
@@ -502,6 +502,51 @@
         <member name="F:FuncWorks.XNA.XTiled.TileData.Rotation">
             <summary>
             Rotation of the placed tile, in radians
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.Polygon">
+            <summary>
+            A sequence of lines that form a closed shape
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polygon.Points">
+            <summary>
+            The points that make up the polygon, in order
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polygon.Lines">
+            <summary>
+            The lines that make up the polygon, in order
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.Polyline">
+            <summary>
+            A sequence of lines
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polyline.Points">
+            <summary>
+            The points that make up the polyline, in order
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polyline.Lines">
+            <summary>
+            The lines that make up the polyline, in order
+            </summary>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.Line">
+            <summary>
+            A list of two points that define a line
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Line.Start">
+            <summary>
+            The starting point of the line
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Line.End">
+            <summary>
+            The ending point of the line
             </summary>
         </member>
     </members>
