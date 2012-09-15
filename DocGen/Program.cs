@@ -36,6 +36,15 @@ namespace DocGen {
             sw.WriteLine("== MapObject ==");
             WriteObject(doc, sw, "FuncWorks.XNA.XTiled.MapObject");
 
+            sw.WriteLine("== Polyline ==");
+            WriteObject(doc, sw, "FuncWorks.XNA.XTiled.Polyline");
+
+            sw.WriteLine("== Polygon ==");
+            WriteObject(doc, sw, "FuncWorks.XNA.XTiled.Polygon");
+
+            sw.WriteLine("== Line ==");
+            WriteObject(doc, sw, "FuncWorks.XNA.XTiled.Line");
+
             sw.WriteLine("== Property ==");
             WriteObject(doc, sw, "FuncWorks.XNA.XTiled.Property");
 
