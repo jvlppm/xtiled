@@ -353,22 +353,51 @@ namespace FuncWorks.XNA.XTiled {
 
                     o.Polygon = null;
                     if (oElem.Element("polygon") != null) {
+                        o.Polygon = new Polygon();
                         List<Point> points = new List<Point>();
                         foreach (var point in oElem.Element("polygon").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
                             String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                            points.Add(new Point(Convert.ToInt32(coord[0]), Convert.ToInt32(coord[1])));
+                            points.Add(new Point(o.Bounds.X + Convert.ToInt32(coord[0]), o.Bounds.Y + Convert.ToInt32(coord[1])));
                         }
-                        o.Polygon = Polygon.FromPoints(points.ToArray());
+                        points.Add(points.First()); // connect the last point to the first and close the polygon
+
+                        o.Polygon.Points = points.ToArray();
+                        if (o.Polygon.Points.Length > 1) {
+                            o.Polygon.Lines = new Line[o.Polygon.Points.Length - 1];
+                            for (int i = 0; i < o.Polygon.Lines.Length; i++) {
+                                o.Polygon.Lines[i].Start = points[i];
+                                o.Polygon.Lines[i].End = points[i + 1];
+                            }
+                        }
+
+                        o.Bounds.X = points.Min(x => x.X);
+                        o.Bounds.Y = points.Min(x => x.Y);
+                        o.Bounds.Width = points.Max(x => x.X) - points.Min(x => x.X);
+                        o.Bounds.Height = points.Max(x => x.Y) - points.Min(x => x.Y);
                     }
 
                     o.Polyline = null;
                     if (oElem.Element("polyline") != null) {
+                        o.Polyline = new Polyline();
                         List<Point> points = new List<Point>();
                         foreach (var point in oElem.Element("polyline").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
                             String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                            points.Add(new Point(Convert.ToInt32(coord[0]), Convert.ToInt32(coord[1])));
+                            points.Add(new Point(o.Bounds.X + Convert.ToInt32(coord[0]), o.Bounds.Y + Convert.ToInt32(coord[1])));
                         }
-                        o.Polyline = Polyline.FromPoints(points.ToArray());
+
+                        o.Polyline.Points = points.ToArray();
+                        if (o.Polyline.Points.Length > 1) {
+                            o.Polyline.Lines = new Line[o.Polyline.Points.Length - 1];
+                            for (int i = 0; i < o.Polyline.Lines.Length; i++) {
+                                o.Polyline.Lines[i].Start = points[i];
+                                o.Polyline.Lines[i].End = points[i + 1];
+                            }
+                        }
+
+                        o.Bounds.X = points.Min(x => x.X);
+                        o.Bounds.Y = points.Min(x => x.Y);
+                        o.Bounds.Width = points.Max(x => x.X) - points.Min(x => x.X);
+                        o.Bounds.Height = points.Max(x => x.Y) - points.Min(x => x.Y);
                     }
 
                     objects.Add(o);

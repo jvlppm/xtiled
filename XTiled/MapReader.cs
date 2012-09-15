@@ -182,23 +182,37 @@ namespace FuncWorks.XNA.XTiled {
                         m.ObjectLayers[i].MapObjects[mo].TileID = null;
 
                     if (input.ReadBoolean()) {
-                        Point[] points = new Point[input.ReadInt32()];
-                        for (int p = 0; p < points.Length; p++) {
-                            points[p].X = input.ReadInt32();
-                            points[p].Y = input.ReadInt32();
+                        m.ObjectLayers[i].MapObjects[mo].Polyline = new Polyline();
+                        m.ObjectLayers[i].MapObjects[mo].Polyline.Points = new Point[input.ReadInt32()];
+                        for (int p = 0; p < m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Length; p++) {
+                            m.ObjectLayers[i].MapObjects[mo].Polyline.Points[p].X = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polyline.Points[p].Y = input.ReadInt32();
                         }
-                        m.ObjectLayers[i].MapObjects[mo].Polyline = Polyline.FromPoints(points);
+                        m.ObjectLayers[i].MapObjects[mo].Polyline.Lines = new Line[input.ReadInt32()];
+                        for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polyline.Lines.Length; l++) {
+                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].Start.X = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].Start.Y = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].End.X = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].End.Y = input.ReadInt32();
+                        }
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polyline = null;
 
                     if (input.ReadBoolean()) {
-                        Point[] points = new Point[input.ReadInt32()];
-                        for (int p = 0; p < points.Length; p++) {
-                            points[p].X = input.ReadInt32();
-                            points[p].Y = input.ReadInt32();
+                        m.ObjectLayers[i].MapObjects[mo].Polygon = new Polygon();
+                        m.ObjectLayers[i].MapObjects[mo].Polygon.Points = new Point[input.ReadInt32()];
+                        for (int p = 0; p < m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Length; p++) {
+                            m.ObjectLayers[i].MapObjects[mo].Polygon.Points[p].X = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polygon.Points[p].Y = input.ReadInt32();
                         }
-                        m.ObjectLayers[i].MapObjects[mo].Polygon = Polygon.FromPoints(points);
+                        m.ObjectLayers[i].MapObjects[mo].Polygon.Lines = new Line[input.ReadInt32()];
+                        for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polygon.Lines.Length; l++) {
+                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].Start.X = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].Start.Y = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].End.X = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].End.Y = input.ReadInt32();
+                        }
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polygon = null;
