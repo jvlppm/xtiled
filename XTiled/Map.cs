@@ -206,7 +206,8 @@ namespace FuncWorks.XNA.XTiled {
         /// <param name="relativeTo">Region of the map that is on screen</param>
         /// <returns>A location converted to screen space</returns>
         public static Rectangle Translate(Rectangle location, Rectangle relativeTo) {
-            location.Offset(location.X - relativeTo.X, location.Y - relativeTo.Y);
+            location.X = location.X - relativeTo.X;
+            location.Y = location.Y - relativeTo.Y;
             return location; 
         }
 
@@ -216,7 +217,8 @@ namespace FuncWorks.XNA.XTiled {
         /// <param name="location">The location in map pixel coordinates</param>
         /// <param name="relativeTo">Region of the map that is on screen</param>
         public static void Translate(ref Rectangle location, ref Rectangle relativeTo) {
-            location.Offset(location.X - relativeTo.X, location.Y - relativeTo.Y);
+            location.X = location.X - relativeTo.X;
+            location.Y = location.Y - relativeTo.Y;
         }
 
         /// <summary>
