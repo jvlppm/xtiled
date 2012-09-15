@@ -146,8 +146,8 @@ namespace FuncWorks.XNA.XTiled {
 
                     output.Write(m.Polyline != null);
                     if (m.Polyline != null) {
-                        output.Write(m.Polyline.Length);
-                        foreach (var p in m.Polyline) {
+                        output.Write(m.Polyline.Points.Length);
+                        foreach (var p in m.Polyline.Points) {
                             output.Write(p.X);
                             output.Write(p.Y);
                         }
@@ -155,8 +155,8 @@ namespace FuncWorks.XNA.XTiled {
 
                     output.Write(m.Polygon != null);
                     if (m.Polygon != null) {
-                        output.Write(m.Polygon.Length);
-                        foreach (var p in m.Polygon) {
+                        output.Write(m.Polygon.Points.Length);
+                        foreach (var p in m.Polygon.Points) {
                             output.Write(p.X);
                             output.Write(p.Y);
                         }

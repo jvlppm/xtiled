@@ -44,10 +44,13 @@
   <ItemGroup />
   <ItemGroup>
     <Compile Include="LayerList.cs" />
+    <Compile Include="Line.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="MapReader.cs" />
     <Compile Include="ObjectLayer.cs" />
+    <Compile Include="Polygon.cs" />
+    <Compile Include="Polyline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="Tile.cs" />

@@ -71,6 +71,9 @@
     <Compile Include="..\XTiled\LayerList.cs">
       <Link>LayerList.cs</Link>
     </Compile>
+    <Compile Include="..\XTiled\Line.cs">
+      <Link>Line.cs</Link>
+    </Compile>
     <Compile Include="..\XTiled\Map.cs">
       <Link>Map.cs</Link>
     </Compile>
@@ -79,6 +82,12 @@
     </Compile>
     <Compile Include="..\XTiled\ObjectLayer.cs">
       <Link>ObjectLayer.cs</Link>
+    </Compile>
+    <Compile Include="..\XTiled\Polygon.cs">
+      <Link>Polygon.cs</Link>
+    </Compile>
+    <Compile Include="..\XTiled\Polyline.cs">
+      <Link>Polyline.cs</Link>
     </Compile>
     <Compile Include="..\XTiled\Property.cs">
       <Link>Property.cs</Link>

@@ -34,10 +34,10 @@ namespace FuncWorks.XNA.XTiled {
         /// <summary>
         /// A list of points that form a closed shape (last point should be linked to the first)
         /// </summary>
-        public Point[] Polygon;
+        public Polygon Polygon;
         /// <summary>
         /// A list of points that form a line
         /// </summary>
-        public Point[] Polyline;
+        public Polyline Polyline;
     }
 }

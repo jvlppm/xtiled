@@ -358,7 +358,7 @@ namespace FuncWorks.XNA.XTiled {
                             String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                             points.Add(new Point(Convert.ToInt32(coord[0]), Convert.ToInt32(coord[1])));
                         }
-                        o.Polygon = points.ToArray();
+                        o.Polygon = Polygon.FromPoints(points.ToArray());
                     }
 
                     o.Polyline = null;
@@ -368,7 +368,7 @@ namespace FuncWorks.XNA.XTiled {
                             String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                             points.Add(new Point(Convert.ToInt32(coord[0]), Convert.ToInt32(coord[1])));
                         }
-                        o.Polyline = points.ToArray();
+                        o.Polyline = Polyline.FromPoints(points.ToArray());
                     }
 
                     objects.Add(o);

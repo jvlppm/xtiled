@@ -182,21 +182,23 @@ namespace FuncWorks.XNA.XTiled {
                         m.ObjectLayers[i].MapObjects[mo].TileID = null;
 
                     if (input.ReadBoolean()) {
-                        m.ObjectLayers[i].MapObjects[mo].Polyline = new Point[input.ReadInt32()];
-                        for (int p = 0; p < m.ObjectLayers[i].MapObjects[mo].Polyline.Length; p++) {
-                            m.ObjectLayers[i].MapObjects[mo].Polyline[p].X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polyline[p].Y = input.ReadInt32();
+                        Point[] points = new Point[input.ReadInt32()];
+                        for (int p = 0; p < points.Length; p++) {
+                            points[p].X = input.ReadInt32();
+                            points[p].Y = input.ReadInt32();
                         }
+                        m.ObjectLayers[i].MapObjects[mo].Polyline = Polyline.FromPoints(points);
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polyline = null;
 
                     if (input.ReadBoolean()) {
-                        m.ObjectLayers[i].MapObjects[mo].Polygon = new Point[input.ReadInt32()];
-                        for (int p = 0; p < m.ObjectLayers[i].MapObjects[mo].Polygon.Length; p++) {
-                            m.ObjectLayers[i].MapObjects[mo].Polygon[p].X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polygon[p].Y = input.ReadInt32();
+                        Point[] points = new Point[input.ReadInt32()];
+                        for (int p = 0; p < points.Length; p++) {
+                            points[p].X = input.ReadInt32();
+                            points[p].Y = input.ReadInt32();
                         }
+                        m.ObjectLayers[i].MapObjects[mo].Polygon = Polygon.FromPoints(points);
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polygon = null;
