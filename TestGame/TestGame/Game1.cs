@@ -20,6 +20,8 @@ namespace TestGame {
         Int32 mapIdx;
         List<Map> maps;
 
+        Texture2D whiteTex;
+
         double actionTimer = 0;
 
         public Game1() {
@@ -48,6 +50,9 @@ namespace TestGame {
             maps.Add(Content.Load<Map>("isometric_5_10"));
             maps.Add(Content.Load<Map>("perspective_walls"));
             maps.Add(Content.Load<Map>("sewers"));
+
+            whiteTex = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            whiteTex.SetData(new[] { Color.White });
 
             mapIdx = 0;
         }
@@ -102,6 +107,18 @@ namespace TestGame {
                 spriteBatch.Begin();
 
             maps[mapIdx].Draw(spriteBatch, mapView);
+
+            // line render test
+            for (int ol = 0; ol < maps[mapIdx].ObjectLayers.Count; ol++) {
+                for (int o = 0; o < maps[mapIdx].ObjectLayers[ol].MapObjects.Length; o++) {
+                    if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polyline != null) {
+                        maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polyline.Draw(spriteBatch, mapView, whiteTex, 2.0f, maps[mapIdx].ObjectLayers[ol].Color ?? Color.White, 0);
+                    }
+                    if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon != null) {
+                        maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon.Draw(spriteBatch, mapView, whiteTex, 2.0f, maps[mapIdx].ObjectLayers[ol].Color ?? Color.White, 0);
+                    }
+                }
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);

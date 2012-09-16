@@ -190,10 +190,12 @@ namespace FuncWorks.XNA.XTiled {
                         }
                         m.ObjectLayers[i].MapObjects[mo].Polyline.Lines = new Line[input.ReadInt32()];
                         for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polyline.Lines.Length; l++) {
-                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].Start.X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].Start.Y = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].End.X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l].End.Y = input.ReadInt32();
+                            Point Start, End;
+                            Start.X = input.ReadInt32();
+                            Start.Y = input.ReadInt32();
+                            End.X = input.ReadInt32();
+                            End.Y = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l] = Line.FromPoints(Start, End);
                         }
                     }
                     else
@@ -208,10 +210,12 @@ namespace FuncWorks.XNA.XTiled {
                         }
                         m.ObjectLayers[i].MapObjects[mo].Polygon.Lines = new Line[input.ReadInt32()];
                         for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polygon.Lines.Length; l++) {
-                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].Start.X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].Start.Y = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].End.X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l].End.Y = input.ReadInt32();
+                            Point Start, End;
+                            Start.X = input.ReadInt32();
+                            Start.Y = input.ReadInt32();
+                            End.X = input.ReadInt32();
+                            End.Y = input.ReadInt32();
+                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l] = Line.FromPoints(Start, End);
                         }
                     }
                     else

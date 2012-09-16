@@ -87,14 +87,12 @@ Global
 		{0CE0D810-4503-4125-966B-90EF05A29434}.Release|Xbox 360.Build.0 = Release|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Debug|Mixed Platforms.ActiveCfg = Debug|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Debug|Mixed Platforms.Build.0 = Debug|Xbox 360
-		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Debug|Mixed Platforms.Deploy.0 = Debug|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Debug|x86.ActiveCfg = Debug|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Debug|Xbox 360.Deploy.0 = Debug|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Mixed Platforms.ActiveCfg = Release|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Mixed Platforms.Build.0 = Release|Xbox 360
-		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Mixed Platforms.Deploy.0 = Release|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|x86.ActiveCfg = Release|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
 		{F43A62E7-B8CD-4702-BD65-3152504EA499}.Release|Xbox 360.Build.0 = Release|Xbox 360
