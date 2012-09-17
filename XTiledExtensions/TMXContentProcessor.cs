@@ -343,8 +343,13 @@ namespace FuncWorks.XNA.XTiled {
                     o.Bounds.Y = oElem.Attribute("y") == null ? 0 : Convert.ToInt32(oElem.Attribute("y").Value);
                     o.Bounds.Width = oElem.Attribute("width") == null ? 0 : Convert.ToInt32(oElem.Attribute("width").Value);
                     o.Bounds.Height = oElem.Attribute("height") == null ? 0 : Convert.ToInt32(oElem.Attribute("height").Value);
-                    o.TileID = oElem.Attribute("gid") == null ? null : (Int32?)Convert.ToInt32(oElem.Attribute("gid").Value);
+                    o.TileID = oElem.Attribute("gid") == null ? null : (Int32?)gid2id[Convert.ToUInt32(oElem.Attribute("gid").Value)];
                     o.Visible = oElem.Attribute("visible") == null ? true : oElem.Attribute("visible").Equals("1");
+
+                    if (o.TileID.HasValue) {
+                        o.Bounds.Width = map.SourceTiles[o.TileID.Value].Source.Width;
+                        o.Bounds.Height = map.SourceTiles[o.TileID.Value].Source.Height;
+                    }
 
                     o.Properties = new Dictionary<String, Property>();
                     if (oElem.Element("properties") != null)

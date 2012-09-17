@@ -13,6 +13,12 @@ namespace FuncWorks.XNA.XTiled {
             Map m = new Map();
             Int32 props = 0;
 
+            IGraphicsDeviceService graphicsDeviceService = (IGraphicsDeviceService)input.ContentManager.ServiceProvider.GetService(typeof(IGraphicsDeviceService));
+            GraphicsDevice graphicsDevice = graphicsDeviceService.GraphicsDevice;
+
+            m._whiteTexture = new Texture2D(graphicsDeviceService.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            m._whiteTexture.SetData(new[] { Color.White });
+            
             m.Orientation = input.ReadBoolean() ? MapOrientation.Orthogonal : MapOrientation.Isometric;
             m.Width = input.ReadInt32();
             m.Height = input.ReadInt32();

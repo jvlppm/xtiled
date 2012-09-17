@@ -38,6 +38,9 @@ namespace FuncWorks.XNA.XTiled {
     /// An XTiled TMX Map
     /// </summary>
     public class Map {
+
+        internal Texture2D _whiteTexture;
+
         /// <summary>
         /// Orientation of the map.
         /// </summary>
@@ -199,6 +202,41 @@ namespace FuncWorks.XNA.XTiled {
             }
         }
 
+        public void DrawObjectLayer(SpriteBatch spriteBatch, Int32 objectLayerID, Rectangle region, Single layerDepth) {
+            DrawObjectLayer(spriteBatch, objectLayerID, ref region, layerDepth);
+        }
+
+        public void DrawObjectLayer(SpriteBatch spriteBatch, Int32 objectLayerID, ref Rectangle region, Single layerDepth) {
+            for (int o = 0; o < this.ObjectLayers[objectLayerID].MapObjects.Length; o++) {
+                if (region.Contains(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds) || region.Intersects(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds)) {
+                    if (this.ObjectLayers[objectLayerID].MapObjects[o].Polyline != null) {
+                        this.ObjectLayers[objectLayerID].MapObjects[o].Polyline.Draw(spriteBatch, region, this._whiteTexture, 2.0f, this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor, layerDepth);
+                    }
+                    else if (this.ObjectLayers[objectLayerID].MapObjects[o].Polygon != null) {
+                        this.ObjectLayers[objectLayerID].MapObjects[o].Polygon.Draw(spriteBatch, region, this._whiteTexture, 2.0f, this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor, layerDepth);
+                    }
+                    else if (this.ObjectLayers[objectLayerID].MapObjects[o].TileID.HasValue) {
+                        Rectangle target = Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds, region);
+                        spriteBatch.Draw(
+                            this.Tilesets[this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[o].TileID.Value].TilesetID].Texture,
+                            target,
+                            this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[o].TileID.Value].Source,
+                            this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor,
+                            0,
+                            this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[o].TileID.Value].Origin,
+                            SpriteEffects.None,
+                            layerDepth);
+                    }
+                    else {
+                        Rectangle target = Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds, region);
+                        Color color = this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor;
+                        color.A /= 4;
+                        spriteBatch.Draw(this._whiteTexture, target, null, color, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Translates a location to screen space
         /// </summary>
@@ -208,7 +246,7 @@ namespace FuncWorks.XNA.XTiled {
         public static Rectangle Translate(Rectangle location, Rectangle relativeTo) {
             location.X = location.X - relativeTo.X;
             location.Y = location.Y - relativeTo.Y;
-            return location; 
+            return location;
         }
 
         /// <summary>
