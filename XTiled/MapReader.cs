@@ -196,7 +196,8 @@ namespace FuncWorks.XNA.XTiled {
                         }
                         m.ObjectLayers[i].MapObjects[mo].Polyline.Lines = new Line[input.ReadInt32()];
                         for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polyline.Lines.Length; l++) {
-                            Point Start, End;
+                            Point Start = new Point();
+                            Point End = new Point();
                             Start.X = input.ReadInt32();
                             Start.Y = input.ReadInt32();
                             End.X = input.ReadInt32();
@@ -216,7 +217,8 @@ namespace FuncWorks.XNA.XTiled {
                         }
                         m.ObjectLayers[i].MapObjects[mo].Polygon.Lines = new Line[input.ReadInt32()];
                         for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polygon.Lines.Length; l++) {
-                            Point Start, End;
+                            Point Start = new Point();
+                            Point End = new Point();
                             Start.X = input.ReadInt32();
                             Start.Y = input.ReadInt32();
                             End.X = input.ReadInt32();

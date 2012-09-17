@@ -202,10 +202,24 @@ namespace FuncWorks.XNA.XTiled {
             }
         }
 
+        /// <summary>
+        /// Draws all objects on the given object layer
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="objectLayerID">Index of the layer to draw in the Map.TileLayers collection</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         public void DrawObjectLayer(SpriteBatch spriteBatch, Int32 objectLayerID, Rectangle region, Single layerDepth) {
             DrawObjectLayer(spriteBatch, objectLayerID, ref region, layerDepth);
         }
 
+        /// <summary>
+        /// Draws all objects on the given object layer
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="objectLayerID">Index of the layer to draw in the Map.TileLayers collection</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         public void DrawObjectLayer(SpriteBatch spriteBatch, Int32 objectLayerID, ref Rectangle region, Single layerDepth) {
             for (int o = 0; o < this.ObjectLayers[objectLayerID].MapObjects.Length; o++) {
                 if (region.Contains(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds) || region.Intersects(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds)) {

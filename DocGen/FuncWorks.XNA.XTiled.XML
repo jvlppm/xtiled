@@ -287,6 +287,24 @@
             <param name="region">Region of the map in pixels to draw</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawObjectLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle,System.Single)">
+            <summary>
+            Draws all objects on the given object layer
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.TileLayers collection</param>
+            <param name="region">Region of the map in pixels to draw</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawObjectLayer(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,Microsoft.Xna.Framework.Rectangle@,System.Single)">
+            <summary>
+            Draws all objects on the given object layer
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.TileLayers collection</param>
+            <param name="region">Region of the map in pixels to draw</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
         <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle)">
             <summary>
             Translates a location to screen space
@@ -407,6 +425,58 @@
             Image as an XNA Texture2D instance; null if Map.LoadTextures is false
             </summary>
         </member>
+        <member name="T:FuncWorks.XNA.XTiled.Polyline">
+            <summary>
+            A sequence of lines
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polyline.Points">
+            <summary>
+            The points that make up the polyline, in order
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polyline.Lines">
+            <summary>
+            The lines that make up the polyline, in order
+            </summary>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polyline.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>
+            Draws the lines that make up the Polyline
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="region">Region of the map in pixels to draw</param> 
+            <param name="texture">A texture to use in drawing the lines</param>
+            <param name="lineWidth">The width of the lines in pixels</param>
+            <param name="color">The color value to apply to the given texture</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="T:FuncWorks.XNA.XTiled.Polygon">
+            <summary>
+            A sequence of lines that form a closed shape
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polygon.Points">
+            <summary>
+            The points that make up the polygon, in order
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polygon.Lines">
+            <summary>
+            The lines that make up the polygon, in order
+            </summary>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>
+            Draws the lines that make up the Polygon
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="region">Region of the map in pixels to draw</param> 
+            <param name="texture">A texture to use in drawing the lines</param>
+            <param name="lineWidth">The width of the lines in pixels</param>
+            <param name="color">The color value to apply to the given texture</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
         <member name="T:FuncWorks.XNA.XTiled.MapReader">
             <summary/>
         </member>
@@ -479,6 +549,51 @@
             </summary>
             <param name="value">Value of the property</param>
         </member>
+        <member name="T:FuncWorks.XNA.XTiled.Line">
+            <summary>
+            A list of two points that define a line
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Line.Start">
+            <summary>
+            The starting point of the line
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Line.End">
+            <summary>
+            The ending point of the line
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Line.Length">
+            <summary>
+            Length of the line
+            </summary>
+        </member>
+        <member name="F:FuncWorks.XNA.XTiled.Line.Angle">
+            <summary>
+            Rotation of the line, suitable for using with SpriteBatch
+            </summary>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.FromPoints(Microsoft.Xna.Framework.Point,Microsoft.Xna.Framework.Point)">
+            <summary>
+            Create a line from start and end points and calculate the length and angle
+            </summary>
+            <param name="start">The first point of the line</param>
+            <param name="end">The end of the line</param>
+            <returns>A Line created from the points</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,FuncWorks.XNA.XTiled.Line,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>
+            Draws a Line
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="line">The Line to draw</param>
+            <param name="region">Region of the map in pixels to draw</param> 
+            <param name="texture">A texture to use in drawing the line</param>
+            <param name="lineWidth">The width of the line in pixels</param>
+            <param name="color">The color value to apply to the given texture</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
         <member name="T:FuncWorks.XNA.XTiled.TileData">
             <summary>
             Represents a placed tiled on the map
@@ -502,51 +617,6 @@
         <member name="F:FuncWorks.XNA.XTiled.TileData.Rotation">
             <summary>
             Rotation of the placed tile, in radians
-            </summary>
-        </member>
-        <member name="T:FuncWorks.XNA.XTiled.Polygon">
-            <summary>
-            A sequence of lines that form a closed shape
-            </summary>
-        </member>
-        <member name="F:FuncWorks.XNA.XTiled.Polygon.Points">
-            <summary>
-            The points that make up the polygon, in order
-            </summary>
-        </member>
-        <member name="F:FuncWorks.XNA.XTiled.Polygon.Lines">
-            <summary>
-            The lines that make up the polygon, in order
-            </summary>
-        </member>
-        <member name="T:FuncWorks.XNA.XTiled.Polyline">
-            <summary>
-            A sequence of lines
-            </summary>
-        </member>
-        <member name="F:FuncWorks.XNA.XTiled.Polyline.Points">
-            <summary>
-            The points that make up the polyline, in order
-            </summary>
-        </member>
-        <member name="F:FuncWorks.XNA.XTiled.Polyline.Lines">
-            <summary>
-            The lines that make up the polyline, in order
-            </summary>
-        </member>
-        <member name="T:FuncWorks.XNA.XTiled.Line">
-            <summary>
-            A list of two points that define a line
-            </summary>
-        </member>
-        <member name="F:FuncWorks.XNA.XTiled.Line.Start">
-            <summary>
-            The starting point of the line
-            </summary>
-        </member>
-        <member name="F:FuncWorks.XNA.XTiled.Line.End">
-            <summary>
-            The ending point of the line
             </summary>
         </member>
     </members>

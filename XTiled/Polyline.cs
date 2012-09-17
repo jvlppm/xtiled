@@ -15,7 +15,15 @@ namespace FuncWorks.XNA.XTiled {
         /// The lines that make up the polyline, in order
         /// </summary>
         public Line[] Lines;
-
+        /// <summary>
+        /// Draws the lines that make up the Polyline
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="region">Region of the map in pixels to draw</param> 
+        /// <param name="texture">A texture to use in drawing the lines</param>
+        /// <param name="lineWidth">The width of the lines in pixels</param>
+        /// <param name="color">The color value to apply to the given texture</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         public void Draw(SpriteBatch spriteBatch, Rectangle region, Texture2D texture, Single lineWidth, Color color, Single layerDepth) {
             for (int i = 0; i < Lines.Length; i++) 
                 Line.Draw(spriteBatch, Lines[i], region, texture, lineWidth, color, layerDepth);
