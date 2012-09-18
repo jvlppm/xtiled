@@ -15,10 +15,12 @@ namespace TestGame {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Rectangle screen;
         Rectangle mapView;
         Int32 mapIdx;
         List<Map> maps;
+
+        Rectangle player;
+        Color playerColor;
 
         double actionTimer = 0;
 
@@ -29,10 +31,14 @@ namespace TestGame {
 
         protected override void Initialize() {
             base.Initialize();
-            screen = graphics.GraphicsDevice.Viewport.Bounds;
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
+        
+            player = maps[mapIdx].SourceTiles[0].Source;
+            player.X = mapView.Width / 2 - player.Width / 2;
+            player.Y = mapView.Height / 2 - player.Height / 2;
+            playerColor = Color.White;
         }
 
         protected override void LoadContent() {
@@ -72,8 +78,11 @@ namespace TestGame {
             if (keys.IsKeyDown(Keys.Left) || pad.IsButtonDown(Buttons.DPadLeft))
                 delta.X -= Convert.ToInt32(gameTime.ElapsedGameTime.TotalMilliseconds / 4);
 
-            if (maps[mapIdx].Bounds.Contains(delta))
+            if (maps[mapIdx].Bounds.Contains(delta)) {
+                player.X += delta.X - mapView.X;
+                player.Y += delta.Y - mapView.Y;
                 mapView = delta;
+            }
 
             actionTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
             if ((keys.IsKeyDown(Keys.PageUp) || pad.IsButtonDown(Buttons.RightShoulder)) && actionTimer >= 250) {
@@ -81,12 +90,31 @@ namespace TestGame {
                 mapView.X = 0;
                 mapView.Y = 0;
                 actionTimer = 0;
+
+                player = maps[mapIdx].SourceTiles[0].Source;
+                player.X = mapView.Width / 2 - player.Width / 2;
+                player.Y = mapView.Height / 2 - player.Height / 2;
             }
             if ((keys.IsKeyDown(Keys.PageDown) || pad.IsButtonDown(Buttons.LeftShoulder)) && actionTimer >= 250) {
                 mapIdx = mapIdx - 1 < 0 ? maps.Count - 1 : mapIdx - 1;
                 mapView.X = 0;
                 mapView.Y = 0;
                 actionTimer = 0;
+
+                player = maps[mapIdx].SourceTiles[0].Source;
+                player.X = mapView.Width / 2 - player.Width / 2;
+                player.Y = mapView.Height / 2 - player.Height / 2;
+            }
+
+            playerColor = Color.White;
+            for (int ol = 0; ol < maps[mapIdx].ObjectLayers.Count; ol++) {
+                for (int o = 0; o < maps[mapIdx].ObjectLayers[ol].MapObjects.Length; o++) {
+                    if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon != null &&
+                        maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon.Contains(ref player)) {
+                        playerColor = Color.Red;
+                    }
+                }
+
             }
 
             base.Update(gameTime);
@@ -106,6 +134,12 @@ namespace TestGame {
             // draw object layers test
             for (int ol = 0; ol < maps[mapIdx].ObjectLayers.Count; ol++) 
                 maps[mapIdx].DrawObjectLayer(spriteBatch, ol, mapView, 0);
+
+            // draw player
+            spriteBatch.Draw(maps[mapIdx].Tilesets[maps[mapIdx].SourceTiles[0].TilesetID].Texture,
+                             Map.Translate(player, mapView),
+                             maps[mapIdx].SourceTiles[0].Source,
+                             playerColor);
            
             spriteBatch.End();
 

@@ -11,8 +11,13 @@
   </tile>
  </tileset>
  <layer name="Ground" width="40" height="40">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2YbU7CQBCGB/mBSiKiiQhGqFQFvwpH4CgcxaN4FI/G29BNyWTTbpfdYTT98SRsspt9eGegAxkRZUTfYAN+p1iH5AoMwLXneTj95F5gmwV2yyx+s8B3nDq/mORZ3YERuFfgY6MDzkCXece4awwmDXgAF+AS9AWyeALzBqQR/ZYVfs/gHbyc0K8qv9QxTwm/V4V+a+bF/T5p3/9fwn685/i6Li/elyH8bJ+DJcvPvK7z47mGym/B1sanaX6x68s9OW9F/Vz5CODXKzin8llURddxn+HxSL8BlfOFea9V9B332c75+I2onC+G4KaGW8d9tnMxe0+ahOxzjibPRNDHZzaT8DK/aVy+Ow+fP2mg+11x8cud1sVeSb+VQj/e19r8fOp7OF9I+a0a+PEsteVnq7VmP8n8fGYzSb//QqLA4a/As9L232Bb45aW49gBHkzfbgAZAAA=
+  <data encoding="base64" compression="zlib">
+   eJztmG1OwkAQhgf5gUoiookIRqhUBb8KR+AoHMWjeBSPxtvQTclk026X3WE0/fEkbLKbfXhnoAMZEWVE32ADfqdYh+QKDMC153k4/eReYJsFdsssfrPAd5w6v5jkWd2BEbhX4GOjA85Al3nHuGsMJg14ABfgEvQFsngC8wakEf2WFX7P4B28nNCvKr/UMU8Jv1eFfmvmxf0+ad//X8J+vOf4ui4v3pch/GyfgyXLz7yu8+O5hspvwdbGp2l+sevLPTlvRf1c+Qjg1ys4p/JZVEXXcZ/h8Ui/AZXzhXmvVfQd99nO+fiNqJwvhuCmhlvHfbZzMXtPmoTsc44mz0TQx2c2k/Ayv2lcvjsPnz9poPtdcfHLndbFXkm/lUI/3tfa/HzqezhfSPmtGvjxLLXlZ6u1Zj/J/HxmM0m//0KiwOGvwLPS9t9gW+OWluPYAUjru48=
   </data>
  </layer>
+ <objectgroup name="Object Layer 1" width="40" height="40">
+  <object x="448" y="352">
+   <polygon points="0,0 0,160 224,160 224,-64"/>
+  </object>
+ </objectgroup>
 </map>
