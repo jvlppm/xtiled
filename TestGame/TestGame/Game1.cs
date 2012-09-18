@@ -34,7 +34,7 @@ namespace TestGame {
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
             mapView.X = 0;
             mapView.Y = 0;
-        
+
             player = maps[mapIdx].SourceTiles[0].Source;
             player.X = mapView.Width / 2 - player.Width / 2;
             player.Y = mapView.Height / 2 - player.Height / 2;
@@ -109,9 +109,13 @@ namespace TestGame {
             playerColor = Color.White;
             for (int ol = 0; ol < maps[mapIdx].ObjectLayers.Count; ol++) {
                 for (int o = 0; o < maps[mapIdx].ObjectLayers[ol].MapObjects.Length; o++) {
-                    if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon != null &&
-                        maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon.Contains(ref player)) {
-                        playerColor = Color.Red;
+                    if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon != null) {
+                        if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon.Contains(ref player)) {
+                            playerColor = Color.Red;
+                        }
+                        else if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polygon.Intersects(ref player)) {
+                            playerColor = Color.Yellow;
+                        }
                     }
                 }
 
@@ -132,7 +136,7 @@ namespace TestGame {
             maps[mapIdx].Draw(spriteBatch, mapView);
 
             // draw object layers test
-            for (int ol = 0; ol < maps[mapIdx].ObjectLayers.Count; ol++) 
+            for (int ol = 0; ol < maps[mapIdx].ObjectLayers.Count; ol++)
                 maps[mapIdx].DrawObjectLayer(spriteBatch, ol, mapView, 0);
 
             // draw player
@@ -140,7 +144,7 @@ namespace TestGame {
                              Map.Translate(player, mapView),
                              maps[mapIdx].SourceTiles[0].Source,
                              playerColor);
-           
+
             spriteBatch.End();
 
             base.Draw(gameTime);

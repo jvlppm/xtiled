@@ -29,24 +29,33 @@ namespace FuncWorks.XNA.XTiled {
                 Line.Draw(spriteBatch, Lines[i], region, texture, lineWidth, color, layerDepth);
         }
 
-        public bool Contains(ref Point point) {
+        public bool Contains(ref Vector2 vector) {
             bool result = false;
 
             // modified method from http://stackoverflow.com/questions/2379818/does-xna-have-a-polygon-like-rectangle
             // fixed bugs by following http://funplosion.com/devblog/collision-detection-line-vs-point-circle-and-rectangle.html
             foreach (var side in Lines) {
-                if (point.Y > Math.Min(side.Start.Y, side.End.Y))
-                    if (point.Y <= Math.Max(side.Start.Y, side.End.Y))
-                        if (point.X <= Math.Max(side.Start.X, side.End.X)) {
+                if (vector.Y > Math.Min(side.Start.Y, side.End.Y))
+                    if (vector.Y <= Math.Max(side.Start.Y, side.End.Y))
+                        if (vector.X <= Math.Max(side.Start.X, side.End.X)) {
                             if (side.Start.Y != side.End.Y) {
-                                float xIntersection = (point.Y - side.Start.Y) * (side.End.X - side.Start.X) / (side.End.Y - side.Start.Y) + side.Start.X;
-                                if (side.Start.X == side.End.X || point.X <= xIntersection)
+                                float xIntersection = (vector.Y - side.Start.Y) * (side.End.X - side.Start.X) / (side.End.Y - side.Start.Y) + side.Start.X;
+                                if (side.Start.X == side.End.X || vector.X <= xIntersection)
                                     result = !result;
                             }
                         }
             }
 
             return result;
+        }
+
+        public bool Contains(Vector2 vector) {
+            return Contains(ref vector);
+        }
+
+        public bool Contains(ref Point point) {
+            Vector2 v = new Vector2(point.X, point.Y);
+            return Contains(ref v);
         }
 
         public bool Contains(Point point) {
@@ -70,5 +79,26 @@ namespace FuncWorks.XNA.XTiled {
         public bool Contains(Rectangle rect) {
             return Contains(ref rect);
         }
+
+        public bool Intersects(ref Rectangle rect) {
+            int pointsContained = ((Contains(new Point(rect.Left, rect.Top)) ? 1 : 0) +
+                (Contains(new Point(rect.Left, rect.Bottom)) ? 1 : 0) +
+                (Contains(new Point(rect.Right, rect.Top)) ? 1 : 0) +
+                (Contains(new Point(rect.Right, rect.Bottom)) ? 1 : 0));
+
+            return pointsContained > 0 && pointsContained < 4;
+        }
+
+        public bool Intersects(Rectangle rect) {
+            return Intersects(ref rect);
+        }
+
+        public bool Intersects(ref Line line) {
+            int pointsContained = ((Contains(line.Start) ? 1 : 0) + (Contains(line.End) ? 1 : 0));
+            return pointsContained == 1;
+        }
+        public bool Intersects(Line line) {
+            return Intersects(ref line);
+        }    
     }
 }
