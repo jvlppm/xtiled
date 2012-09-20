@@ -42,7 +42,9 @@ namespace TestGame {
         }
 
         protected override void LoadContent() {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+            Map.InitObjectDrawing(graphics.GraphicsDevice);
+
             maps = new List<Map>();
 
             maps.Add(Content.Load<Map>("desert"));
