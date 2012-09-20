@@ -15,6 +15,9 @@ namespace FuncWorks.XNA.XTiled {
         /// The lines that make up the polyline, in order
         /// </summary>
         public Line[] Lines;
+
+        public Rectangle Bounds;
+
         /// <summary>
         /// Draws the lines that make up the Polyline
         /// </summary>

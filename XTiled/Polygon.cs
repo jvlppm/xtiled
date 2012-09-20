@@ -15,6 +15,9 @@ namespace FuncWorks.XNA.XTiled {
         /// The lines that make up the polygon, in order
         /// </summary>
         public Line[] Lines;
+
+        public Rectangle Bounds;
+
         /// <summary>
         /// Draws the lines that make up the Polygon
         /// </summary>
@@ -71,20 +74,20 @@ namespace FuncWorks.XNA.XTiled {
         }
 
         public bool Contains(ref Rectangle rect) {
-            return Contains(new Point(rect.Left, rect.Top)) &&
-                   Contains(new Point(rect.Left, rect.Bottom)) && 
-                   Contains(new Point(rect.Right, rect.Top)) &&
-                   Contains(new Point(rect.Right, rect.Bottom));
+            return Contains(new Vector2(rect.Left, rect.Top)) &&
+                   Contains(new Vector2(rect.Left, rect.Bottom)) &&
+                   Contains(new Vector2(rect.Right, rect.Top)) &&
+                   Contains(new Vector2(rect.Right, rect.Bottom));
         }
         public bool Contains(Rectangle rect) {
             return Contains(ref rect);
         }
 
         public bool Intersects(ref Rectangle rect) {
-            int pointsContained = ((Contains(new Point(rect.Left, rect.Top)) ? 1 : 0) +
-                (Contains(new Point(rect.Left, rect.Bottom)) ? 1 : 0) +
-                (Contains(new Point(rect.Right, rect.Top)) ? 1 : 0) +
-                (Contains(new Point(rect.Right, rect.Bottom)) ? 1 : 0));
+            int pointsContained = ((Contains(new Vector2(rect.Left, rect.Top)) ? 1 : 0) +
+                (Contains(new Vector2(rect.Left, rect.Bottom)) ? 1 : 0) +
+                (Contains(new Vector2(rect.Right, rect.Top)) ? 1 : 0) +
+                (Contains(new Vector2(rect.Right, rect.Bottom)) ? 1 : 0));
 
             return pointsContained > 0 && pointsContained < 4;
         }

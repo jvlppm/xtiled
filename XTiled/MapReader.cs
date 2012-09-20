@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
@@ -198,6 +199,10 @@ namespace FuncWorks.XNA.XTiled {
                             End.Y = input.ReadSingle();
                             m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l] = Line.FromPoints(Start, End);
                         }
+                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.X = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Min(x => x.X);
+                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Y = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Min(x => x.Y);
+                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Width = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Max(x => x.X) - m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.X;
+                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Height = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Max(x => x.Y) - m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Y;
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polyline = null;
@@ -219,6 +224,10 @@ namespace FuncWorks.XNA.XTiled {
                             End.Y = input.ReadSingle();
                             m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l] = Line.FromPoints(Start, End);
                         }
+                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.X = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Min(x => x.X);
+                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Y = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Min(x => x.Y);
+                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Width = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Max(x => x.X) - m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.X;
+                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Height = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Max(x => x.Y) - m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Y;
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polygon = null;
