@@ -370,8 +370,8 @@ namespace FuncWorks.XNA.XTiled {
                         if (o.Polygon.Points.Length > 1) {
                             o.Polygon.Lines = new Line[o.Polygon.Points.Length - 1];
                             for (int i = 0; i < o.Polygon.Lines.Length; i++) {
-                                o.Polygon.Lines[i].Start = points[i];
-                                o.Polygon.Lines[i].End = points[i + 1];
+                                o.Polygon.Lines[i].Start = new Vector2(points[i].X, points[i].Y);
+                                o.Polygon.Lines[i].End = new Vector2(points[i + 1].X, points[i + 1].Y);
                             }
                         }
 
@@ -394,8 +394,8 @@ namespace FuncWorks.XNA.XTiled {
                         if (o.Polyline.Points.Length > 1) {
                             o.Polyline.Lines = new Line[o.Polyline.Points.Length - 1];
                             for (int i = 0; i < o.Polyline.Lines.Length; i++) {
-                                o.Polyline.Lines[i].Start = points[i];
-                                o.Polyline.Lines[i].End = points[i + 1];
+                                o.Polyline.Lines[i].Start = new Vector2(points[i].X, points[i].Y);
+                                o.Polyline.Lines[i].End = new Vector2(points[i + 1].X, points[i + 1].Y);
                             }
                         }
 

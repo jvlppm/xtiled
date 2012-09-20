@@ -28,5 +28,28 @@ namespace FuncWorks.XNA.XTiled {
             for (int i = 0; i < Lines.Length; i++) 
                 Line.Draw(spriteBatch, Lines[i], region, texture, lineWidth, color, layerDepth);
         }
+
+        public bool Intersects(ref Rectangle rect) {
+            for (int i = 0; i < this.Lines.Length; i++) {
+                if (this.Lines[i].Intersects(ref rect))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool Intersects(Rectangle rect) {
+            return Intersects(ref rect);
+        }
+
+        public bool Intersects(ref Line line) {
+            for (int i = 0; i < this.Lines.Length; i++) {
+                if (this.Lines[i].Intersects(ref line))
+                    return true;
+            }
+            return false;
+        }
+        public bool Intersects(Line line) {
+            return Intersects(ref line);
+        }
     }
 }

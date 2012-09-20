@@ -13,11 +13,11 @@ namespace FuncWorks.XNA.XTiled {
         /// <summary>
         /// The starting point of the line
         /// </summary>
-        public Point Start;
+        public Vector2 Start;
         /// <summary>
         /// The ending point of the line
         /// </summary>
-        public Point End;
+        public Vector2 End;
         /// <summary>
         /// Length of the line
         /// </summary>
@@ -33,12 +33,12 @@ namespace FuncWorks.XNA.XTiled {
         /// <param name="start">The first point of the line</param>
         /// <param name="end">The end of the line</param>
         /// <returns>A Line created from the points</returns>
-        public static Line FromPoints(Point start, Point end) {
+        public static Line FromPoints(Vector2 start, Vector2 end) {
             Line l = new Line();
             l.Start = start;
             l.End = end;
             l.Length = Convert.ToSingle(Math.Sqrt(Math.Pow(Math.Abs(start.X - end.X), 2) + Math.Pow(Math.Abs(start.Y - end.Y), 2)));
-            l.Angle =  Convert.ToSingle(Math.Atan2(end.Y - start.Y, end.X - start.X));
+            l.Angle = Convert.ToSingle(Math.Atan2(end.Y - start.Y, end.X - start.X));
             return l;
         }
 
@@ -53,8 +53,74 @@ namespace FuncWorks.XNA.XTiled {
         /// <param name="color">The color value to apply to the given texture</param>
         /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         public static void Draw(SpriteBatch spriteBatch, Line line, Rectangle region, Texture2D texture, Single lineWidth, Color color, Single layerDepth) {
-            Point start = Map.Translate(line.Start, region);
-            spriteBatch.Draw(texture, new Vector2(start.X, start.Y), null, color, line.Angle, Vector2.Zero, new Vector2(line.Length, lineWidth), SpriteEffects.None, layerDepth);
+            Vector2 start = Map.Translate(line.Start, region);
+            spriteBatch.Draw(texture, start, null, color, line.Angle, Vector2.Zero, new Vector2(line.Length, lineWidth), SpriteEffects.None, layerDepth);
         }
+
+        public Boolean Intersects(Line line) {
+            return this.Intersects(ref line);
+        }
+
+        public Boolean Intersects(ref Line line) {
+            Boolean result;
+            Vector2 intersection;
+            Intersects(ref line, out result, out intersection);
+            return result;
+        }
+
+        public Boolean Intersects(Line line, out Vector2 intersection) {
+            return Intersects(ref line, out intersection);
+        }
+
+        public Boolean Intersects(ref Line line, out Vector2 intersection) {
+            Boolean result;
+            Intersects(ref line, out result, out intersection);
+            return result;
+        }
+
+        public Boolean Intersects(Rectangle rect) {
+            return this.Intersects(ref rect);
+        }
+
+        public Boolean Intersects(ref Rectangle rect) {
+            if (this.Intersects(Line.FromPoints(new Vector2(rect.Left, rect.Top), new Vector2(rect.Right, rect.Top))))
+                return true;
+            if (this.Intersects(Line.FromPoints(new Vector2(rect.Right, rect.Top), new Vector2(rect.Right, rect.Bottom))))
+                return true;
+            if (this.Intersects(Line.FromPoints(new Vector2(rect.Right, rect.Bottom), new Vector2(rect.Left, rect.Bottom))))
+                return true;
+            if (this.Intersects(Line.FromPoints(new Vector2(rect.Left, rect.Bottom), new Vector2(rect.Left, rect.Top))))
+                return true; 
+            
+            return false;
+        }
+        
+        public void Intersects(ref Line line, out Boolean result, out Vector2 intersection) {
+            // Method from http://paulbourke.net/geometry/lineline2d/
+            // C# implementation based on version by Olaf Rabbachin (same link)
+            result = false;
+            intersection = Vector2.Zero;
+
+            float d = (line.End.Y - line.Start.Y) * (this.End.X - this.Start.X) -
+                      (line.End.X - line.Start.X) * (this.End.Y - this.Start.Y);
+
+            if (d == 0) return;
+
+            float n_a = (line.End.X - line.Start.X) * (this.Start.Y - line.Start.Y) -
+                        (line.End.Y - line.Start.Y) * (this.Start.X - line.Start.X);
+
+            float n_b = (this.End.X - this.Start.X) * (this.Start.Y - line.Start.Y) -
+                        (this.End.Y - this.Start.Y) * (this.Start.X - line.Start.X);
+
+            float ua = n_a / d;
+            float ub = n_b / d;
+
+            if (ua >= 0d && ua <= 1d && ub >= 0d && ub <= 1d) {
+                intersection.X = this.Start.X + (ua * (this.End.X - this.Start.X));
+                intersection.Y = this.Start.Y + (ua * (this.End.Y - this.Start.Y));
+                result = true;
+            }
+        }
+
     }
 }

@@ -117,6 +117,11 @@ namespace TestGame {
                             playerColor = Color.Yellow;
                         }
                     }
+                    if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polyline != null) {
+                        if (maps[mapIdx].ObjectLayers[ol].MapObjects[o].Polyline.Intersects(ref player)) {
+                            playerColor = Color.Yellow;
+                        }
+                    }
                 }
 
             }
