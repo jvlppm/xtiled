@@ -328,5 +328,134 @@ namespace FuncWorks.XNA.XTiled {
             location.X = location.X - relativeTo.X;
             location.Y = location.Y - relativeTo.Y;
         }
+
+        /// <summary>
+        /// Returns a collection of MapObjects inside the given region
+        /// </summary>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching MapObjects</returns>
+        public IEnumerable<MapObject> GetObjectsInRegion(Rectangle region) {
+            return this.GetObjectsInRegion(ref region);
+        }
+
+        /// <summary>
+        /// Returns a collection of MapObjects inside the given region
+        /// </summary>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching MapObjects</returns>
+        public IEnumerable<MapObject> GetObjectsInRegion(ref Rectangle region) {
+            List<MapObject> results = new List<MapObject>();
+
+            for (int i = 0; i < ObjectLayers.Count; i++)
+                results.AddRange(this.GetObjectsInRegion(i, ref region));
+
+            return results;
+        }
+
+        /// <summary>
+        /// Returns a collection of MapObjects inside the given region
+        /// </summary>
+        /// <param name="objectLayerID">The object layer to check</param>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching MapObjects</returns>
+        public IEnumerable<MapObject> GetObjectsInRegion(Int32 objectLayerID, Rectangle region) {
+            return this.GetObjectsInRegion(objectLayerID, ref region);
+        }
+
+        /// <summary>
+        /// Returns a collection of MapObjects inside the given region
+        /// </summary>
+        /// <param name="objectLayerID">The object layer to check</param>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching MapObjects</returns>
+        public IEnumerable<MapObject> GetObjectsInRegion(Int32 objectLayerID, ref Rectangle region) {
+            List<MapObject> results = new List<MapObject>();
+
+            for (int i = 0; i < this.ObjectLayers[objectLayerID].MapObjects.Length; i++) {
+                if (region.Contains(this.ObjectLayers[objectLayerID].MapObjects[i].Bounds) || region.Intersects(this.ObjectLayers[objectLayerID].MapObjects[i].Bounds))
+                    results.Add(this.ObjectLayers[objectLayerID].MapObjects[i]);
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Returns a collection of TileData inside the given region
+        /// </summary>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching TileData</returns>
+        public IEnumerable<TileData> GetTilesInRegion(Rectangle region) {
+            return this.GetTilesInRegion(ref region);
+        }
+
+        /// <summary>
+        /// Returns a collection of TileData inside the given region
+        /// </summary>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching TileData</returns>
+        public IEnumerable<TileData> GetTilesInRegion(ref Rectangle region) {
+            List<TileData> result = new List<TileData>();
+
+            Int32 txMin = region.X / this.TileWidth;
+            Int32 txMax = (region.X + region.Width) / this.TileWidth;
+            Int32 tyMin = region.Y / this.TileHeight;
+            Int32 tyMax = (region.Y + region.Height) / this.TileHeight;
+
+            if (this.Orientation == MapOrientation.Isometric) {
+                tyMax = tyMax * 2 + 1;
+                txMax = txMax * 2 + 1;
+            }
+
+            for (int i = 0; i < this.TileLayers.Count; i++) {
+                for (int y = tyMin; y <= tyMax; y++) {
+                    for (int x = txMin; x <= txMax; x++) {
+                        if (this.TileLayers[i].Tiles[x][y] != null) {
+                            result.Add(this.TileLayers[i].Tiles[x][y]);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a collection of TileData inside the given region
+        /// </summary>
+        /// <param name="tileLayerID">The tile layer to check</param>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching TileData</returns>
+        public IEnumerable<TileData> GetTilesInRegion(Int32 tileLayerID, Rectangle region) {
+            return this.GetTilesInRegion(tileLayerID, ref region);
+        }
+
+        /// <summary>
+        /// Returns a collection of TileData inside the given region
+        /// </summary>
+        /// <param name="tileLayerID">The tile layer to check</param>
+        /// <param name="region">The region, in pixles, to check</param>
+        /// <returns>Collection of matching TileData</returns>
+        public IEnumerable<TileData> GetTilesInRegion(Int32 tileLayerID, ref Rectangle region) {
+            List<TileData> result = new List<TileData>();
+
+            Int32 txMin = region.X / this.TileWidth;
+            Int32 txMax = (region.X + region.Width) / this.TileWidth;
+            Int32 tyMin = region.Y / this.TileHeight;
+            Int32 tyMax = (region.Y + region.Height) / this.TileHeight;
+
+            if (this.Orientation == MapOrientation.Isometric) {
+                tyMax = tyMax * 2 + 1;
+                txMax = txMax * 2 + 1;
+            }
+
+            for (int y = tyMin; y <= tyMax; y++) {
+                for (int x = txMin; x <= txMax; x++) {
+                    if (this.TileLayers[tileLayerID].Tiles[x][y] != null) {
+                        result.Add(this.TileLayers[tileLayerID].Tiles[x][y]);
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
