@@ -258,6 +258,10 @@ namespace FuncWorks.XNA.XTiled {
                     m.Tilesets[i].Texture = input.ContentManager.Load<Texture2D>(String.Format("{0}/{1:00}", input.AssetName, i));
                 }
             }
+
+            if (Map._enableRendering)
+                m.CreatePolygonTextures();
+
             return m;
         }
     }

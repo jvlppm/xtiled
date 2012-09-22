@@ -7,6 +7,8 @@ namespace FuncWorks.XNA.XTiled {
     /// A sequence of lines that form a closed shape
     /// </summary>
     public class Polygon {
+        internal Texture2D _polyTex;
+
         /// <summary>
         /// The points that make up the polygon, in order
         /// </summary>

@@ -39,7 +39,9 @@ namespace FuncWorks.XNA.XTiled {
     /// </summary>
     public class Map {
 
-        internal static Texture2D _whiteTexture;
+        internal static Boolean _enableRendering = false;
+        internal static Texture2D _whiteTexture = null;
+        internal const float _lineThickness = 1.0f;
 
         /// <summary>
         /// Orientation of the map.
@@ -101,6 +103,37 @@ namespace FuncWorks.XNA.XTiled {
         public static void InitObjectDrawing(GraphicsDevice graphicsDevice) {
             Map._whiteTexture = new Texture2D(graphicsDevice, 1, 1, false, SurfaceFormat.Color);
             Map._whiteTexture.SetData(new[] { Color.White });
+            Map._enableRendering = true;
+        }
+
+        internal void CreatePolygonTextures() {
+            for (int i = 0; i < this.ObjectLayers.Count; i++) {
+                for (int o = 0; o < this.ObjectLayers[i].MapObjects.Length; o++) {
+                    if (this.ObjectLayers[i].MapObjects[o].Polygon != null) {
+
+                        this.ObjectLayers[i].MapObjects[o].Polygon._polyTex =
+                            new Texture2D(Map._whiteTexture.GraphicsDevice,
+                                          this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Width,
+                                          this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Height,
+                                          false, SurfaceFormat.Color);
+
+                        Color[] colorData = new Color[this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Width *
+                                            this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Height];
+                        for (int y = this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Y; y < this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Bottom; y++) {
+                            for (int x = this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.X; x < this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Right; x++) {
+                                int c = (x - this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.X) + 
+                                    (y - this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Y) * this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Width;
+                                if (this.ObjectLayers[i].MapObjects[o].Polygon.Contains(new Vector2(x, y)))
+                                    colorData[c] = Color.White;
+                                else
+                                    colorData[c] = Color.Transparent;
+                            }
+                        }
+
+                        this.ObjectLayers[i].MapObjects[o].Polygon._polyTex.SetData(colorData);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -230,16 +263,22 @@ namespace FuncWorks.XNA.XTiled {
         /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         public void DrawObjectLayer(SpriteBatch spriteBatch, Int32 objectLayerID, ref Rectangle region, Single layerDepth) {
             if (Map._whiteTexture == null) {
-                throw new Exception("Map.InitObjectDrawing must be called before objects can be rendered");
+                throw new Exception("Map.InitObjectDrawing must be called before Map is loaded to enable object rendering");
             }
 
             for (int o = 0; o < this.ObjectLayers[objectLayerID].MapObjects.Length; o++) {
                 if (region.Contains(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds) || region.Intersects(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds)) {
+                    Color color = this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor;
+                    Color fillColor = color;
+                    fillColor.A /= 4;
+
                     if (this.ObjectLayers[objectLayerID].MapObjects[o].Polyline != null) {
-                        this.ObjectLayers[objectLayerID].MapObjects[o].Polyline.Draw(spriteBatch, region, Map._whiteTexture, 2.0f, this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor, layerDepth);
+                        this.ObjectLayers[objectLayerID].MapObjects[o].Polyline.Draw(spriteBatch, region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
                     }
                     else if (this.ObjectLayers[objectLayerID].MapObjects[o].Polygon != null) {
-                        this.ObjectLayers[objectLayerID].MapObjects[o].Polygon.Draw(spriteBatch, region, Map._whiteTexture, 2.0f, this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor, layerDepth);
+                        Rectangle target = Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[o].Polygon.Bounds, region);
+                        spriteBatch.Draw(this.ObjectLayers[objectLayerID].MapObjects[o].Polygon._polyTex, target, null, fillColor, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
+                        this.ObjectLayers[objectLayerID].MapObjects[o].Polygon.Draw(spriteBatch, region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
                     }
                     else if (this.ObjectLayers[objectLayerID].MapObjects[o].TileID.HasValue) {
                         Rectangle target = Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds, region);
@@ -247,7 +286,7 @@ namespace FuncWorks.XNA.XTiled {
                             this.Tilesets[this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[o].TileID.Value].TilesetID].Texture,
                             target,
                             this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[o].TileID.Value].Source,
-                            this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor,
+                            color,
                             0,
                             this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[o].TileID.Value].Origin,
                             SpriteEffects.None,
@@ -255,9 +294,15 @@ namespace FuncWorks.XNA.XTiled {
                     }
                     else {
                         Rectangle target = Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds, region);
-                        Color color = this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor;
-                        color.A /= 4;
-                        spriteBatch.Draw(Map._whiteTexture, target, null, color, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
+                        spriteBatch.Draw(Map._whiteTexture, target, null, fillColor, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
+                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top),
+                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
+                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top),
+                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
+                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom),
+                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
+                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom),
+                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
                     }
                 }
             }
