@@ -15,7 +15,9 @@ namespace FuncWorks.XNA.XTiled {
         /// The lines that make up the polyline, in order
         /// </summary>
         public Line[] Lines;
-
+        /// <summary>
+        /// Bounding rectangle of this polyline
+        /// </summary>
         public Rectangle Bounds;
 
         /// <summary>
@@ -32,6 +34,11 @@ namespace FuncWorks.XNA.XTiled {
                 Line.Draw(spriteBatch, Lines[i], region, texture, lineWidth, color, layerDepth);
         }
 
+        /// <summary>
+        /// Determines if a specificed Rectangle intersects with this Polyline
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle intersects</returns>
         public bool Intersects(ref Rectangle rect) {
             for (int i = 0; i < this.Lines.Length; i++) {
                 if (this.Lines[i].Intersects(ref rect))
@@ -40,10 +47,20 @@ namespace FuncWorks.XNA.XTiled {
             return false;
         }
 
+        /// <summary>
+        /// Determines if a specificed Rectangle intersects with this Polyline
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle intersects</returns>
         public bool Intersects(Rectangle rect) {
             return Intersects(ref rect);
         }
 
+        /// <summary>
+        /// Determines if a specificed Line intersects with this Polyline
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the Line intersects</returns>
         public bool Intersects(ref Line line) {
             for (int i = 0; i < this.Lines.Length; i++) {
                 if (this.Lines[i].Intersects(ref line))
@@ -51,6 +68,12 @@ namespace FuncWorks.XNA.XTiled {
             }
             return false;
         }
+
+        /// <summary>
+        /// Determines if a specificed Line intersects with this Polyline
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the Line intersects</returns>
         public bool Intersects(Line line) {
             return Intersects(ref line);
         }

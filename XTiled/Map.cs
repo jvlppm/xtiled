@@ -94,6 +94,10 @@ namespace FuncWorks.XNA.XTiled {
         /// </summary>
         public LayerInfo[] LayerOrder;
 
+        /// <summary>
+        /// Enables rendering of map objects
+        /// </summary>
+        /// <param name="graphicsDevice">The graphics device to us in creating textures to support object rendering</param>
         public static void InitObjectDrawing(GraphicsDevice graphicsDevice) {
             Map._whiteTexture = new Texture2D(graphicsDevice, 1, 1, false, SurfaceFormat.Color);
             Map._whiteTexture.SetData(new[] { Color.White });

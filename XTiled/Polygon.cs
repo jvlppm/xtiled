@@ -15,7 +15,9 @@ namespace FuncWorks.XNA.XTiled {
         /// The lines that make up the polygon, in order
         /// </summary>
         public Line[] Lines;
-
+        /// <summary>
+        /// Bounding rectangle of this Polygon
+        /// </summary>
         public Rectangle Bounds;
 
         /// <summary>
@@ -32,6 +34,11 @@ namespace FuncWorks.XNA.XTiled {
                 Line.Draw(spriteBatch, Lines[i], region, texture, lineWidth, color, layerDepth);
         }
 
+        /// <summary>
+        /// Determines if a Vector2 is inside this Polygon
+        /// </summary>
+        /// <param name="vector">Vector2 to compare to</param>
+        /// <returns>True if the Vector2 is inside the Polygon</returns>
         public bool Contains(ref Vector2 vector) {
             bool result = false;
 
@@ -52,37 +59,79 @@ namespace FuncWorks.XNA.XTiled {
             return result;
         }
 
+        /// <summary>
+        /// Determines if a Vector2 is inside this Polygon
+        /// </summary>
+        /// <param name="vector">Vector2 to compare to</param>
+        /// <returns>True if the Vector2 is inside the Polygon</returns>
         public bool Contains(Vector2 vector) {
             return Contains(ref vector);
         }
 
+        /// <summary>
+        /// Determines if a Point is inside this Polygon
+        /// </summary>
+        /// <param name="point">Point to compare to</param>
+        /// <returns>True if the Point is inside the Polygon</returns>
         public bool Contains(ref Point point) {
             Vector2 v = new Vector2(point.X, point.Y);
             return Contains(ref v);
         }
 
+        /// <summary>
+        /// Determines if a Point is inside this Polygon
+        /// </summary>
+        /// <param name="point">Point to compare to</param>
+        /// <returns>True if the Point is inside the Polygon</returns>
         public bool Contains(Point point) {
             return Contains(ref point);
         }
 
+        /// <summary>
+        /// Determines if a Line is inside this Polygon; a Line is considered inside if both Start and End points are inside
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the Line is inside the Polygon</returns>
         public bool Contains(ref Line line) {
             return Contains(ref line.Start) && Contains(ref line.End);
         }
 
+        /// <summary>
+        /// Determines if a Line is inside this Polygon; a Line is considered inside if both Start and End points are inside
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the Line is inside the Polygon</returns>
         public bool Contains(Line line) {
             return Contains(ref line);
         }
 
+        /// <summary>
+        /// Determines if a Rectangle is inside this Polygon; a Rectangle is considered inside if all four corners are inside
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle is inside the Polygon</returns>
         public bool Contains(ref Rectangle rect) {
             return Contains(new Vector2(rect.Left, rect.Top)) &&
                    Contains(new Vector2(rect.Left, rect.Bottom)) &&
                    Contains(new Vector2(rect.Right, rect.Top)) &&
                    Contains(new Vector2(rect.Right, rect.Bottom));
         }
+
+        /// <summary>
+        /// Determines if a Rectangle is inside this Polygon; a Rectangle is considered inside if all four corners are inside
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle is inside the Polygon</returns>
         public bool Contains(Rectangle rect) {
             return Contains(ref rect);
         }
 
+
+        /// <summary>
+        /// Determines if a Rectangle intersects this Polygon; a Rectangle is considered to intersect if at least one corner is contained but not all four corners are contained
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle is intersects the Polygon</returns>
         public bool Intersects(ref Rectangle rect) {
             int pointsContained = ((Contains(new Vector2(rect.Left, rect.Top)) ? 1 : 0) +
                 (Contains(new Vector2(rect.Left, rect.Bottom)) ? 1 : 0) +
@@ -92,16 +141,32 @@ namespace FuncWorks.XNA.XTiled {
             return pointsContained > 0 && pointsContained < 4;
         }
 
+        /// <summary>
+        /// Determines if a Rectangle intersects this Polygon; a Rectangle is considered to intersect if at least one corner is contained but not all four corners are contained
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle is intersects the Polygon</returns>
         public bool Intersects(Rectangle rect) {
             return Intersects(ref rect);
         }
 
+        /// <summary>
+        /// Determines if a Line intersects this Polygon; a Line is considered to intersect if one but not both points are contained
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the Line is intersects the Polygon</returns>
         public bool Intersects(ref Line line) {
             int pointsContained = ((Contains(line.Start) ? 1 : 0) + (Contains(line.End) ? 1 : 0));
             return pointsContained == 1;
         }
+
+        /// <summary>
+        /// Determines if a Line intersects this Polygon; a Line is considered to intersect if one but not both points are contained
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the Line is intersects the Polygon</returns>
         public bool Intersects(Line line) {
             return Intersects(ref line);
-        }    
+        }
     }
 }

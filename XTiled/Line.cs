@@ -57,10 +57,20 @@ namespace FuncWorks.XNA.XTiled {
             spriteBatch.Draw(texture, start, null, color, line.Angle, Vector2.Zero, new Vector2(line.Length, lineWidth), SpriteEffects.None, layerDepth);
         }
 
+        /// <summary>
+        /// Determines if a specificed Line intersects with this Line
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the lines intersect</returns>
         public Boolean Intersects(Line line) {
             return this.Intersects(ref line);
         }
 
+        /// <summary>
+        /// Determines if a specificed Line intersects with this Line
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <returns>True if the lines intersect</returns>
         public Boolean Intersects(ref Line line) {
             Boolean result;
             Vector2 intersection;
@@ -68,20 +78,42 @@ namespace FuncWorks.XNA.XTiled {
             return result;
         }
 
+        /// <summary>
+        /// Determines if a specificed Line intersects with this Line
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <param name="intersection">If the lines intersect this will be set to the point of intersection</param>
+        /// <returns>True if the lines intersect</returns>
         public Boolean Intersects(Line line, out Vector2 intersection) {
             return Intersects(ref line, out intersection);
         }
 
+        /// <summary>
+        /// Determines if a specificed Line intersects with this Line
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <param name="intersection">If the lines intersect this will be set to the point of intersection</param>
+        /// <returns>True if the lines intersect</returns>
         public Boolean Intersects(ref Line line, out Vector2 intersection) {
             Boolean result;
             Intersects(ref line, out result, out intersection);
             return result;
         }
 
+        /// <summary>
+        /// Determines if a specificed Rectangle intersects with this Line
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle intersects</returns>
         public Boolean Intersects(Rectangle rect) {
             return this.Intersects(ref rect);
         }
 
+        /// <summary>
+        /// Determines if a specificed Rectangle intersects with this Line
+        /// </summary>
+        /// <param name="rect">Rectangle to compare to</param>
+        /// <returns>True if the Rectangle intersects</returns>
         public Boolean Intersects(ref Rectangle rect) {
             if (this.Intersects(Line.FromPoints(new Vector2(rect.Left, rect.Top), new Vector2(rect.Right, rect.Top))))
                 return true;
@@ -94,7 +126,13 @@ namespace FuncWorks.XNA.XTiled {
             
             return false;
         }
-        
+
+        /// <summary>
+        /// Determines if a specificed Line intersects with this Line
+        /// </summary>
+        /// <param name="line">Line to compare to</param>
+        /// <param name="result">True if the lines intersect</param>
+        /// <param name="intersection">If the lines intersect this will be set to the point of intersection</param>
         public void Intersects(ref Line line, out Boolean result, out Vector2 intersection) {
             // Method from http://paulbourke.net/geometry/lineline2d/
             // C# implementation based on version by Olaf Rabbachin (same link)
