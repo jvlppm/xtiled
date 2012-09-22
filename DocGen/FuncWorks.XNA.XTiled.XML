@@ -239,6 +239,12 @@
             Order of tile and object layers combined, first is the bottom layer
             </summary>
         </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.InitObjectDrawing(Microsoft.Xna.Framework.Graphics.GraphicsDevice)">
+            <summary>
+            Enables rendering of map objects
+            </summary>
+            <param name="graphicsDevice">The graphics device to us in creating textures to support object rendering</param>
+        </member>
         <member name="M:FuncWorks.XNA.XTiled.Map.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle)">
             <summary>
             Draws all visible tile layers
@@ -350,6 +356,66 @@
             <param name="location">The location in map pixel coordinates</param>
             <param name="relativeTo">Region of the map that is on screen</param>
         </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetObjectsInRegion(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Returns a collection of MapObjects inside the given region
+            </summary>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching MapObjects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetObjectsInRegion(Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Returns a collection of MapObjects inside the given region
+            </summary>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching MapObjects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetObjectsInRegion(System.Int32,Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Returns a collection of MapObjects inside the given region
+            </summary>
+            <param name="objectLayerID">The object layer to check</param>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching MapObjects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetObjectsInRegion(System.Int32,Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Returns a collection of MapObjects inside the given region
+            </summary>
+            <param name="objectLayerID">The object layer to check</param>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching MapObjects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetTilesInRegion(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Returns a collection of TileData inside the given region
+            </summary>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching TileData</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetTilesInRegion(Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Returns a collection of TileData inside the given region
+            </summary>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching TileData</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetTilesInRegion(System.Int32,Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Returns a collection of TileData inside the given region
+            </summary>
+            <param name="tileLayerID">The tile layer to check</param>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching TileData</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.GetTilesInRegion(System.Int32,Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Returns a collection of TileData inside the given region
+            </summary>
+            <param name="tileLayerID">The tile layer to check</param>
+            <param name="region">The region, in pixles, to check</param>
+            <returns>Collection of matching TileData</returns>
+        </member>
         <member name="T:FuncWorks.XNA.XTiled.Tileset">
             <summary>
             Represents a tileset (aka tile sheet) in a Map
@@ -440,6 +506,11 @@
             The lines that make up the polyline, in order
             </summary>
         </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polyline.Bounds">
+            <summary>
+            Bounding rectangle of this polyline
+            </summary>
+        </member>
         <member name="M:FuncWorks.XNA.XTiled.Polyline.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,System.Single)">
             <summary>
             Draws the lines that make up the Polyline
@@ -450,6 +521,34 @@
             <param name="lineWidth">The width of the lines in pixels</param>
             <param name="color">The color value to apply to the given texture</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polyline.Intersects(Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Determines if a specificed Rectangle intersects with this Polyline
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle intersects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polyline.Intersects(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Determines if a specificed Rectangle intersects with this Polyline
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle intersects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polyline.Intersects(FuncWorks.XNA.XTiled.Line@)">
+            <summary>
+            Determines if a specificed Line intersects with this Polyline
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the Line intersects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polyline.Intersects(FuncWorks.XNA.XTiled.Line)">
+            <summary>
+            Determines if a specificed Line intersects with this Polyline
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the Line intersects</returns>
         </member>
         <member name="T:FuncWorks.XNA.XTiled.Polygon">
             <summary>
@@ -466,6 +565,11 @@
             The lines that make up the polygon, in order
             </summary>
         </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polygon.Bounds">
+            <summary>
+            Bounding rectangle of this Polygon
+            </summary>
+        </member>
         <member name="M:FuncWorks.XNA.XTiled.Polygon.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,System.Single)">
             <summary>
             Draws the lines that make up the Polygon
@@ -476,6 +580,90 @@
             <param name="lineWidth">The width of the lines in pixels</param>
             <param name="color">The color value to apply to the given texture</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Determines if a Vector2 is inside this Polygon
+            </summary>
+            <param name="vector">Vector2 to compare to</param>
+            <returns>True if the Vector2 is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Determines if a Vector2 is inside this Polygon
+            </summary>
+            <param name="vector">Vector2 to compare to</param>
+            <returns>True if the Vector2 is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(Microsoft.Xna.Framework.Point@)">
+            <summary>
+            Determines if a Point is inside this Polygon
+            </summary>
+            <param name="point">Point to compare to</param>
+            <returns>True if the Point is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(Microsoft.Xna.Framework.Point)">
+            <summary>
+            Determines if a Point is inside this Polygon
+            </summary>
+            <param name="point">Point to compare to</param>
+            <returns>True if the Point is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(FuncWorks.XNA.XTiled.Line@)">
+            <summary>
+            Determines if a Line is inside this Polygon; a Line is considered inside if both Start and End points are inside
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the Line is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(FuncWorks.XNA.XTiled.Line)">
+            <summary>
+            Determines if a Line is inside this Polygon; a Line is considered inside if both Start and End points are inside
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the Line is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Determines if a Rectangle is inside this Polygon; a Rectangle is considered inside if all four corners are inside
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Determines if a Rectangle is inside this Polygon; a Rectangle is considered inside if all four corners are inside
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle is inside the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Intersects(Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Determines if a Rectangle intersects this Polygon; a Rectangle is considered to intersect if at least one corner is contained but not all four corners are contained
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle is intersects the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Intersects(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Determines if a Rectangle intersects this Polygon; a Rectangle is considered to intersect if at least one corner is contained but not all four corners are contained
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle is intersects the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Intersects(FuncWorks.XNA.XTiled.Line@)">
+            <summary>
+            Determines if a Line intersects this Polygon; a Line is considered to intersect if one but not both points are contained
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the Line is intersects the Polygon</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.Intersects(FuncWorks.XNA.XTiled.Line)">
+            <summary>
+            Determines if a Line intersects this Polygon; a Line is considered to intersect if one but not both points are contained
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the Line is intersects the Polygon</returns>
         </member>
         <member name="T:FuncWorks.XNA.XTiled.MapReader">
             <summary/>
@@ -574,7 +762,7 @@
             Rotation of the line, suitable for using with SpriteBatch
             </summary>
         </member>
-        <member name="M:FuncWorks.XNA.XTiled.Line.FromPoints(Microsoft.Xna.Framework.Point,Microsoft.Xna.Framework.Point)">
+        <member name="M:FuncWorks.XNA.XTiled.Line.FromPoints(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
             <summary>
             Create a line from start and end points and calculate the length and angle
             </summary>
@@ -593,6 +781,58 @@
             <param name="lineWidth">The width of the line in pixels</param>
             <param name="color">The color value to apply to the given texture</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Intersects(FuncWorks.XNA.XTiled.Line)">
+            <summary>
+            Determines if a specificed Line intersects with this Line
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the lines intersect</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Intersects(FuncWorks.XNA.XTiled.Line@)">
+            <summary>
+            Determines if a specificed Line intersects with this Line
+            </summary>
+            <param name="line">Line to compare to</param>
+            <returns>True if the lines intersect</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Intersects(FuncWorks.XNA.XTiled.Line,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Determines if a specificed Line intersects with this Line
+            </summary>
+            <param name="line">Line to compare to</param>
+            <param name="intersection">If the lines intersect this will be set to the point of intersection</param>
+            <returns>True if the lines intersect</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Intersects(FuncWorks.XNA.XTiled.Line@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Determines if a specificed Line intersects with this Line
+            </summary>
+            <param name="line">Line to compare to</param>
+            <param name="intersection">If the lines intersect this will be set to the point of intersection</param>
+            <returns>True if the lines intersect</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Intersects(Microsoft.Xna.Framework.Rectangle)">
+            <summary>
+            Determines if a specificed Rectangle intersects with this Line
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle intersects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Intersects(Microsoft.Xna.Framework.Rectangle@)">
+            <summary>
+            Determines if a specificed Rectangle intersects with this Line
+            </summary>
+            <param name="rect">Rectangle to compare to</param>
+            <returns>True if the Rectangle intersects</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Line.Intersects(FuncWorks.XNA.XTiled.Line@,System.Boolean@,Microsoft.Xna.Framework.Vector2@)">
+            <summary>
+            Determines if a specificed Line intersects with this Line
+            </summary>
+            <param name="line">Line to compare to</param>
+            <param name="result">True if the lines intersect</param>
+            <param name="intersection">If the lines intersect this will be set to the point of intersection</param>
         </member>
         <member name="T:FuncWorks.XNA.XTiled.TileData">
             <summary>
