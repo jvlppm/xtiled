@@ -293,19 +293,45 @@ namespace FuncWorks.XNA.XTiled {
                             layerDepth);
                     }
                     else {
-                        Rectangle target = Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds, region);
-                        spriteBatch.Draw(Map._whiteTexture, target, null, fillColor, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
-                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top),
-                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
-                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top),
-                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
-                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Left, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom),
-                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
-                        Line.Draw(spriteBatch, Line.FromPoints(new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Bottom),
-                            new Vector2(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Right, this.ObjectLayers[objectLayerID].MapObjects[o].Bounds.Top)), region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
+                        DrawRectangle(spriteBatch, ref this.ObjectLayers[objectLayerID].MapObjects[o].Bounds, ref region, layerDepth, ref color, ref fillColor);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Method to draw a Rectangle
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="rect">The Rectangle to draw, in map pixels</param>
+        /// <param name="region">Region of the map in pixels currently visible</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        /// <param name="linecolor">Color of the Rectangle border</param>
+        /// <param name="fillColor">Color to fill the Rectangle with</param>
+        public static void DrawRectangle(SpriteBatch spriteBatch, Rectangle rect, Rectangle region, Single layerDepth, Color linecolor, Color fillColor) {
+            DrawRectangle(spriteBatch, ref rect, ref region, layerDepth, ref linecolor, ref fillColor);
+        }
+
+        /// <summary>
+        /// Method to draw a Rectangle
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="rect">The Rectangle to draw, in map pixels</param>
+        /// <param name="region">Region of the map in pixels currently visible</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        /// <param name="linecolor">Color of the Rectangle border</param>
+        /// <param name="fillColor">Color to fill the Rectangle with</param>
+        public static void DrawRectangle(SpriteBatch spriteBatch, ref Rectangle rect, ref Rectangle region, Single layerDepth, ref Color linecolor, ref Color fillColor) {
+            if (Map._whiteTexture == null) {
+                throw new Exception("Map.InitObjectDrawing must be called before Map is loaded to enable object rendering");
+            }
+            
+            Rectangle target = Map.Translate(rect, region);
+            spriteBatch.Draw(Map._whiteTexture, target, null, fillColor, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
+            Line.Draw(spriteBatch, Line.FromPoints(new Vector2(rect.Right, rect.Top), new Vector2(rect.Left, rect.Top)), region, Map._whiteTexture, Map._lineThickness, linecolor, layerDepth);
+            Line.Draw(spriteBatch, Line.FromPoints(new Vector2(rect.Left, rect.Top), new Vector2(rect.Left, rect.Bottom)), region, Map._whiteTexture, Map._lineThickness, linecolor, layerDepth);
+            Line.Draw(spriteBatch, Line.FromPoints(new Vector2(rect.Left, rect.Bottom), new Vector2(rect.Right, rect.Bottom)), region, Map._whiteTexture, Map._lineThickness, linecolor, layerDepth);
+            Line.Draw(spriteBatch, Line.FromPoints(new Vector2(rect.Right, rect.Bottom), new Vector2(rect.Right, rect.Top)), region, Map._whiteTexture, Map._lineThickness, linecolor, layerDepth);
         }
 
         /// <summary>
