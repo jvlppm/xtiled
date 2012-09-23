@@ -154,7 +154,7 @@ namespace FuncWorks.XNA.XTiled {
 
                         Tile tile = new Tile();
                         tile.Source = new Rectangle(x, y, t.TileWidth, t.TileHeight);
-                        tile.Origin = new Vector2(((float)t.TileWidth) / 2.0f, ((float)t.TileHeight) / 2.0f);
+                        tile.Origin = new Vector2(t.TileWidth / 2, t.TileHeight / 2);
                         tile.TilesetID = tilesets.Count;
                         tile.Properties = new Dictionary<String, Property>();
                         mapTiles.Add(tile);
@@ -266,7 +266,6 @@ namespace FuncWorks.XNA.XTiled {
 
                             if (FlippedDiagonally) {
                                 td.Rotation = MathHelper.PiOver2;
-
                                 // this works, not 100% why (we are rotating instead of diag flipping, so I guess that's a clue)
                                 FlippedHorizontally = false;
                             }
@@ -291,6 +290,11 @@ namespace FuncWorks.XNA.XTiled {
                                 td.Target.X = x * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
                                 td.Target.Y = y * map.TileHeight + Convert.ToInt32(mapTiles[td.SourceID].Origin.Y) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetY;
                                 td.Target.Y += map.TileHeight - td.Target.Height;
+                                
+                                // adjust for off center origin in odd tiles sizes
+                                if (FlippedDiagonally && td.Target.Width % 2 == 1)
+                                    td.Target.X += 1;
+
                                 tiles[x][y] = td;
                             }
                             else if (map.Orientation == MapOrientation.Isometric) {
@@ -301,6 +305,11 @@ namespace FuncWorks.XNA.XTiled {
                                 td.Target.Y += map.TileHeight - td.Target.Height;
                                 td.Target.X = td.Target.X / 2 + map.TileWidth / 4;
                                 td.Target.Y = td.Target.Y / 2 + map.TileHeight / 4;
+
+                                // adjust for off center origin in odd tiles sizes
+                                if (FlippedDiagonally && td.Target.Width % 2 == 1)
+                                    td.Target.X += 1;
+                                
                                 tiles[x][y] = td;
                             }
                         }

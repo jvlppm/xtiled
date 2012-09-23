@@ -56,6 +56,7 @@ namespace TestGame {
             maps.Add(Content.Load<Map>("isometric_5_10"));
             maps.Add(Content.Load<Map>("perspective_walls"));
             maps.Add(Content.Load<Map>("sewers"));
+            maps.Add(Content.Load<Map>("rot_odd_test"));
 
             mapIdx = 0;
         }
