@@ -37,6 +37,23 @@ namespace FuncWorks.XNA.XTiled {
         }
 
         /// <summary>
+        /// Draws the lines that make up the Polygon
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="region">Region of the map in pixels to draw</param> 
+        /// <param name="texture">A texture to use in drawing the lines</param>
+        /// <param name="lineWidth">The width of the lines in pixels</param>
+        /// <param name="color">The color value to apply to the polgon lines</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        /// <param name="fillColor">The color value to fill the polygon</param>
+        public void DrawFilled(SpriteBatch spriteBatch, Rectangle region, Texture2D texture, Single lineWidth, Color color, Color fillColor, Single layerDepth) {
+            for (int i = 0; i < Lines.Length; i++)
+                Line.Draw(spriteBatch, Lines[i], region, texture, lineWidth, color, layerDepth);
+        
+            spriteBatch.Draw(this._polyTex, Map.Translate(this.Bounds, region), null, fillColor, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
+        }
+
+        /// <summary>
         /// Determines if a Vector2 is inside this Polygon
         /// </summary>
         /// <param name="vector">Vector2 to compare to</param>
