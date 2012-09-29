@@ -183,51 +183,23 @@ namespace FuncWorks.XNA.XTiled {
                         m.ObjectLayers[i].MapObjects[mo].TileID = null;
 
                     if (input.ReadBoolean()) {
-                        m.ObjectLayers[i].MapObjects[mo].Polyline = new Polyline();
-                        m.ObjectLayers[i].MapObjects[mo].Polyline.Points = new Point[input.ReadInt32()];
-                        for (int p = 0; p < m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Length; p++) {
-                            m.ObjectLayers[i].MapObjects[mo].Polyline.Points[p].X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polyline.Points[p].Y = input.ReadInt32();
+                        Point[] points = new Point[input.ReadInt32()];
+                        for (int p = 0; p < points.Length; p++) {
+                            points[p].X = input.ReadInt32();
+                            points[p].Y = input.ReadInt32();
                         }
-                        m.ObjectLayers[i].MapObjects[mo].Polyline.Lines = new Line[input.ReadInt32()];
-                        for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polyline.Lines.Length; l++) {
-                            Vector2 Start = new Vector2();
-                            Vector2 End = new Vector2();
-                            Start.X = input.ReadSingle();
-                            Start.Y = input.ReadSingle();
-                            End.X = input.ReadSingle();
-                            End.Y = input.ReadSingle();
-                            m.ObjectLayers[i].MapObjects[mo].Polyline.Lines[l] = Line.FromPoints(Start, End);
-                        }
-                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.X = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Min(x => x.X);
-                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Y = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Min(x => x.Y);
-                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Width = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Max(x => x.X) - m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.X;
-                        m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Height = m.ObjectLayers[i].MapObjects[mo].Polyline.Points.Max(x => x.Y) - m.ObjectLayers[i].MapObjects[mo].Polyline.Bounds.Y;
+                        m.ObjectLayers[i].MapObjects[mo].Polyline = Polyline.FromPoints(points);
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polyline = null;
 
                     if (input.ReadBoolean()) {
-                        m.ObjectLayers[i].MapObjects[mo].Polygon = new Polygon();
-                        m.ObjectLayers[i].MapObjects[mo].Polygon.Points = new Point[input.ReadInt32()];
-                        for (int p = 0; p < m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Length; p++) {
-                            m.ObjectLayers[i].MapObjects[mo].Polygon.Points[p].X = input.ReadInt32();
-                            m.ObjectLayers[i].MapObjects[mo].Polygon.Points[p].Y = input.ReadInt32();
+                        Point[] points = new Point[input.ReadInt32()];
+                        for (int p = 0; p < points.Length; p++) {
+                            points[p].X = input.ReadInt32();
+                            points[p].Y = input.ReadInt32();
                         }
-                        m.ObjectLayers[i].MapObjects[mo].Polygon.Lines = new Line[input.ReadInt32()];
-                        for (int l = 0; l < m.ObjectLayers[i].MapObjects[mo].Polygon.Lines.Length; l++) {
-                            Vector2 Start = new Vector2();
-                            Vector2 End = new Vector2();
-                            Start.X = input.ReadSingle();
-                            Start.Y = input.ReadSingle();
-                            End.X = input.ReadSingle();
-                            End.Y = input.ReadSingle();
-                            m.ObjectLayers[i].MapObjects[mo].Polygon.Lines[l] = Line.FromPoints(Start, End);
-                        }
-                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.X = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Min(x => x.X);
-                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Y = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Min(x => x.Y);
-                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Width = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Max(x => x.X) - m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.X;
-                        m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Height = m.ObjectLayers[i].MapObjects[mo].Polygon.Points.Max(x => x.Y) - m.ObjectLayers[i].MapObjects[mo].Polygon.Bounds.Y;
+                        m.ObjectLayers[i].MapObjects[mo].Polygon = Polygon.FromPoints(points);
                     }
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polygon = null;

@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace FuncWorks.XNA.XTiled {
     /// <summary>
     /// A sequence of lines that form a closed shape
     /// </summary>
     public class Polygon {
-        internal Texture2D _polyTex;
-
+        /// <summary>
+        /// A texture representing the polygon, must be first created by calling GenerateTexure
+        /// </summary>
+        public Texture2D Texture;
         /// <summary>
         /// The points that make up the polygon, in order
         /// </summary>
@@ -21,6 +25,55 @@ namespace FuncWorks.XNA.XTiled {
         /// Bounding rectangle of this Polygon
         /// </summary>
         public Rectangle Bounds;
+
+        /// <summary>
+        /// Creates a Polygon from a list of points and calculates the lines and bounds of the result
+        /// </summary>
+        /// <param name="points">The list of points that define the polygon; the last point must be the same as the first to close the polygon</param>
+        /// <returns>a Polygon object</returns>
+        public static Polygon FromPoints(IEnumerable<Point> points) {
+            Polygon poly = new Polygon();
+            poly.Points = points.ToArray();
+
+            poly.Bounds.X = points.Min(x => x.X);
+            poly.Bounds.Y = points.Min(x => x.Y);
+            poly.Bounds.Width = points.Max(x => x.X) - points.Min(x => x.X);
+            poly.Bounds.Height = points.Max(x => x.Y) - points.Min(x => x.Y);
+
+            poly.Points = points.ToArray();
+            if (poly.Points.Length > 1) {
+                poly.Lines = new Line[poly.Points.Length - 1];
+                for (int i = 0; i < poly.Lines.Length; i++) {
+                    poly.Lines[i] = Line.FromPoints(
+                        new Vector2(poly.Points[i].X, poly.Points[i].Y),
+                        new Vector2(poly.Points[i + 1].X, poly.Points[i + 1].Y));
+                }
+            }
+
+            return poly;
+        }
+
+        /// <summary>
+        /// Initializes the Polygon.Texture field
+        /// </summary>
+        /// <param name="graphicsDevice">GraphicsDevice to create the texture on</param>
+        /// <param name="color">Color for the polygon</param>
+        public void GenerateTexture(GraphicsDevice graphicsDevice, Color color) {
+            Color[] colorData = new Color[this.Bounds.Width * this.Bounds.Height];
+            for (int y = this.Bounds.Y; y < this.Bounds.Bottom; y++) {
+                for (int x = this.Bounds.X; x < this.Bounds.Right; x++) {
+                    int c = (x - this.Bounds.X) +
+                        (y - this.Bounds.Y) * this.Bounds.Width;
+                    if (this.Contains(new Vector2(x, y)))
+                        colorData[c] = color;
+                    else
+                        colorData[c] = Color.Transparent;
+                }
+            }
+
+            this.Texture = new Texture2D(graphicsDevice, this.Bounds.Width, this.Bounds.Height, false, SurfaceFormat.Color);
+            this.Texture.SetData(colorData);
+        }
 
         /// <summary>
         /// Draws the lines that make up the Polygon
@@ -49,8 +102,8 @@ namespace FuncWorks.XNA.XTiled {
         public void DrawFilled(SpriteBatch spriteBatch, Rectangle region, Texture2D texture, Single lineWidth, Color color, Color fillColor, Single layerDepth) {
             for (int i = 0; i < Lines.Length; i++)
                 Line.Draw(spriteBatch, Lines[i], region, texture, lineWidth, color, layerDepth);
-        
-            spriteBatch.Draw(this._polyTex, Map.Translate(this.Bounds, region), null, fillColor, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
+
+            spriteBatch.Draw(this.Texture, Map.Translate(this.Bounds, region), null, fillColor, 0, Vector2.Zero, SpriteEffects.None, layerDepth);
         }
 
         /// <summary>

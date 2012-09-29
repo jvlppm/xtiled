@@ -110,27 +110,7 @@ namespace FuncWorks.XNA.XTiled {
             for (int i = 0; i < this.ObjectLayers.Count; i++) {
                 for (int o = 0; o < this.ObjectLayers[i].MapObjects.Length; o++) {
                     if (this.ObjectLayers[i].MapObjects[o].Polygon != null) {
-
-                        this.ObjectLayers[i].MapObjects[o].Polygon._polyTex =
-                            new Texture2D(Map._whiteTexture.GraphicsDevice,
-                                          this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Width,
-                                          this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Height,
-                                          false, SurfaceFormat.Color);
-
-                        Color[] colorData = new Color[this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Width *
-                                            this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Height];
-                        for (int y = this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Y; y < this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Bottom; y++) {
-                            for (int x = this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.X; x < this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Right; x++) {
-                                int c = (x - this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.X) +
-                                    (y - this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Y) * this.ObjectLayers[i].MapObjects[o].Polygon.Bounds.Width;
-                                if (this.ObjectLayers[i].MapObjects[o].Polygon.Contains(new Vector2(x, y)))
-                                    colorData[c] = Color.White;
-                                else
-                                    colorData[c] = Color.Transparent;
-                            }
-                        }
-
-                        this.ObjectLayers[i].MapObjects[o].Polygon._polyTex.SetData(colorData);
+                        this.ObjectLayers[i].MapObjects[o].Polygon.GenerateTexture(Map._whiteTexture.GraphicsDevice, Color.White);
                     }
                 }
             }
@@ -268,28 +248,13 @@ namespace FuncWorks.XNA.XTiled {
 
             for (int o = 0; o < this.ObjectLayers[objectLayerID].MapObjects.Length; o++) {
                 if (region.Contains(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds) || region.Intersects(this.ObjectLayers[objectLayerID].MapObjects[o].Bounds)) {
-                    Color color = this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor;
-                    Color fillColor = color;
-                    fillColor.A /= 4;
-
-                    if (this.ObjectLayers[objectLayerID].MapObjects[o].Polyline != null) {
-                        this.ObjectLayers[objectLayerID].MapObjects[o].Polyline.Draw(spriteBatch, region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
-                    }
-                    else if (this.ObjectLayers[objectLayerID].MapObjects[o].Polygon != null) {
-                        this.ObjectLayers[objectLayerID].MapObjects[o].Polygon.DrawFilled(spriteBatch, region, Map._whiteTexture, Map._lineThickness, color, fillColor, layerDepth);
-                    }
-                    else if (this.ObjectLayers[objectLayerID].MapObjects[o].TileID.HasValue) {
-                        DrawMapObject(spriteBatch, objectLayerID, o, ref region, layerDepth, ref color);
-                    }
-                    else {
-                        DrawRectangle(spriteBatch, ref this.ObjectLayers[objectLayerID].MapObjects[o].Bounds, ref region, layerDepth, ref color, ref fillColor);
-                    }
+                    DrawMapObject(spriteBatch, objectLayerID, o, ref region, layerDepth);
                 }
             }
         }
 
         /// <summary>
-        /// Method to draw a MapObject
+        /// Method to draw a MapObject that represents a tile object
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
         /// <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
@@ -297,12 +262,12 @@ namespace FuncWorks.XNA.XTiled {
         /// <param name="region">Region of the map in pixels to draw</param>
         /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         /// <param name="color">Color of the object</param>
-        public void DrawMapObject(SpriteBatch spriteBatch, Int32 objectLayerID, Int32 objectID, Rectangle region, Single layerDepth, Color color) {
-            this.DrawMapObject(spriteBatch, objectLayerID, objectID, ref region, layerDepth, ref color);
+        public void DrawTileObject(SpriteBatch spriteBatch, Int32 objectLayerID, Int32 objectID, Rectangle region, Single layerDepth, Color color) {
+            this.DrawTileObject(spriteBatch, objectLayerID, objectID, ref region, layerDepth, ref color);
         }
 
         /// <summary>
-        /// Method to draw a MapObject
+        /// Method to draw a MapObject that represents a tile object
         /// </summary>
         /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
         /// <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
@@ -310,17 +275,57 @@ namespace FuncWorks.XNA.XTiled {
         /// <param name="region">Region of the map in pixels to draw</param>
         /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         /// <param name="color">Color of the object</param>
-        public void DrawMapObject(SpriteBatch spriteBatch, Int32 objectLayerID, Int32 objectID, ref Rectangle region, Single layerDepth, ref Color color) {
-            Rectangle target = Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[objectID].Bounds, region);
+        public void DrawTileObject(SpriteBatch spriteBatch, int objectLayerID, int objectID, ref Rectangle region, float layerDepth, ref Color color) {
             spriteBatch.Draw(
                 this.Tilesets[this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[objectID].TileID.Value].TilesetID].Texture,
-                target,
+                Map.Translate(this.ObjectLayers[objectLayerID].MapObjects[objectID].Bounds, region),
                 this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[objectID].TileID.Value].Source,
                 color,
                 0,
                 this.SourceTiles[this.ObjectLayers[objectLayerID].MapObjects[objectID].TileID.Value].Origin,
                 SpriteEffects.None,
                 layerDepth);
+        }
+
+        /// <summary>
+        /// Method to draw a MapObject
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
+        /// <param name="objectID">Index of the object to draw in the Map.ObjectLayers.MapObjects collection</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        /// <param name="color">Color of the object</param>
+        public void DrawMapObject(SpriteBatch spriteBatch, Int32 objectLayerID, Int32 objectID, Rectangle region, Single layerDepth) {
+            DrawMapObject(spriteBatch, objectLayerID, objectID, ref region, layerDepth);
+        }
+
+        /// <summary>
+        /// Method to draw a MapObject
+        /// </summary>
+        /// <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+        /// <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
+        /// <param name="objectID">Index of the object to draw in the Map.ObjectLayers.MapObjects collection</param>
+        /// <param name="region">Region of the map in pixels to draw</param>
+        /// <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        /// <param name="color">Color of the object</param>
+        public void DrawMapObject(SpriteBatch spriteBatch, Int32 objectLayerID, Int32 objectID, ref Rectangle region, Single layerDepth) {
+            Color color = this.ObjectLayers[objectLayerID].Color ?? this.ObjectLayers[objectLayerID].OpacityColor;
+            Color fillColor = color;
+            fillColor.A /= 4;
+
+            if (this.ObjectLayers[objectLayerID].MapObjects[objectID].Polyline != null) {
+                this.ObjectLayers[objectLayerID].MapObjects[objectID].Polyline.Draw(spriteBatch, region, Map._whiteTexture, Map._lineThickness, color, layerDepth);
+            }
+            else if (this.ObjectLayers[objectLayerID].MapObjects[objectID].Polygon != null) {
+                this.ObjectLayers[objectLayerID].MapObjects[objectID].Polygon.DrawFilled(spriteBatch, region, Map._whiteTexture, Map._lineThickness, color, fillColor, layerDepth);
+            }
+            else if (this.ObjectLayers[objectLayerID].MapObjects[objectID].TileID.HasValue) {
+                DrawTileObject(spriteBatch, objectLayerID, objectID, ref region, layerDepth, ref color);
+            }
+            else {
+                DrawRectangle(spriteBatch, ref this.ObjectLayers[objectLayerID].MapObjects[objectID].Bounds, ref region, layerDepth, ref color, ref fillColor);
+            }
         }
 
         /// <summary>

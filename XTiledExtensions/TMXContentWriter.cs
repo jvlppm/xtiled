@@ -151,13 +151,6 @@ namespace FuncWorks.XNA.XTiled {
                             output.Write(p.X);
                             output.Write(p.Y);
                         }
-                        output.Write(m.Polyline.Lines.Length);
-                        foreach (var l in m.Polyline.Lines) {
-                            output.Write(l.Start.X);
-                            output.Write(l.Start.Y);
-                            output.Write(l.End.X);
-                            output.Write(l.End.Y);
-                        }
                     }
 
                     output.Write(m.Polygon != null);
@@ -166,13 +159,6 @@ namespace FuncWorks.XNA.XTiled {
                         foreach (var p in m.Polygon.Points) {
                             output.Write(p.X);
                             output.Write(p.Y);
-                        }
-                        output.Write(m.Polygon.Lines.Length);
-                        foreach (var l in m.Polygon.Lines) {
-                            output.Write(l.Start.X);
-                            output.Write(l.Start.Y);
-                            output.Write(l.End.X);
-                            output.Write(l.End.Y);
                         }
                     }
 
