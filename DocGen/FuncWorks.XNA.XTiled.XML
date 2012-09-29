@@ -298,7 +298,7 @@
             Draws all objects on the given object layer
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-            <param name="objectLayerID">Index of the layer to draw in the Map.TileLayers collection</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
             <param name="region">Region of the map in pixels to draw</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
         </member>
@@ -307,9 +307,75 @@
             Draws all objects on the given object layer
             </summary>
             <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
-            <param name="objectLayerID">Index of the layer to draw in the Map.TileLayers collection</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
             <param name="region">Region of the map in pixels to draw</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawTileObject(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,System.Int32,Microsoft.Xna.Framework.Rectangle,System.Single,Microsoft.Xna.Framework.Color)">
+            <summary>
+            Method to draw a MapObject that represents a tile object
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
+            <param name="objectID">Index of the object to draw in the Map.ObjectLayers.MapObjects collection</param>
+            <param name="region">Region of the map in pixels to draw</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+            <param name="color">Color of the object</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawTileObject(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,System.Int32,Microsoft.Xna.Framework.Rectangle@,System.Single,Microsoft.Xna.Framework.Color@)">
+            <summary>
+            Method to draw a MapObject that represents a tile object
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
+            <param name="objectID">Index of the object to draw in the Map.ObjectLayers.MapObjects collection</param>
+            <param name="region">Region of the map in pixels to draw</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+            <param name="color">Color of the object</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawMapObject(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,System.Int32,Microsoft.Xna.Framework.Rectangle,System.Single)">
+            <summary>
+            Method to draw a MapObject
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
+            <param name="objectID">Index of the object to draw in the Map.ObjectLayers.MapObjects collection</param>
+            <param name="region">Region of the map in pixels to draw</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+            <param name="color">Color of the object</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawMapObject(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,System.Int32,Microsoft.Xna.Framework.Rectangle@,System.Single)">
+            <summary>
+            Method to draw a MapObject
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="objectLayerID">Index of the layer to draw in the Map.ObjectLayers collection</param>
+            <param name="objectID">Index of the object to draw in the Map.ObjectLayers.MapObjects collection</param>
+            <param name="region">Region of the map in pixels to draw</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+            <param name="color">Color of the object</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawRectangle(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle,System.Single,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color)">
+            <summary>
+            Method to draw a Rectangle
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="rect">The Rectangle to draw, in map pixels</param>
+            <param name="region">Region of the map in pixels currently visible</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+            <param name="linecolor">Color of the Rectangle border</param>
+            <param name="fillColor">Color to fill the Rectangle with</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Map.DrawRectangle(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle@,Microsoft.Xna.Framework.Rectangle@,System.Single,Microsoft.Xna.Framework.Color@,Microsoft.Xna.Framework.Color@)">
+            <summary>
+            Method to draw a Rectangle
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="rect">The Rectangle to draw, in map pixels</param>
+            <param name="region">Region of the map in pixels currently visible</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+            <param name="linecolor">Color of the Rectangle border</param>
+            <param name="fillColor">Color to fill the Rectangle with</param>
         </member>
         <member name="M:FuncWorks.XNA.XTiled.Map.Translate(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle)">
             <summary>
@@ -511,6 +577,13 @@
             Bounding rectangle of this polyline
             </summary>
         </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polyline.FromPoints(System.Collections.Generic.IEnumerable{Microsoft.Xna.Framework.Point})">
+            <summary>
+            Creates a Polyline from a list of points and calculates the lines and bounds of the result
+            </summary>
+            <param name="points">The list of points that define the polyline</param>
+            <returns>a Polyline object</returns>
+        </member>
         <member name="M:FuncWorks.XNA.XTiled.Polyline.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,System.Single)">
             <summary>
             Draws the lines that make up the Polyline
@@ -555,6 +628,11 @@
             A sequence of lines that form a closed shape
             </summary>
         </member>
+        <member name="F:FuncWorks.XNA.XTiled.Polygon.Texture">
+            <summary>
+            A texture representing the polygon, must be first created by calling GenerateTexure
+            </summary>
+        </member>
         <member name="F:FuncWorks.XNA.XTiled.Polygon.Points">
             <summary>
             The points that make up the polygon, in order
@@ -570,6 +648,20 @@
             Bounding rectangle of this Polygon
             </summary>
         </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.FromPoints(System.Collections.Generic.IEnumerable{Microsoft.Xna.Framework.Point})">
+            <summary>
+            Creates a Polygon from a list of points and calculates the lines and bounds of the result
+            </summary>
+            <param name="points">The list of points that define the polygon; the last point must be the same as the first to close the polygon</param>
+            <returns>a Polygon object</returns>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.GenerateTexture(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Color)">
+            <summary>
+            Initializes the Polygon.Texture field
+            </summary>
+            <param name="graphicsDevice">GraphicsDevice to create the texture on</param>
+            <param name="color">Color for the polygon</param>
+        </member>
         <member name="M:FuncWorks.XNA.XTiled.Polygon.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,System.Single)">
             <summary>
             Draws the lines that make up the Polygon
@@ -580,6 +672,18 @@
             <param name="lineWidth">The width of the lines in pixels</param>
             <param name="color">The color value to apply to the given texture</param>
             <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+        </member>
+        <member name="M:FuncWorks.XNA.XTiled.Polygon.DrawFilled(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>
+            Draws the lines that make up the Polygon
+            </summary>
+            <param name="spriteBatch">XNA SpriteBatch instance; SpriteBatch.Begin() must be called before using this method</param>
+            <param name="region">Region of the map in pixels to draw</param> 
+            <param name="texture">A texture to use in drawing the lines</param>
+            <param name="lineWidth">The width of the lines in pixels</param>
+            <param name="color">The color value to apply to the polgon lines</param>
+            <param name="layerDepth">LayerDepth value to pass to SpriteBatch</param>
+            <param name="fillColor">The color value to fill the polygon</param>
         </member>
         <member name="M:FuncWorks.XNA.XTiled.Polygon.Contains(Microsoft.Xna.Framework.Vector2@)">
             <summary>
