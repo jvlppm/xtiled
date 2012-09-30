@@ -356,8 +356,8 @@ namespace FuncWorks.XNA.XTiled {
                     o.Visible = oElem.Attribute("visible") == null ? true : oElem.Attribute("visible").Equals("1");
 
                     if (o.TileID.HasValue) {
-                        o.Bounds.X += Convert.ToInt32(mapTiles[o.TileID.Value].Origin.X) + map.Tilesets[mapTiles[o.TileID.Value].TilesetID].TileOffsetX;
-                        o.Bounds.Y -= Convert.ToInt32(mapTiles[o.TileID.Value].Origin.Y) + map.Tilesets[mapTiles[o.TileID.Value].TilesetID].TileOffsetY;
+                        o.Bounds.X += Convert.ToInt32(mapTiles[o.TileID.Value].Origin.X); // +map.Tilesets[mapTiles[o.TileID.Value].TilesetID].TileOffsetX;
+                        o.Bounds.Y -= Convert.ToInt32(mapTiles[o.TileID.Value].Origin.Y); // +map.Tilesets[mapTiles[o.TileID.Value].TilesetID].TileOffsetY;
                         o.Bounds.Width = map.SourceTiles[o.TileID.Value].Source.Width;
                         o.Bounds.Height = map.SourceTiles[o.TileID.Value].Source.Height;
                     }
