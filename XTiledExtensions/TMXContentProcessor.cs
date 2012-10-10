@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System.ComponentModel;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
+using System.Globalization;
+using System.Threading;
 
 namespace FuncWorks.XNA.XTiled {
     [ContentProcessor(DisplayName = "TMX Map - XTiled")]
@@ -41,6 +43,9 @@ namespace FuncWorks.XNA.XTiled {
         }
 
         public override Map Process(XDocument input, ContentProcessorContext context) {
+            CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
             Map map = new Map();
             map.LoadTextures = LoadTextures;
             List<Tile> mapTiles = new List<Tile>();
@@ -409,6 +414,7 @@ namespace FuncWorks.XNA.XTiled {
             }
             map.LayerOrder = info.ToArray();
 
+            Thread.CurrentThread.CurrentCulture = culture;
             return map;
         }
     }
