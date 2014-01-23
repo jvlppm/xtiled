@@ -87,9 +87,12 @@ namespace FuncWorks.XNA.XTiled {
                 Tileset t = new Tileset();
                 XElement tElem = elem;
                 UInt32 FirstGID = Convert.ToUInt32(tElem.Attribute("firstgid").Value);
+                string fileRoot = mapDirectory;
 
                 if (elem.Attribute("source") != null) {
-                    XDocument tsx = XDocument.Load(elem.Attribute("source").Value);
+                    fileRoot = Path.Combine(mapDirectory, elem.Attribute("source").Value);
+                    XDocument tsx = XDocument.Load(fileRoot);
+                    fileRoot = Path.GetDirectoryName(fileRoot);
                     tElem = tsx.Root;
                 }
 
@@ -110,7 +113,7 @@ namespace FuncWorks.XNA.XTiled {
 
                 if (tElem.Element("image") != null) {
                     XElement imgElem = tElem.Element("image");
-                    t.ImageFileName = Path.Combine(mapDirectory, imgElem.Attribute("source").Value);
+                    t.ImageFileName = Path.Combine(fileRoot, imgElem.Attribute("source").Value);
                     t.ImageWidth = imgElem.Attribute("width") == null ? -1 : Convert.ToInt32(imgElem.Attribute("width").Value);
                     t.ImageHeight = imgElem.Attribute("height") == null ? -1 : Convert.ToInt32(imgElem.Attribute("height").Value);
                     t.ImageTransparentColor = null;
