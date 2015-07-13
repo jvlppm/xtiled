@@ -1,8 +1,0 @@
-syntax: glob
-bin/
-obj/
-*.cachefile
-*.user
-*.suo
-Thumbs.db
-_ReSharper*
