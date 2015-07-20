@@ -5,12 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace FuncWorks.XNA.XTiled {
+namespace FuncWorks.XNA.XTiled
+{
 
     /// <summary/>
-    public sealed class MapReader : ContentTypeReader<Map> {
+    public sealed class MapReader : ContentTypeReader<Map>
+    {
         /// <summary/>
-        protected override Map Read(ContentReader input, Map existingInstance) {
+        protected override Map Read(ContentReader input, Map existingInstance)
+        {
             Map m = new Map();
             Int32 props = 0;
             
@@ -25,8 +28,28 @@ namespace FuncWorks.XNA.XTiled {
             m.Bounds.Width = input.ReadInt32();
             m.LoadTextures = input.ReadBoolean();
 
+            m.Terrains = new Terrain[input.ReadInt32()];
+            for (int i = 0; i < m.Terrains.Length; i++)
+            {
+                var name = input.ReadString();
+                var id = input.ReadInt32();
+                var pCount = input.ReadInt32();
+
+                var properties = new Dictionary<string, Property>();
+                for (int p = 0; p < pCount; p++)
+                    properties.Add(input.ReadString(), Property.Create(input.ReadString()));
+
+                m.Terrains[i] = new Terrain
+                {
+                    Name = name,
+                    TileID = id < 0 ? (int?)null : id,
+                    Properties = properties
+                };
+            }
+
             m.Tilesets = new Tileset[input.ReadInt32()];
-            for (int i = 0; i < m.Tilesets.Length; i++) {
+            for (int i = 0; i < m.Tilesets.Length; i++)
+            {
                 m.Tilesets[i] = new Tileset();
                 m.Tilesets[i].ImageFileName = input.ReadString();
                 m.Tilesets[i].ImageHeight = input.ReadInt32();
@@ -39,14 +62,16 @@ namespace FuncWorks.XNA.XTiled {
                 m.Tilesets[i].TileOffsetY = input.ReadInt32();
                 m.Tilesets[i].TileWidth = input.ReadInt32();
 
-                if (input.ReadBoolean()) {
+                if (input.ReadBoolean())
+                {
                     Color c = Color.White;
                     c.A = input.ReadByte();
                     m.Tilesets[i].ImageTransparentColor = c;
                 }
 
                 m.Tilesets[i].Tiles = new Tile[input.ReadInt32()];
-                for (int j = 0; j < m.Tilesets[i].Tiles.Length; j++) {
+                for (int j = 0; j < m.Tilesets[i].Tiles.Length; j++)
+                {
                     m.Tilesets[i].Tiles[j] = new Tile();
                     m.Tilesets[i].Tiles[j].TilesetID = input.ReadInt32();
                     m.Tilesets[i].Tiles[j].Origin.X = input.ReadSingle();
@@ -56,29 +81,40 @@ namespace FuncWorks.XNA.XTiled {
                     m.Tilesets[i].Tiles[j].Source.Height = input.ReadInt32();
                     m.Tilesets[i].Tiles[j].Source.Width = input.ReadInt32();
 
+                    var tileTerrains = new []{ input.ReadInt32(), input.ReadInt32(), input.ReadInt32(), input.ReadInt32() }
+                        .Select(tI => i < 0 ? null : m.Terrains[tI]).ToArray();
+
+                    m.Tilesets[i].Tiles[j].Terrain = new TerrainData(
+                        tileTerrains[0], tileTerrains[1], tileTerrains[2], tileTerrains[3]
+                    );
+
                     props = input.ReadInt32();
                     m.Tilesets[i].Tiles[j].Properties = new Dictionary<String, Property>();
-                    for (int p = 0; p < props; p++) {
+                    for (int p = 0; p < props; p++)
+                    {
                         m.Tilesets[i].Tiles[j].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
                     }
                 }
 
                 props = input.ReadInt32();
                 m.Tilesets[i].Properties = new Dictionary<String, Property>(props);
-                for (int p = 0; p < props; p++) {
+                for (int p = 0; p < props; p++)
+                {
                     m.Tilesets[i].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
                 }
             }
 
             props = input.ReadInt32();
             m.Properties = new Dictionary<String, Property>(props);
-            for (int p = 0; p < props; p++) {
+            for (int p = 0; p < props; p++)
+            {
                 m.Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
             }
 
             m.TileLayers = new TileLayerList();
             int tileLayers = input.ReadInt32();
-            for (int i = 0; i < tileLayers; i++) {
+            for (int i = 0; i < tileLayers; i++)
+            {
 
                 m.TileLayers.Add(new TileLayer());
                 m.TileLayers[i].Name = input.ReadString();
@@ -89,16 +125,20 @@ namespace FuncWorks.XNA.XTiled {
 
                 props = input.ReadInt32();
                 m.TileLayers[i].Properties = new Dictionary<String, Property>(props);
-                for (int p = 0; p < props; p++) {
+                for (int p = 0; p < props; p++)
+                {
                     m.TileLayers[i].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
                 }
 
                 m.TileLayers[i].Tiles = new TileData[input.ReadInt32()][];
-                for (int x = 0; x < m.TileLayers[i].Tiles.Length; x++) {
+                for (int x = 0; x < m.TileLayers[i].Tiles.Length; x++)
+                {
                     m.TileLayers[i].Tiles[x] = new TileData[input.ReadInt32()];
-                    for (int y = 0; y < m.TileLayers[i].Tiles[x].Length; y++) {
+                    for (int y = 0; y < m.TileLayers[i].Tiles[x].Length; y++)
+                    {
 
-                        if (input.ReadBoolean()) {
+                        if (input.ReadBoolean())
+                        {
                             m.TileLayers[i].Tiles[x][y] = new TileData();
                             m.TileLayers[i].Tiles[x][y].Rotation = input.ReadSingle();
                             m.TileLayers[i].Tiles[x][y].SourceID = input.ReadInt32();
@@ -126,7 +166,8 @@ namespace FuncWorks.XNA.XTiled {
             }
 
             m.SourceTiles = new Tile[input.ReadInt32()];
-            for (int i = 0; i < m.SourceTiles.Length; i++) {
+            for (int i = 0; i < m.SourceTiles.Length; i++)
+            {
                 m.SourceTiles[i] = new Tile();
                 m.SourceTiles[i].Origin.X = input.ReadSingle();
                 m.SourceTiles[i].Origin.Y = input.ReadSingle();
@@ -138,14 +179,16 @@ namespace FuncWorks.XNA.XTiled {
 
                 props = input.ReadInt32();
                 m.SourceTiles[i].Properties = new Dictionary<String, Property>(props);
-                for (int p = 0; p < props; p++) {
+                for (int p = 0; p < props; p++)
+                {
                     m.SourceTiles[i].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
                 }
             }
 
             Int32 olayers = input.ReadInt32();
             m.ObjectLayers = new ObjectLayerList();
-            for (int i = 0; i < olayers; i++) {
+            for (int i = 0; i < olayers; i++)
+            {
 
                 m.ObjectLayers.Add(new ObjectLayer());
                 m.ObjectLayers[i].Name = input.ReadString();
@@ -154,7 +197,8 @@ namespace FuncWorks.XNA.XTiled {
                 m.ObjectLayers[i].OpacityColor.A = input.ReadByte();
                 m.ObjectLayers[i].Visible = input.ReadBoolean();
 
-                if (input.ReadBoolean()) {
+                if (input.ReadBoolean())
+                {
                     Color c = Color.White;
                     c.R = input.ReadByte();
                     c.G = input.ReadByte();
@@ -166,7 +210,8 @@ namespace FuncWorks.XNA.XTiled {
                     m.ObjectLayers[i].Color = null;
 
                 m.ObjectLayers[i].MapObjects = new MapObject[input.ReadInt32()];
-                for (int mo = 0; mo < m.ObjectLayers[i].MapObjects.Length; mo++) {
+                for (int mo = 0; mo < m.ObjectLayers[i].MapObjects.Length; mo++)
+                {
 
                     m.ObjectLayers[i].MapObjects[mo] = new MapObject();
                     m.ObjectLayers[i].MapObjects[mo].Bounds.X = input.ReadInt32();
@@ -182,9 +227,11 @@ namespace FuncWorks.XNA.XTiled {
                     else
                         m.ObjectLayers[i].MapObjects[mo].TileID = null;
 
-                    if (input.ReadBoolean()) {
+                    if (input.ReadBoolean())
+                    {
                         Point[] points = new Point[input.ReadInt32()];
-                        for (int p = 0; p < points.Length; p++) {
+                        for (int p = 0; p < points.Length; p++)
+                        {
                             points[p].X = input.ReadInt32();
                             points[p].Y = input.ReadInt32();
                         }
@@ -193,9 +240,11 @@ namespace FuncWorks.XNA.XTiled {
                     else
                         m.ObjectLayers[i].MapObjects[mo].Polyline = null;
 
-                    if (input.ReadBoolean()) {
+                    if (input.ReadBoolean())
+                    {
                         Point[] points = new Point[input.ReadInt32()];
-                        for (int p = 0; p < points.Length; p++) {
+                        for (int p = 0; p < points.Length; p++)
+                        {
                             points[p].X = input.ReadInt32();
                             points[p].Y = input.ReadInt32();
                         }
@@ -214,19 +263,23 @@ namespace FuncWorks.XNA.XTiled {
 
                 props = input.ReadInt32();
                 m.ObjectLayers[i].Properties = new Dictionary<String, Property>(props);
-                for (int p = 0; p < props; p++) {
+                for (int p = 0; p < props; p++)
+                {
                     m.ObjectLayers[i].Properties.Add(input.ReadString(), Property.Create(input.ReadString()));
                 } 
             }
 
             m.LayerOrder = new LayerInfo[input.ReadInt32()];
-            for (int li = 0; li < m.LayerOrder.Length; li++) {
+            for (int li = 0; li < m.LayerOrder.Length; li++)
+            {
                 m.LayerOrder[li].ID = input.ReadInt32();
                 m.LayerOrder[li].LayerType = input.ReadBoolean() ? LayerType.TileLayer : LayerType.ObjectLayer;
             }
 
-            if (m.LoadTextures) {
-                for (int i = 0; i < m.Tilesets.Length; i++) {
+            if (m.LoadTextures)
+            {
+                for (int i = 0; i < m.Tilesets.Length; i++)
+                {
                     m.Tilesets[i].Texture = input.ContentManager.Load<Texture2D>(String.Format("{0}/{1:00}", input.AssetName, i));
                 }
             }

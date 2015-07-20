@@ -2,11 +2,13 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace FuncWorks.XNA.XTiled {
+namespace FuncWorks.XNA.XTiled
+{
     /// <summary>
     /// Represents a source tile image's metadata
     /// </summary>
-    public class Tile {
+    public class Tile
+    {
         /// <summary>
         /// Index of the Tileset in the Map.Tilesets collection this tile belongs to
         /// </summary>
@@ -23,5 +25,9 @@ namespace FuncWorks.XNA.XTiled {
         /// Origin of this tile for rendering; set to the center of the tile
         /// </summary>
         public Vector2 Origin;
+        /// <summary>
+        /// Terrain information for this tile
+        /// </summary>
+        public TerrainData Terrain;
     }
 }

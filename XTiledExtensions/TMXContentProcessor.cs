@@ -13,9 +13,11 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using System.Globalization;
 using System.Threading;
 
-namespace FuncWorks.XNA.XTiled {
+namespace FuncWorks.XNA.XTiled
+{
     [ContentProcessor(DisplayName = "TMX Map - XTiled")]
-    public class TMXContentProcessor : ContentProcessor<XDocument, Map> {
+    public class TMXContentProcessor : ContentProcessor<XDocument, Map>
+    {
 
         private const UInt32 FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
         private const UInt32 FLIPPED_VERTICALLY_FLAG = 0x40000000;
@@ -36,13 +38,15 @@ namespace FuncWorks.XNA.XTiled {
         [Description("If true, texture is converted to premultiplied alpha format")]
         public Boolean PremultiplyAlpha { get; set; }
 
-        public TMXContentProcessor() {
+        public TMXContentProcessor()
+        {
             LoadTextures = true;
             TextureFormat = TextureProcessorOutputFormat.Color;
             PremultiplyAlpha = true;
         }
 
-        public override Map Process(XDocument input, ContentProcessorContext context) {
+        public override Map Process(XDocument input, ContentProcessorContext context)
+        {
             CultureInfo culture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
@@ -58,7 +62,8 @@ namespace FuncWorks.XNA.XTiled {
             if (Version != 1.0M)
                 throw new NotSupportedException("XTiled only supports TMX maps version 1.0");
 
-            switch (input.Document.Root.Attribute("orientation").Value) {
+            switch (input.Document.Root.Attribute("orientation").Value)
+            {
                 case "orthogonal":
                     map.Orientation = MapOrientation.Orthogonal;
                     break;
@@ -83,13 +88,15 @@ namespace FuncWorks.XNA.XTiled {
                     map.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
             List<Tileset> tilesets = new List<Tileset>();
-            foreach (var elem in input.Document.Root.Elements("tileset")) {
+            foreach (var elem in input.Document.Root.Elements("tileset"))
+            {
                 Tileset t = new Tileset();
                 XElement tElem = elem;
                 UInt32 FirstGID = Convert.ToUInt32(tElem.Attribute("firstgid").Value);
                 string fileRoot = mapDirectory;
 
-                if (elem.Attribute("source") != null) {
+                if (elem.Attribute("source") != null)
+                {
                     fileRoot = Path.Combine(mapDirectory, elem.Attribute("source").Value);
                     XDocument tsx = XDocument.Load(fileRoot);
                     fileRoot = Path.GetDirectoryName(fileRoot);
@@ -102,42 +109,50 @@ namespace FuncWorks.XNA.XTiled {
                 t.Spacing = tElem.Attribute("spacing") == null ? 0 : Convert.ToInt32(tElem.Attribute("spacing").Value);
                 t.Margin = tElem.Attribute("margin") == null ? 0 : Convert.ToInt32(tElem.Attribute("margin").Value);
 
-                if (tElem.Element("tileoffset") != null) {
+                if (tElem.Element("tileoffset") != null)
+                {
                     t.TileOffsetX = Convert.ToInt32(tElem.Element("tileoffset").Attribute("x").Value);
                     t.TileOffsetY = Convert.ToInt32(tElem.Element("tileoffset").Attribute("y").Value);
                 }
-                else {
+                else
+                {
                     t.TileOffsetX = 0;
                     t.TileOffsetY = 0;
                 }
 
-                if (tElem.Element("image") != null) {
+                if (tElem.Element("image") != null)
+                {
                     XElement imgElem = tElem.Element("image");
                     t.ImageFileName = Path.Combine(fileRoot, imgElem.Attribute("source").Value);
                     t.ImageWidth = imgElem.Attribute("width") == null ? -1 : Convert.ToInt32(imgElem.Attribute("width").Value);
                     t.ImageHeight = imgElem.Attribute("height") == null ? -1 : Convert.ToInt32(imgElem.Attribute("height").Value);
                     t.ImageTransparentColor = null;
-                    if (imgElem.Attribute("trans") != null) {
+                    if (imgElem.Attribute("trans") != null)
+                    {
                         System.Drawing.Color sdc = System.Drawing.ColorTranslator.FromHtml("#" + imgElem.Attribute("trans").Value.TrimStart('#'));
                         t.ImageTransparentColor = new Color(sdc.R, sdc.G, sdc.B);
                     }
 
-                    if (t.ImageWidth == -1 || t.ImageHeight == -1) {
-                        try {
+                    if (t.ImageWidth == -1 || t.ImageHeight == -1)
+                    {
+                        try
+                        {
                             System.Drawing.Image sdi = System.Drawing.Image.FromFile(t.ImageFileName);
                             t.ImageHeight = sdi.Height;
                             t.ImageWidth = sdi.Width;
                         }
-                        catch (Exception ex) {
+                        catch (Exception ex)
+                        {
                             throw new Exception(String.Format("Image size not set for {0} and error loading file.", t.ImageFileName), ex);
                         }
                     }
 
-                    if (LoadTextures) {
+                    if (LoadTextures)
+                    {
                         String assetName = Path.Combine(
-                                Path.GetDirectoryName(context.OutputFilename.Remove(0, context.OutputDirectory.Length)), 
-                                Path.GetFileNameWithoutExtension(context.OutputFilename),
-                                tilesets.Count.ToString("00"));
+                                               Path.GetDirectoryName(context.OutputFilename.Remove(0, context.OutputDirectory.Length)), 
+                                               Path.GetFileNameWithoutExtension(context.OutputFilename),
+                                               tilesets.Count.ToString("00"));
 
                         OpaqueDataDictionary data = new OpaqueDataDictionary();
                         data.Add("GenerateMipmaps", false);
@@ -152,11 +167,13 @@ namespace FuncWorks.XNA.XTiled {
                 }
 
                 UInt32 gid = FirstGID;
-                for (int y = t.Margin; y < t.ImageHeight - t.Margin; y += t.TileHeight + t.Spacing) {
+                for (int y = t.Margin; y < t.ImageHeight - t.Margin; y += t.TileHeight + t.Spacing)
+                {
                     if (y + t.TileHeight > t.ImageHeight - t.Margin)
                         continue;
 
-                    for (int x = t.Margin; x < t.ImageWidth - t.Margin; x += t.TileWidth + t.Spacing) {
+                    for (int x = t.Margin; x < t.ImageWidth - t.Margin; x += t.TileWidth + t.Spacing)
+                    {
                         if (x + t.TileWidth > t.ImageWidth - t.Margin)
                             continue;
 
@@ -172,10 +189,45 @@ namespace FuncWorks.XNA.XTiled {
                     }
                 }
 
+                List<Terrain> terrainTypes = new List<Terrain>();
+                var terrainsElem = tElem.Element("terraintypes");
+                if (terrainsElem != null)
+                {
+                    foreach (var terrainElem in terrainsElem.Elements("terrain"))
+                    {
+                        var tileAttr = terrainElem.Attribute("tile")?.Value;
+                        int? tile = tileAttr != null ? int.Parse(tileAttr) : (int?)null;
+
+                        var customProperties = terrainElem.Element("properties")?.Elements("property")
+                                .ToDictionary(p => p.Attribute("name").Value,
+                                                   p => Property.Create(p.Attribute("value").Value))
+                                               ?? new Dictionary<string, Property>();
+
+                        terrainTypes.Add(new Terrain
+                            {
+                                Name = terrainElem.Attribute("name")?.Value,
+                                TileID = tile,
+                                Properties = customProperties
+                            });
+                    }
+                }
+
+                map.Terrains = terrainTypes.ToArray();
+
                 List<Tile> tiles = new List<Tile>();
-                foreach (var tileElem in tElem.Elements("tile")) {
+                foreach (var tileElem in tElem.Elements("tile"))
+                {
                     UInt32 id = Convert.ToUInt32(tileElem.Attribute("id").Value);
                     Tile tile = mapTiles[gid2id[id + FirstGID]];
+                    var terrain = tileElem.Attribute("terrain")?.Value;
+                    if (terrain != null)
+                    {
+                        var terrains = terrain.Split(',')
+                            .Select(f => f != "" ? terrainTypes[int.Parse(f)] : null)
+                            .ToArray();
+                        tile.Terrain = new TerrainData(terrains[0], terrains[1], terrains[2], terrains[3]);
+                    }
+
                     if (tileElem.Element("properties") != null)
                         foreach (var pElem in tileElem.Element("properties").Elements("property"))
                             tile.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
@@ -193,7 +245,8 @@ namespace FuncWorks.XNA.XTiled {
             map.Tilesets = tilesets.ToArray();
 
             TileLayerList layers = new TileLayerList();
-            foreach (var lElem in input.Document.Root.Elements("layer")) {
+            foreach (var lElem in input.Document.Root.Elements("layer"))
+            {
                 TileLayer l = new TileLayer();
                 l.Name = lElem.Attribute("name") == null ? null : lElem.Attribute("name").Value;
                 l.Opacity = lElem.Attribute("opacity") == null ? 1.0f : Convert.ToSingle(lElem.Attribute("opacity").Value);
@@ -211,68 +264,84 @@ namespace FuncWorks.XNA.XTiled {
                 for (int i = 0; i < tiles.Length; i++)
                     tiles[i] = new TileData[map.Orientation == MapOrientation.Orthogonal ? map.Height : map.Height + map.Width - 1];
 
-                if (lElem.Element("data") != null) {
+                if (lElem.Element("data") != null)
+                {
                     List<UInt32> gids = new List<UInt32>();
-                    if (lElem.Element("data").Attribute("encoding") != null || lElem.Element("data").Attribute("compression") != null) {
+                    if (lElem.Element("data").Attribute("encoding") != null || lElem.Element("data").Attribute("compression") != null)
+                    {
 
                         // parse csv formatted data
-                        if (lElem.Element("data").Attribute("encoding") != null && lElem.Element("data").Attribute("encoding").Value.Equals("csv")) {
+                        if (lElem.Element("data").Attribute("encoding") != null && lElem.Element("data").Attribute("encoding").Value.Equals("csv"))
+                        {
                             foreach (var gid in lElem.Element("data").Value.Split(",\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
                                 gids.Add(Convert.ToUInt32(gid));
                         }
-                        else if (lElem.Element("data").Attribute("encoding") != null && lElem.Element("data").Attribute("encoding").Value.Equals("base64")) {
+                        else if (lElem.Element("data").Attribute("encoding") != null && lElem.Element("data").Attribute("encoding").Value.Equals("base64"))
+                        {
                             Byte[] data = Convert.FromBase64String(lElem.Element("data").Value);
 
-                            if (lElem.Element("data").Attribute("compression") == null) {
+                            if (lElem.Element("data").Attribute("compression") == null)
+                            {
                                 // uncompressed data
-                                for (int i = 0; i < data.Length; i += sizeof(UInt32)) {
+                                for (int i = 0; i < data.Length; i += sizeof(UInt32))
+                                {
                                     gids.Add(BitConverter.ToUInt32(data, i));
                                 }
                             }
-                            else if (lElem.Element("data").Attribute("compression").Value.Equals("gzip")) {
+                            else if (lElem.Element("data").Attribute("compression").Value.Equals("gzip"))
+                            {
                                 // gzip data
                                 GZipStream gz = new GZipStream(new MemoryStream(data), CompressionMode.Decompress);
                                 Byte[] buffer = new Byte[sizeof(UInt32)];
-                                while (gz.Read(buffer, 0, buffer.Length) == buffer.Length) {
+                                while (gz.Read(buffer, 0, buffer.Length) == buffer.Length)
+                                {
                                     gids.Add(BitConverter.ToUInt32(buffer, 0));
                                 }
                             }
-                            else if (lElem.Element("data").Attribute("compression").Value.Equals("zlib")) {
+                            else if (lElem.Element("data").Attribute("compression").Value.Equals("zlib"))
+                            {
                                 // zlib data - first two bytes zlib specific and not part of deflate
                                 MemoryStream ms = new MemoryStream(data);
                                 ms.ReadByte();
                                 ms.ReadByte();
                                 DeflateStream gz = new DeflateStream(ms, CompressionMode.Decompress);
                                 Byte[] buffer = new Byte[sizeof(UInt32)];
-                                while (gz.Read(buffer, 0, buffer.Length) == buffer.Length) {
+                                while (gz.Read(buffer, 0, buffer.Length) == buffer.Length)
+                                {
                                     gids.Add(BitConverter.ToUInt32(buffer, 0));
                                 }
                             }
-                            else {
+                            else
+                            {
                                 throw new NotSupportedException(String.Format("Compression '{0}' not supported.  XTiled supports gzip or zlib", lElem.Element("data").Attribute("compression").Value));
                             }
                         }
-                        else {
+                        else
+                        {
                             throw new NotSupportedException(String.Format("Encoding '{0}' not supported.  XTiled supports csv or base64", lElem.Element("data").Attribute("encoding").Value));
                         }
                     }
-                    else {
+                    else
+                    {
 
                         // parse xml formatted data
                         foreach (var tElem in lElem.Element("data").Elements("tile"))
                             gids.Add(Convert.ToUInt32(tElem.Attribute("gid").Value));
                     }
 
-                    for (int i = 0; i < gids.Count; i++) {
+                    for (int i = 0; i < gids.Count; i++)
+                    {
                         TileData td = new TileData();
                         UInt32 ID = gids[i] & ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
                         td.SourceID = gid2id[ID];
-                        if (td.SourceID >= 0) {
+                        if (td.SourceID >= 0)
+                        {
                             Boolean FlippedHorizontally = Convert.ToBoolean(gids[i] & FLIPPED_HORIZONTALLY_FLAG);
                             Boolean FlippedVertically = Convert.ToBoolean(gids[i] & FLIPPED_VERTICALLY_FLAG);
                             Boolean FlippedDiagonally = Convert.ToBoolean(gids[i] & FLIPPED_DIAGONALLY_FLAG);
 
-                            if (FlippedDiagonally) {
+                            if (FlippedDiagonally)
+                            {
                                 td.Rotation = MathHelper.PiOver2;
                                 // this works, not 100% why (we are rotating instead of diag flipping, so I guess that's a clue)
                                 FlippedHorizontally = false;
@@ -292,7 +361,8 @@ namespace FuncWorks.XNA.XTiled {
                             td.Target.Width = mapTiles[td.SourceID].Source.Width;
                             td.Target.Height = mapTiles[td.SourceID].Source.Height;
 
-                            if (map.Orientation == MapOrientation.Orthogonal) {
+                            if (map.Orientation == MapOrientation.Orthogonal)
+                            {
                                 Int32 x = i % map.Width;
                                 Int32 y = i / map.Width;
                                 td.Target.X = x * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
@@ -305,7 +375,8 @@ namespace FuncWorks.XNA.XTiled {
 
                                 tiles[x][y] = td;
                             }
-                            else if (map.Orientation == MapOrientation.Isometric) {
+                            else if (map.Orientation == MapOrientation.Isometric)
+                            {
                                 Int32 x = map.Height + i % map.Width - (1 * i / map.Width + 1);
                                 Int32 y = i - i / map.Width * map.Width + i / map.Width;
                                 td.Target.X = x * map.TileWidth + Convert.ToInt32(mapTiles[td.SourceID].Origin.X) + map.Tilesets[mapTiles[td.SourceID].TilesetID].TileOffsetX;
@@ -331,7 +402,8 @@ namespace FuncWorks.XNA.XTiled {
             map.SourceTiles = mapTiles.ToArray();
 
             ObjectLayerList oLayers = new ObjectLayerList();
-            foreach (var olElem in input.Document.Root.Elements("objectgroup")) {
+            foreach (var olElem in input.Document.Root.Elements("objectgroup"))
+            {
                 ObjectLayer ol = new ObjectLayer();
                 ol.Name = olElem.Attribute("name") == null ? null : olElem.Attribute("name").Value;
                 ol.Opacity = olElem.Attribute("opacity") == null ? 1.0f : Convert.ToSingle(olElem.Attribute("opacity").Value);
@@ -341,7 +413,8 @@ namespace FuncWorks.XNA.XTiled {
                 ol.OpacityColor.A = Convert.ToByte(255.0f * ol.Opacity);
 
                 ol.Color = null;
-                if (olElem.Attribute("color") != null) {
+                if (olElem.Attribute("color") != null)
+                {
                     System.Drawing.Color sdc = System.Drawing.ColorTranslator.FromHtml("#" + olElem.Attribute("color").Value.TrimStart('#'));
                     ol.Color = new Color(sdc.R, sdc.G, sdc.B, ol.OpacityColor.A);
                 }
@@ -352,7 +425,8 @@ namespace FuncWorks.XNA.XTiled {
                         ol.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
                 List<MapObject> objects = new List<MapObject>();
-                foreach (var oElem in olElem.Elements("object")) {
+                foreach (var oElem in olElem.Elements("object"))
+                {
                     MapObject o = new MapObject();
                     o.Name = oElem.Attribute("name") == null ? null : oElem.Attribute("name").Value;
                     o.Type = oElem.Attribute("type") == null ? null : oElem.Attribute("type").Value;
@@ -363,7 +437,8 @@ namespace FuncWorks.XNA.XTiled {
                     o.TileID = oElem.Attribute("gid") == null ? null : (Int32?)gid2id[Convert.ToUInt32(oElem.Attribute("gid").Value)];
                     o.Visible = oElem.Attribute("visible") == null ? true : oElem.Attribute("visible").Equals("1");
 
-                    if (o.TileID.HasValue) {
+                    if (o.TileID.HasValue)
+                    {
                         o.Bounds.X += Convert.ToInt32(mapTiles[o.TileID.Value].Origin.X); // +map.Tilesets[mapTiles[o.TileID.Value].TilesetID].TileOffsetX;
                         o.Bounds.Y -= Convert.ToInt32(mapTiles[o.TileID.Value].Origin.Y); // +map.Tilesets[mapTiles[o.TileID.Value].TilesetID].TileOffsetY;
                         o.Bounds.Width = map.SourceTiles[o.TileID.Value].Source.Width;
@@ -376,9 +451,11 @@ namespace FuncWorks.XNA.XTiled {
                             o.Properties.Add(pElem.Attribute("name").Value, Property.Create(pElem.Attribute("value").Value));
 
                     o.Polygon = null;
-                    if (oElem.Element("polygon") != null) {
+                    if (oElem.Element("polygon") != null)
+                    {
                         List<Point> points = new List<Point>();
-                        foreach (var point in oElem.Element("polygon").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
+                        foreach (var point in oElem.Element("polygon").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                        {
                             String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                             points.Add(new Point(o.Bounds.X + Convert.ToInt32(coord[0]), o.Bounds.Y + Convert.ToInt32(coord[1])));
                         }
@@ -388,9 +465,11 @@ namespace FuncWorks.XNA.XTiled {
                     }
 
                     o.Polyline = null;
-                    if (oElem.Element("polyline") != null) {
+                    if (oElem.Element("polyline") != null)
+                    {
                         List<Point> points = new List<Point>();
-                        foreach (var point in oElem.Element("polyline").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) {
+                        foreach (var point in oElem.Element("polyline").Attribute("points").Value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                        {
                             String[] coord = point.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                             points.Add(new Point(o.Bounds.X + Convert.ToInt32(coord[0]), o.Bounds.Y + Convert.ToInt32(coord[1])));
                         }
@@ -409,7 +488,8 @@ namespace FuncWorks.XNA.XTiled {
 
             Int32 layerId = 0, objectId = 0;
             List<LayerInfo> info = new List<LayerInfo>();
-            foreach (var elem in input.Document.Root.Elements()) {
+            foreach (var elem in input.Document.Root.Elements())
+            {
                 if (elem.Name.LocalName.Equals("layer"))
                     info.Add(new LayerInfo() { ID = layerId++, LayerType = LayerType.TileLayer });
                 else if (elem.Name.LocalName.Equals("objectgroup"))

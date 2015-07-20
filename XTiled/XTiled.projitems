@@ -6,7 +6,7 @@
     <SharedGUID>ea9d9180-e0d2-4909-bef3-a246083d2a26</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>XTiled</Import_RootNamespace>
+    <Import_RootNamespace>FuncWorks.XNA.XTiled</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)LayerList.cs" />
@@ -22,5 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TileData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TileLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tileset.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Terrain.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TerrainData.cs" />
   </ItemGroup>
 </Project>

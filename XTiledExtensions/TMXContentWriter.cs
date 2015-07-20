@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace FuncWorks.XNA.XTiled {
+namespace FuncWorks.XNA.XTiled
+{
     [ContentTypeWriter]
-    public class TMXContentWriter : ContentTypeWriter<Map> {
-        protected override void Write(ContentWriter output, Map value) {
+    public class TMXContentWriter : ContentTypeWriter<Map>
+    {
+        protected override void Write(ContentWriter output, Map value)
+        {
 
             output.Write(value.Orientation == MapOrientation.Orthogonal);
             output.Write(value.Width);
@@ -19,13 +23,30 @@ namespace FuncWorks.XNA.XTiled {
             output.Write(value.Bounds.Width);
             output.Write(value.LoadTextures);
 
+            output.Write(value.Terrains.Length);
+            foreach (var t in value.Terrains)
+            {
+                output.Write(t.Name ?? string.Empty);
+                output.Write(t.TileID ?? -1);
+
+                output.Write(t.Properties.Count);
+                foreach (var kv in t.Properties)
+                {
+                    output.Write(kv.Key ?? string.Empty);
+                    output.Write(kv.Value.Value ?? string.Empty);
+                }
+            }
+
+            var terrains = value.Terrains.ToList();
+
             output.Write(value.Tilesets.Length);
-            foreach (var ts in value.Tilesets) {
-                output.Write(ts.ImageFileName == null ? String.Empty : ts.ImageFileName);
+            foreach (var ts in value.Tilesets)
+            {
+                output.Write(ts.ImageFileName ?? String.Empty);
                 output.Write(ts.ImageHeight);
                 output.Write(ts.ImageWidth);
                 output.Write(ts.Margin);
-                output.Write(ts.Name == null ? String.Empty : ts.Name);
+                output.Write(ts.Name ?? String.Empty);
                 output.Write(ts.Spacing);
                 output.Write(ts.TileHeight);
                 output.Write(ts.TileOffsetX);
@@ -37,7 +58,8 @@ namespace FuncWorks.XNA.XTiled {
                     output.Write(ts.ImageTransparentColor.Value.A);
 
                 output.Write(ts.Tiles.Length);
-                foreach (var t in ts.Tiles) {
+                foreach (var t in ts.Tiles)
+                {
                     output.Write(t.TilesetID);
                     output.Write(t.Origin.X);
                     output.Write(t.Origin.Y);
@@ -46,45 +68,58 @@ namespace FuncWorks.XNA.XTiled {
                     output.Write(t.Source.Height);
                     output.Write(t.Source.Width);
 
+                    output.Write(terrains.IndexOf(t.Terrain.TopLeft));
+                    output.Write(terrains.IndexOf(t.Terrain.TopRight));
+                    output.Write(terrains.IndexOf(t.Terrain.BottomLeft));
+                    output.Write(terrains.IndexOf(t.Terrain.BottomRight));
+
                     output.Write(t.Properties.Count);
-                    foreach (var kv in t.Properties) {
-                        output.Write(kv.Key == null ? String.Empty : kv.Key);
-                        output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                    foreach (var kv in t.Properties)
+                    {
+                        output.Write(kv.Key ?? String.Empty);
+                        output.Write(kv.Value.Value ?? String.Empty);
                     }
                 }
 
                 output.Write(ts.Properties.Count);
-                foreach (var kv in ts.Properties) {
-                    output.Write(kv.Key == null ? String.Empty : kv.Key);
-                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                foreach (var kv in ts.Properties)
+                {
+                    output.Write(kv.Key ?? String.Empty);
+                    output.Write(kv.Value.Value ?? String.Empty);
                 }
             }
 
             output.Write(value.Properties.Count);
-            foreach (var kv in value.Properties) {
-                output.Write(kv.Key == null ? String.Empty : kv.Key);
-                output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+            foreach (var kv in value.Properties)
+            {
+                output.Write(kv.Key ?? String.Empty);
+                output.Write(kv.Value.Value ?? String.Empty);
             }
 
             output.Write(value.TileLayers.Count);
-            foreach (var l in value.TileLayers) {
-                output.Write(l.Name == null ? String.Empty : l.Name);
+            foreach (var l in value.TileLayers)
+            {
+                output.Write(l.Name ?? String.Empty);
                 output.Write(l.Opacity);
                 output.Write(l.OpacityColor.A);
                 output.Write(l.Visible);
 
                 output.Write(l.Properties.Count);
-                foreach (var kv in l.Properties) {
-                    output.Write(kv.Key == null ? String.Empty : kv.Key);
-                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                foreach (var kv in l.Properties)
+                {
+                    output.Write(kv.Key ?? String.Empty);
+                    output.Write(kv.Value.Value ?? String.Empty);
                 }
 
                 output.Write(l.Tiles.Length);
-                foreach (var row in l.Tiles) {
+                foreach (var row in l.Tiles)
+                {
                     output.Write(row.Length);
-                    foreach (var t in row) {
+                    foreach (var t in row)
+                    {
                         output.Write(t != null);
-                        if (t != null) {
+                        if (t != null)
+                        {
                             output.Write(t.Rotation);
                             output.Write(t.SourceID);
                             output.Write(t.Target.X);
@@ -99,7 +134,8 @@ namespace FuncWorks.XNA.XTiled {
             }
 
             output.Write(value.SourceTiles.Length);
-            foreach (var t in value.SourceTiles) {
+            foreach (var t in value.SourceTiles)
+            {
                 output.Write(t.Origin.X);
                 output.Write(t.Origin.Y);
                 output.Write(t.Source.X);
@@ -109,21 +145,24 @@ namespace FuncWorks.XNA.XTiled {
                 output.Write(t.TilesetID);
 
                 output.Write(t.Properties.Count);
-                foreach (var kv in t.Properties) {
-                    output.Write(kv.Key == null ? String.Empty : kv.Key);
-                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                foreach (var kv in t.Properties)
+                {
+                    output.Write(kv.Key ?? String.Empty);
+                    output.Write(kv.Value.Value ?? String.Empty);
                 }
             }
 
             output.Write(value.ObjectLayers.Count);
-            foreach (var ol in value.ObjectLayers) {
-                output.Write(ol.Name == null ? String.Empty : ol.Name);
+            foreach (var ol in value.ObjectLayers)
+            {
+                output.Write(ol.Name ?? String.Empty);
                 output.Write(ol.Opacity);
                 output.Write(ol.OpacityColor.A);
                 output.Write(ol.Visible);
 
                 output.Write(ol.Color.HasValue);
-                if (ol.Color.HasValue) {
+                if (ol.Color.HasValue)
+                {
                     output.Write(ol.Color.Value.R);
                     output.Write(ol.Color.Value.G);
                     output.Write(ol.Color.Value.B);
@@ -131,13 +170,14 @@ namespace FuncWorks.XNA.XTiled {
                 }
 
                 output.Write(ol.MapObjects.Length);
-                foreach (var m in ol.MapObjects) {
+                foreach (var m in ol.MapObjects)
+                {
                     output.Write(m.Bounds.X);
                     output.Write(m.Bounds.Y);
                     output.Write(m.Bounds.Height);
                     output.Write(m.Bounds.Width);
-                    output.Write(m.Name == null ? String.Empty : m.Name);
-                    output.Write(m.Type == null ? String.Empty : m.Type);
+                    output.Write(m.Name ?? String.Empty);
+                    output.Write(m.Type ?? String.Empty);
                     output.Write(m.Visible);
 
                     output.Write(m.TileID.HasValue);
@@ -145,18 +185,22 @@ namespace FuncWorks.XNA.XTiled {
                         output.Write(m.TileID.Value);
 
                     output.Write(m.Polyline != null);
-                    if (m.Polyline != null) {
+                    if (m.Polyline != null)
+                    {
                         output.Write(m.Polyline.Points.Length);
-                        foreach (var p in m.Polyline.Points) {
+                        foreach (var p in m.Polyline.Points)
+                        {
                             output.Write(p.X);
                             output.Write(p.Y);
                         }
                     }
 
                     output.Write(m.Polygon != null);
-                    if (m.Polygon != null) {
+                    if (m.Polygon != null)
+                    {
                         output.Write(m.Polygon.Points.Length);
-                        foreach (var p in m.Polygon.Points) {
+                        foreach (var p in m.Polygon.Points)
+                        {
                             output.Write(p.X);
                             output.Write(p.Y);
                         }
@@ -165,31 +209,35 @@ namespace FuncWorks.XNA.XTiled {
                     output.Write(m.Properties.Count);
                     foreach (var kv in m.Properties)
                     {
-                        output.Write(kv.Key == null ? String.Empty : kv.Key);
-                        output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                        output.Write(kv.Key ?? String.Empty);
+                        output.Write(kv.Value.Value ?? String.Empty);
                     }
                 }
 
                 output.Write(ol.Properties.Count);
-                foreach (var kv in ol.Properties) {
-                    output.Write(kv.Key == null ? String.Empty : kv.Key);
-                    output.Write(kv.Value.Value == null ? String.Empty : kv.Value.Value);
+                foreach (var kv in ol.Properties)
+                {
+                    output.Write(kv.Key ?? String.Empty);
+                    output.Write(kv.Value.Value ?? String.Empty);
                 }
             }
 
             output.Write(value.LayerOrder.Length);
-            foreach (var lo in value.LayerOrder) {
+            foreach (var lo in value.LayerOrder)
+            {
                 output.Write(lo.ID);
-                output.Write(lo.LayerType == LayerType.TileLayer ? true : false);
+                output.Write(lo.LayerType == LayerType.TileLayer);
             }
 
         }
 
-        public override string GetRuntimeReader(TargetPlatform targetPlatform) {
+        public override string GetRuntimeReader(TargetPlatform targetPlatform)
+        {
             return "FuncWorks.XNA.XTiled.MapReader, FuncWorks.XNA.XTiled";
         }
 
-        public override string GetRuntimeType(TargetPlatform targetPlatform) {
+        public override string GetRuntimeType(TargetPlatform targetPlatform)
+        {
             return "FuncWorks.XNA.XTiled.Map, FuncWorks.XNA.XTiled";
         }
 
