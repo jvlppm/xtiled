@@ -36,12 +36,8 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MonoGame.Framework.Portable.3.2.99.1-Beta\lib\portable-net40+sl40+win+wp80\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -55,7 +51,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="..\XTiled\XTiled.projitems" Label="Shared" />
   <Import Project="XTiledExtensions.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -65,4 +60,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\XTiled\XTiled [MonoGame].csproj">
+      <Project>{5785AD15-6EFF-4E9D-97A4-408B4B808420}</Project>
+      <Name>XTiled [MonoGame]</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
