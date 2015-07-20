@@ -144,6 +144,11 @@ namespace FuncWorks.XNA.XTiled
                 output.Write(t.Source.Width);
                 output.Write(t.TilesetID);
 
+                output.Write(terrains.IndexOf(t.Terrain.TopLeft));
+                output.Write(terrains.IndexOf(t.Terrain.TopRight));
+                output.Write(terrains.IndexOf(t.Terrain.BottomLeft));
+                output.Write(terrains.IndexOf(t.Terrain.BottomRight));
+
                 output.Write(t.Properties.Count);
                 foreach (var kv in t.Properties)
                 {

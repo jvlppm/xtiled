@@ -177,6 +177,13 @@ namespace FuncWorks.XNA.XTiled
                 m.SourceTiles[i].Source.Width = input.ReadInt32();
                 m.SourceTiles[i].TilesetID = input.ReadInt32();
 
+                var tileTerrains = new[] { input.ReadInt32(), input.ReadInt32(), input.ReadInt32(), input.ReadInt32() }
+                        .Select(tI => i < 0 ? null : m.Terrains[tI]).ToArray();
+
+                m.SourceTiles[i].Terrain = new TerrainData(
+                    tileTerrains[0], tileTerrains[1], tileTerrains[2], tileTerrains[3]
+                );
+
                 props = input.ReadInt32();
                 m.SourceTiles[i].Properties = new Dictionary<String, Property>(props);
                 for (int p = 0; p < props; p++)
