@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -541,7 +542,31 @@ namespace FuncWorks.XNA.XTiled
         /// <returns>Collection of matching TileData</returns>
         public IEnumerable<TileData> GetTilesInRegion(Rectangle region)
         {
-            return this.GetTilesInRegion(ref region);
+            int txMin = Math.Max(0, GetTileCoord(region.X, TileWidth));
+            int txMax = GetTileCoord(region.X + region.Width - 1, TileWidth);
+            int tyMin = Math.Max(0, GetTileCoord(region.Y, TileHeight));
+            int tyMax = GetTileCoord(region.Y + region.Height - 1, TileHeight);
+
+            if (Orientation == MapOrientation.Isometric)
+            {
+                tyMax = tyMax * 2 + 1;
+                txMax = txMax * 2 + 1;
+            }
+
+            for (int i = 0; i < TileLayers.Count; i++)
+            {
+                for (int y = tyMin; y <= tyMax; y++)
+                {
+                    for (int x = txMin; x <= txMax; x++)
+                    {
+                        var tiles = TileLayers[i].Tiles;
+                        if (x < tiles.Length && y < tiles[x].Length && tiles[x][y] != null)
+                        {
+                            yield return TileLayers[i].Tiles[x][y];
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -551,34 +576,14 @@ namespace FuncWorks.XNA.XTiled
         /// <returns>Collection of matching TileData</returns>
         public IEnumerable<TileData> GetTilesInRegion(ref Rectangle region)
         {
-            List<TileData> result = new List<TileData>();
+            return GetTilesInRegion(region).ToList();
+        }
 
-            Int32 txMin = region.X / this.TileWidth;
-            Int32 txMax = (region.X + region.Width) / this.TileWidth;
-            Int32 tyMin = region.Y / this.TileHeight;
-            Int32 tyMax = (region.Y + region.Height) / this.TileHeight;
-
-            if (this.Orientation == MapOrientation.Isometric)
-            {
-                tyMax = tyMax * 2 + 1;
-                txMax = txMax * 2 + 1;
-            }
-
-            for (int i = 0; i < this.TileLayers.Count; i++)
-            {
-                for (int y = tyMin; y <= tyMax; y++)
-                {
-                    for (int x = txMin; x <= txMax; x++)
-                    {
-                        if (this.TileLayers[i].Tiles[x][y] != null)
-                        {
-                            result.Add(this.TileLayers[i].Tiles[x][y]);
-                        }
-                    }
-                }
-            }
-
-            return result;
+        static int GetTileCoord(int mapCoord, int gridSize)
+        {
+            if (mapCoord < 0)
+                return (mapCoord - gridSize + 1) / gridSize;
+            return mapCoord / gridSize;
         }
 
         /// <summary>
