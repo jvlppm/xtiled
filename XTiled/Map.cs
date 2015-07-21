@@ -170,21 +170,20 @@ namespace FuncWorks.XNA.XTiled
         /// <param name="drawHiddenLayers">If true, draws layers regardless of TileLayer.Visible flag</param>
         public void Draw(SpriteBatch spriteBatch, ref Rectangle region, Boolean drawHiddenLayers)
         {
+            int txMin = Math.Max(0, GetTileCoord(region.X, TileWidth));
+            int txMax = GetTileCoord(region.X + region.Width - 1, TileWidth);
+            int tyMin = Math.Max(0, GetTileCoord(region.Y, TileHeight));
+            int tyMax = GetTileCoord(region.Y + region.Height - 1, TileHeight);
 
-            Int32 txMin = region.X / this.TileWidth;
-            Int32 txMax = (region.X + region.Width) / this.TileWidth;
-            Int32 tyMin = region.Y / this.TileHeight;
-            Int32 tyMax = (region.Y + region.Height) / this.TileHeight;
-
-            if (this.Orientation == MapOrientation.Isometric)
+            if (Orientation == MapOrientation.Isometric)
             {
                 tyMax = tyMax * 2 + 1;
                 txMax = txMax * 2 + 1;
             }
 
-            for (int l = 0; l < this.TileLayers.Count; l++)
+            for (int l = 0; l < TileLayers.Count; l++)
             {
-                if (this.TileLayers[l].Visible || drawHiddenLayers)
+                if (TileLayers[l].Visible || drawHiddenLayers)
                 {
                     DrawLayer(spriteBatch, l, ref region, txMin, txMax, tyMin, tyMax, 0);
                 }
