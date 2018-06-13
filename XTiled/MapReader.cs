@@ -82,7 +82,7 @@ namespace FuncWorks.XNA.XTiled
                     m.Tilesets[i].Tiles[j].Source.Width = input.ReadInt32();
 
                     var tileTerrains = new []{ input.ReadInt32(), input.ReadInt32(), input.ReadInt32(), input.ReadInt32() }
-                        .Select(tI => i < 0 ? null : m.Terrains[tI]).ToArray();
+                        .Select(tI => tI < 0 ? null : m.Terrains[tI]).ToArray();
 
                     m.Tilesets[i].Tiles[j].Terrain = new TerrainData(
                         tileTerrains[0], tileTerrains[1], tileTerrains[2], tileTerrains[3]
@@ -178,7 +178,7 @@ namespace FuncWorks.XNA.XTiled
                 m.SourceTiles[i].TilesetID = input.ReadInt32();
 
                 var tileTerrains = new[] { input.ReadInt32(), input.ReadInt32(), input.ReadInt32(), input.ReadInt32() }
-                        .Select(tI => i < 0 ? null : m.Terrains[tI]).ToArray();
+                        .Select(tI => tI < 0 ? null : m.Terrains[tI]).ToArray();
 
                 m.SourceTiles[i].Terrain = new TerrainData(
                     tileTerrains[0], tileTerrains[1], tileTerrains[2], tileTerrains[3]
